@@ -1,0 +1,9 @@
+# Uses the "httpYac - Rest Client" extension
+@baseURL = https://cat-fact.herokuapp.com
+
+###
+
+# Facts
+
+GET {{baseURL}}/facts
+Accept: application/json

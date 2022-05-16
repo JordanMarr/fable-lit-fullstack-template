@@ -1,0 +1,15 @@
+* {
+    font-family: 'Spartan', sans-serif;
+}
+
+.two-column {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+* {
+    box-sizing: border-box;
+}
+
+.two-column > div {
+    margin: 20px
+}

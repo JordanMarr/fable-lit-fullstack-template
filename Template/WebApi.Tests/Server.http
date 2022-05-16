@@ -1,0 +1,5 @@
+@baseURL = https://localhost:5001
+
+###
+# Ping
+GET {{baseURL}}/api/ping

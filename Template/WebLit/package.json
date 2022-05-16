@@ -1,0 +1,22 @@
+{
+    "private": true,
+    "scripts": {
+        "install": "dotnet tool restore",
+        "build": "dotnet fable src -o build/client --run vite build",
+        "start": "dotnet fable watch src -s -o build/client --run vite",
+        "test": "dotnet fable test -o build/test --run web-test-runner build/test/*Test.js --node-resolve",
+        "test:watch": "dotnet fable watch test -o build/test --run web-test-runner build/test/*Test.js --node-resolve --watch",
+        "publish": "npm test && npm run build -- --base=/Lit.TodoMVC/ && npx gh-pages -d dist"
+    },
+    "dependencies": {
+        "@lit-labs/motion": "^1.0.0",
+        "@lit-labs/virtualizer": "^0.6.0",
+        "lit": "^2.0.0",
+        "@fluentui/web-components": "^2.5.0"
+    },
+    "devDependencies": {
+        "@web/test-runner": "^0.13.18",
+        "@web/test-runner-commands": "^0.5.13",
+        "vite": "^2.6.1"
+    }
+}

@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Lit.TodoMVC", "src\Lit.TodoMVC.fsproj", "{C1F8FB58-265C-4425-83BD-4855174E8C77}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Test", "test\Test.fsproj", "{C5894016-6E81-40E1-A05D-45029501EB89}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1F8FB58-265C-4425-83BD-4855174E8C77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1F8FB58-265C-4425-83BD-4855174E8C77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1F8FB58-265C-4425-83BD-4855174E8C77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1F8FB58-265C-4425-83BD-4855174E8C77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5894016-6E81-40E1-A05D-45029501EB89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5894016-6E81-40E1-A05D-45029501EB89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5894016-6E81-40E1-A05D-45029501EB89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5894016-6E81-40E1-A05D-45029501EB89}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
