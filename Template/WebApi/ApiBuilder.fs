@@ -13,11 +13,11 @@ type ServerApi(logger: ILogger<ServerApi>, cfg: IConfiguration) =
 
     let getCatFactsClient () = new HttpClient(BaseAddress = Uri cfg["CatFactsBaseUrl"])
 
-    /// Loads a page of Forge projects.
+    /// Loads a page of CAT FACTS!
     let getCatFacts () = 
         async {
-            use client : HttpClient = getCatFactsClient ()
-            return! Rest.get<Shared.Api.CatFact list> client "/facts"
+            use client = getCatFactsClient ()
+            return! Rest.get<Api.CatFact list> client "/facts"
         }
 
     /// Builds the Fable.Remoting Api with handlers
