@@ -3,7 +3,6 @@ module WebLit.App
 open Fable.Core
 open Fable.Core.JsInterop
 open Shared
-open Util
 open Elmish
 open Lit
 open Lit.Elmish

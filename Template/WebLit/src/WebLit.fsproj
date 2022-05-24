@@ -3,11 +3,7 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Extensions.fs" />
     <Compile Include="Server.fs" />
-    <Compile Include="Util.fs" />
-    <Compile Include="Todos.fs" />
-    <Compile Include="Virtualizer.fs" />
     <Compile Include="App.fs" />
   </ItemGroup>
   <ItemGroup>

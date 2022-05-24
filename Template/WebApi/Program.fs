@@ -1,22 +1,21 @@
 ﻿module WebApi.Program
 
-open Saturn
 open Giraffe
+open Serilog
 open Shared
+open System
+open System.IO
 open WebApi
 open Fable.Remoting.Server
 open Fable.Remoting.Giraffe
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.AspNetCore.Http
-open System
-open Microsoft.Extensions.Logging
-open Shared
 open Microsoft.AspNetCore.Cors.Infrastructure
 open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.Configuration
-open Serilog
 open Microsoft.Extensions.Hosting
 open Microsoft.AspNetCore.Builder
+open Microsoft.Extensions.Logging
 
 let rec private unwrapEx (ex: Exception) =
     if not (isNull ex.InnerException) then 
@@ -33,47 +32,99 @@ let fableRemotingErrorHandler (ex: Exception) (ri: RouteInfo<HttpContext>) =
     logger.LogError(sprintf "Error: %s" ex.Message)
     Propagate "An error occurred while processing the request."
     
-let remotingWebApi =
+let fableRemotingApi =
     Remoting.createApi()
-    |> Remoting.fromContext (fun (ctx: HttpContext) -> ctx.GetService<ApiBuilder.ServerApi>().Build())
+    |> Remoting.fromContext (fun (ctx: HttpContext) -> ctx.GetService<ApiBuilder.ServerApi>().Build(ctx))
     |> Remoting.withRouteBuilder Api.routerPaths
     |> Remoting.withErrorHandler fableRemotingErrorHandler
     |> Remoting.buildHttpHandler
 
-let webApp = 
+let webApp =     
     choose [ 
-        remotingWebApi
-        GET >=> routeCi "/api/ping"   >=> text "pong"
+
+        fableRemotingApi
+
+        GET >=> routeCi "/api/ping" >=> text "pong"
+                
+        //GET >=> routeCi "/signin" >=> (fun next ctx ->
+        //    if ctx.User.Identity.IsAuthenticated then 
+        //        // Try to get the redirectUrl embedded in the app sign-in link
+        //        match ctx.Request.Query.TryGetValue("redirectUrl") with
+        //        | true, urlValue -> redirectTo false urlValue.[0] next ctx 
+        //        | _ -> redirectTo false "/" next ctx 
+        //    else 
+        //        challenge OpenIdConnectDefaults.AuthenticationScheme next ctx
+        //)
+
+        //GET >=> routeCi "/signout" 
+        //    >=> (fun next ctx -> 
+        //        ctx.Response.Cookies.Delete(".AspNetCore.Cookies")
+        //        htmlView Views.goodbye next ctx) 
+
+
+#if DEBUG
         GET >=> htmlView Views.devMode
+#else
+        GET >=> htmlFile "wwwroot/index.html"
+#endif
     ]
 
-let serviceConfig (services: IServiceCollection) =
-    services
-      .AddSingleton<ApiBuilder.ServerApi>()
-      .AddLogging()
+let serviceConfig (ctx: WebHostBuilderContext) (services: IServiceCollection) =
+    let cfg = ctx.Configuration
+    services.AddCors()    |> ignore
+    services.AddGiraffe() |> ignore
+    services.AddSingleton<ApiBuilder.ServerApi>() |> ignore
+    services.AddLogging() |> ignore
+    
 
-let configureWebHost (builder: IWebHostBuilder) =
-    builder.ConfigureAppConfiguration (fun context config ->
-        config
-            .AddJsonFile("appsettings.json", false, true)
-            .AddJsonFile($"appsettings.{context.HostingEnvironment.EnvironmentName}.json" , true)
-            .AddEnvironmentVariables()
-            |> ignore
-    )
+let configureAppSettings (context: WebHostBuilderContext) (config: IConfigurationBuilder) =
+    config
+        .AddJsonFile("appsettings.json", false, true)
+        .AddJsonFile($"appsettings.{context.HostingEnvironment.EnvironmentName}.json" , true)
+        .AddEnvironmentVariables()
+        |> ignore
 
 let configureCors (builder: CorsPolicyBuilder) =
-    builder.WithOrigins([| "http://localhost:3000" |])
-           .AllowAnyMethod()
-           .AllowAnyHeader()
-           |> ignore
+    builder.WithOrigins([| "https://localhost:3000" |])
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        |> ignore
 
-let application = application {
-    use_router webApp
-    use_static "wwwroot"
-    use_cors "CORS_policy" configureCors
-    use_gzip
-    service_config serviceConfig
-    webhost_config configureWebHost
-}
+let errorHandler (ex : Exception) (logger : ILogger) =
+    logger.LogError(ex, "An unhandled exception has occurred while executing the request.")
+    clearResponse >=> setStatusCode 500 >=> text ex.Message
 
-run application
+let configureApp (app : IApplicationBuilder) =
+    let env = app.ApplicationServices.GetService<IWebHostEnvironment>()
+    (if env.IsDevelopment()
+     then app.UseDeveloperExceptionPage()
+     else app.UseGiraffeErrorHandler(errorHandler))
+        .UseHttpsRedirection()
+        .UseCors(configureCors)
+        .UseStaticFiles()
+        .UseGiraffe(webApp)
+
+[<EntryPoint>]
+let main args =
+    let contentRoot = Directory.GetCurrentDirectory()
+    let webRoot     = Path.Combine(contentRoot, "wwwroot")
+    Host.CreateDefaultBuilder(args)
+        .ConfigureWebHostDefaults(fun (webHostBuilder: IWebHostBuilder) ->
+            webHostBuilder
+                .UseContentRoot(contentRoot)
+                .UseWebRoot(webRoot)
+                .Configure(Action<IApplicationBuilder> configureApp)
+                .ConfigureServices(serviceConfig)
+                .ConfigureAppConfiguration configureAppSettings
+                |> ignore
+        )
+        .UseSerilog(fun hostingContext configureLogger ->
+            configureLogger
+                .MinimumLevel.Information()
+                .Enrich.FromLogContext()
+                .WriteTo.Console() 
+                |> ignore
+        )
+        .Build()
+        .Run()
+    0

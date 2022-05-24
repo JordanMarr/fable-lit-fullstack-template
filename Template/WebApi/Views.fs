@@ -11,8 +11,8 @@ let devMode =
                 str "Server Web Api - Dev Mode"
             ]
             p [] [
-                a [ _href "http://localhost:3000" ] [
-                    str "Fable: http://localhost:3000"
+                a [ _href "https://localhost:3000" ] [
+                    str "Fable: https://localhost:3000"
                 ]
             ]
             p [] [
@@ -21,5 +21,20 @@ let devMode =
             p [] [
                 str "To deploy, 'npm run build', then 'Deploy' Server project to Azure target environment."
             ]
+        ]
+    ]
+
+let goodbye =
+    html [] [
+        head [] [
+            title [] [ str "Signed Out" ]
+        ]
+        body [] [
+            h1 [] [ str "Signed Out" ]
+            p [] [ str "You have been signed out." ]
+            p [] [
+                a [ _href "/signin" ] [ str "Sign in" ]
+            ]
+
         ]
     ]

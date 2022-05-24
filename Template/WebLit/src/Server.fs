@@ -1,7 +1,6 @@
 ﻿module WebLit.Server
 
 open System
-open WebLit
 open Fable.Remoting.Client
 open Fable.Core
 
@@ -32,6 +31,5 @@ let normalizeRoutes typeName methodName =
     
 let api =
     Remoting.createApi()
-    |> Remoting.withBaseUrl "https://localhost:5001/"
     |> Remoting.withRouteBuilder normalizeRoutes
     |> Remoting.buildProxy<Shared.Api.IServerApi>
