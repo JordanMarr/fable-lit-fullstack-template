@@ -16,28 +16,6 @@ type Page =
     | ListCatFacts
     | ViewCatFact of fact: string
 
-type Model = 
-    {
-        CurrentPage: Page
-        CatFacts: Api.CatFact array
-    }
-
-type Msg = 
-    | LoadCatFacts of Api.CatFact list
-    | OnError of System.Exception
-
-let init () = 
-    let model = { CurrentPage = Welcome; CatFacts = [||] }
-    model, Cmd.OfAsync.either Server.api.GetCatFacts () LoadCatFacts OnError
-
-let update msg model = 
-    match msg with
-    | LoadCatFacts facts ->
-        { model with CatFacts = facts |> List.toArray }, Cmd.none
-    | OnError ex ->
-        Fable.Core.JS.console.error $"Error: {ex.Message}"
-        model, Cmd.none
-
 [<LitElement("my-app")>]
 let MyApp() =
     let _ = LitElement.init(fun cfg -> cfg.useShadowDom <- false)
