@@ -1,11 +1,8 @@
 module WebLit.App
 
-open Shared
-open Elmish
 open Lit
 open Utils
 open Utils.Grapnel
-
 
 registerComponents()
 Grapnel.init()
