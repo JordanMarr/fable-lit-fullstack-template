@@ -1,19 +1,24 @@
 module WebLit.App
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Shared
 open Elmish
 open Lit
-open Lit.Elmish
+open Utils
+open Utils.Grapnel
 
-// Import FluentUI
-let allComponents: obj = importMember "@fluentui/web-components"
-let provideFluentDesignSystem: unit -> obj = importMember "@fluentui/web-components"
-provideFluentDesignSystem()?register(allComponents)
+
+registerComponents()
+Grapnel.init()
+let router = Router.Create()
+
+type Page = 
+    | Welcome
+    | ListCatFacts
+    | ViewCatFact of fact: string
 
 type Model = 
     {
+        CurrentPage: Page
         CatFacts: Api.CatFact array
     }
 
@@ -22,7 +27,7 @@ type Msg =
     | OnError of System.Exception
 
 let init () = 
-    let model = { CatFacts = [||] }
+    let model = { CurrentPage = Welcome; CatFacts = [||] }
     model, Cmd.OfAsync.either Server.api.GetCatFacts () LoadCatFacts OnError
 
 let update msg model = 
@@ -36,11 +41,26 @@ let update msg model =
 [<LitElement("my-app")>]
 let MyApp() =
     let _ = LitElement.init(fun cfg -> cfg.useShadowDom <- false)
+    let currentPage, setCurrentPage = Hook.useState Page.Welcome
 
-    let model, dispatch = Hook.useElmish(init, update)
+    Hook.useEffectOnce(fun () -> 
+        router.get("/", fun _ -> setCurrentPage Page.Welcome)
+        router.get("/cat-facts", fun _ -> setCurrentPage Page.ListCatFacts)
+        router.get("/cat-fact/:fact", fun (req: Req<{| fact: string |}>) -> setCurrentPage (Page.ViewCatFact req.``params``.fact))
+    )
     
     html $"""
-        <h1>Cat Facts</h1>
-        <fluent-data-grid style="max-height: 30em; overflow-y: auto;" .rowsData={model.CatFacts}>
-        </fluent-data-grid>
+        <nav>
+            <fluent-anchor appearance="hypertext" href="#" @click={fun _ -> router.navigate("/")}>Welcome</fluent-anchor>
+            | 
+            <fluent-anchor appearance="hypertext" href="#" @click={fun _ -> router.navigate("/cat-facts")}>View Cat Facts</fluent-anchor>
+        </nav>
+        <main style="margin: 20px;">
+            {
+                match currentPage with
+                | Welcome -> WelcomePage.Page()
+                | ListCatFacts -> ListCatFactsPage.Page()
+                | ViewCatFact fact -> ViewCatFactPage.Page(fact)
+            }
+        </main>
         """

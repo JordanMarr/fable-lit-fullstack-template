@@ -12,6 +12,7 @@
         "@lit-labs/motion": "^1.0.0",
         "@lit-labs/virtualizer": "^0.6.0",
         "lit": "^2.0.0",
+        "grapnel": "^0.7.6",
         "@fluentui/web-components": "^2.5.0"
     },
     "devDependencies": {
