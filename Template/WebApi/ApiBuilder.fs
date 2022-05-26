@@ -1,6 +1,6 @@
 ﻿module WebApi.ApiBuilder
 
-open Microsoft.Extensions.Logging
+open Serilog
 open Microsoft.Extensions.Configuration
 open Shared
 open Shared.Api
@@ -10,7 +10,7 @@ open Microsoft.AspNetCore.Http
 
 /// An implementation of the Shared IServerApi protocol.
 /// Can require ASP.NET injected dependencies in the constructor and uses the Build() function to return value of `IServerApi`.
-type ServerApi(logger: ILogger<ServerApi>, cfg: IConfiguration) =
+type ServerApi(logger: ILogger, cfg: IConfiguration) =
 
     let getCatFactsClient () = new HttpClient(BaseAddress = Uri cfg["CatFactsBaseUrl"])
 
