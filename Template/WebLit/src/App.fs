@@ -21,13 +21,14 @@ let MyApp() =
     Hook.useEffectOnce(fun () -> 
         router.get("/", fun _ -> setCurrentPage Page.Welcome)
         router.get("/cat-facts", fun _ -> setCurrentPage Page.ListCatFacts)
-        router.get("/cat-fact/:fact", fun (req: Req<{| fact: string |}>) -> setCurrentPage (Page.ViewCatFact req.``params``.fact))
+        router.get("/cat-fact/:fact", 
+            fun (req: Req<{| fact: string |}>) -> 
+                setCurrentPage (Page.ViewCatFact req.``params``.fact))
     )
     
     html $"""
         <nav>
-            <fluent-anchor appearance="hypertext" href="#" @click={fun _ -> router.navigate("/")}>Welcome</fluent-anchor>
-            | 
+            <fluent-anchor appearance="hypertext" href="#" @click={fun _ -> router.navigate("/")}>Welcome</fluent-anchor> | 
             <fluent-anchor appearance="hypertext" href="#" @click={fun _ -> router.navigate("/cat-facts")}>View Cat Facts</fluent-anchor>
         </nav>
         <main style="margin: 20px;">
