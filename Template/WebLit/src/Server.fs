@@ -19,7 +19,7 @@ let combine (paths: string list) =
 /// so we get the virtual path from the location
 /// `virtualPath` of `http://localhost/SafeApp` -> `/SafeApp/`
 let virtualPath : string =
-    JS.eval("window.location.pathname")
+    "/"
 
 /// Normalized the path taking into account the virtual path of the server
 let normalize (path: string) = 
