@@ -27,8 +27,7 @@ let Page (fact: string) =
           <small>Meow!</small>
 
           <div slot="footer">
-            <sl-button variant="primary" pill>More Info</sl-button>
-            
+            <sl-button variant="primary" pill @click={Ev (fun e -> Grapnel.navigate("/cat-facts"))}>Tell me more!!</sl-button>            
           </div>
         </sl-card>
         """
