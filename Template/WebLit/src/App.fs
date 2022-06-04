@@ -26,9 +26,8 @@ let MyApp() =
     
     html $"""
         <nav>
-            <fluent-anchor appearance="hypertext" href="#" @click={fun _ -> router.navigate("/")}>Welcome</fluent-anchor>
-            | 
-            <fluent-anchor appearance="hypertext" href="#" @click={fun _ -> router.navigate("/cat-facts")}>View Cat Facts</fluent-anchor>
+            <sl-button appearance="hypertext" href="#" @click={fun _ -> router.navigate("/")}>Welcome</sl-button>
+            <sl-button appearance="hypertext" href="#" @click={fun _ -> router.navigate("/cat-facts")}>View Cat Facts</sl-button>
         </nav>
         <main style="margin: 20px;">
             {

@@ -1,5 +1,14 @@
 * {
-    font-family: 'Spartan', sans-serif;
+    font-family: 'Spartan', sans-serif;    
+    color: whitesmoke;
+}
+
+html {
+    background-color: black;
+}
+
+nav {
+    padding: 4px;
 }
 
 .two-column {
@@ -13,3 +22,23 @@
 .two-column > div {
     margin: 20px
 }
+
+.card-overview {
+    max-width: 300px;
+}
+
+    .card-overview div {
+        margin: 6px 0 6px 0;
+        
+    }
+
+    .card-overview strong {
+        font-size: 14pt;
+        color: darkgray;
+    }
+
+    .card-overview small {
+        font-size: 9pt;
+        color: darkgray;
+        font-style: italic;
+    }

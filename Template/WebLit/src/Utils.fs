@@ -3,11 +3,34 @@ open Fable.Core
 open Fable.Core.JsInterop
 open Browser.Types
 
-let registerComponents() =
-    // Import FluentUI
-    let allComponents: obj = importMember "@fluentui/web-components"
+let registerFluentUI() =
     let provideFluentDesignSystem: unit -> obj = importMember "@fluentui/web-components"
-    provideFluentDesignSystem()?register(allComponents)
+    
+    // Register all components
+    //let allComponents: obj = importMember "@fluentui/web-components"
+    //provideFluentDesignSystem()?register(allComponents)
+    
+    // Cherrypick components
+    let fluentSlider: unit -> unit = importMember "@fluentui/web-components"
+    let fluentSliderLabel: unit -> unit = importMember "@fluentui/web-components"
+    provideFluentDesignSystem()?register(
+        fluentSlider(), 
+        fluentSliderLabel()
+    )
+
+let private registerShoelace() = 
+    //importSideEffects "@shoelace-style/shoelace/dist/themes/light.css"
+    importSideEffects "@shoelace-style/shoelace/dist/themes/dark.css"
+    importSideEffects "@shoelace-style/shoelace/dist/components/button/button.js"
+    importSideEffects "@shoelace-style/shoelace/dist/components/card/card.js"
+    importSideEffects "@shoelace-style/shoelace/dist/components/breadcrumb/breadcrumb.js"
+    importSideEffects "@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js"
+
+/// Imports and registers components
+let registerComponents () = 
+    registerFluentUI()
+    registerShoelace()
+
 
 /// Grapnel Router bindings.
 module Grapnel =
