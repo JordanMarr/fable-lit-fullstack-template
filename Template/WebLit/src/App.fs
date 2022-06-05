@@ -17,6 +17,9 @@ type Page =
 let MyApp() =
     let _ = LitElement.init(fun cfg -> cfg.useShadowDom <- false)
     let currentPage, setCurrentPage = Hook.useState Page.Welcome
+    
+    let navLinkIsActive page = 
+        if page = currentPage then "primary" else "default"
 
     Hook.useEffectOnce(fun () -> 
         router.get("/", fun _ -> setCurrentPage Page.Welcome)
@@ -26,8 +29,14 @@ let MyApp() =
     
     html $"""
         <nav>
-            <sl-button href="#" @click={fun _ -> router.navigate("/")}>Welcome</sl-button>
-            <sl-button href="#" @click={fun _ -> router.navigate("/cat-facts")}>View Cat Facts</sl-button>
+            <sl-button href="#" @click={fun _ -> router.navigate("/")} variant={navLinkIsActive Page.Welcome} outline>
+                <bs-icon src="house" color="white" size="14px"></bs-icon>
+                Home
+            </sl-button>
+            <sl-button href="#" @click={fun _ -> router.navigate("/cat-facts")} variant={navLinkIsActive Page.ListCatFacts} outline>
+                <bs-icon src="list-ul" color="white" size="14px"></bs-icon>
+                View Cat Facts
+            </sl-button>
         </nav>
         <main style="margin: 20px;">
             {

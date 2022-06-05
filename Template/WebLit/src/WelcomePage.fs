@@ -9,5 +9,5 @@ open Shared.Api
 [<HookComponent>]
 let Page() = 
     html $"""
-        <h1>Welcome to Cat Facts!</h1>
+        <h1>Welcome to Cat Facts!</h1>        
         """
