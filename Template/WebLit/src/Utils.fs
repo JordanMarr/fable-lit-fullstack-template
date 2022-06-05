@@ -51,7 +51,7 @@ module Grapnel =
         abstract navigate : path: string -> unit
 
     type RouterStatic =
-        [<Emit("new Grapnel({ pushState: true });")>]
+        [<Emit("new Grapnel({ pushState: true })")>]
         abstract Create: unit -> Router
 
     open Fable.Core.JsInterop
