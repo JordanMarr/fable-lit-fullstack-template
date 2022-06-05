@@ -3,6 +3,7 @@ open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Core.DynamicExtensions
 open Browser.Types
+open Lit
 
 [<AutoOpen>]
 module PromiseExtensions =
@@ -45,6 +46,23 @@ let private registerShoelace() =
 let registerComponents () = 
     registerFluentUI()
     registerShoelace()
+
+[<LitElement("bs-icon")>]
+let BootstrapIcon() = 
+    let _, props =
+        LitElement.init(fun init ->
+            init.useShadowDom <- false
+            init.props <- 
+                {| 
+                    src = Prop.Of(defaultValue = "SurveyQuestions", attribute = "src")
+                    size = Prop.Of(defaultValue = "20px", attribute = "size")
+                    color = Prop.Of(defaultValue = "#036ac4", attribute = "color")
+                |}
+        )
+
+    html $"""
+        <i class="bi bi-{props.src.Value}" style="font-size: {props.size.Value}; color: {props.color.Value};"></i>
+    """
 
 /// Grapnel Router bindings.
 module Grapnel =
