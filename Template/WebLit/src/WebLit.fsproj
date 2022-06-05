@@ -4,6 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Server.fs" />
+    <Compile Include="Registrations.fs" />
     <Compile Include="Utils.fs" />
     <Compile Include="ViewCatFactPage.fs" />
     <Compile Include="ListCatFactsPage.fs" />

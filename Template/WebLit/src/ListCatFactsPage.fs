@@ -63,17 +63,23 @@ let Page() =
         </sl-breadcrumb>
 
         <sl-card>
-            <div slot="header">
-                Page Size {model.PageSize}
-            </div>
             <fluent-slider 
-                .min={5}
-                .max={10}
+                .min={1}
+                .max={20}
                 .value={model.PageSize}
                 style="width: 200px"
                 @change={Ev (fun e -> dispatch (SetPageSize e.target?valueAsNumber))}>
+                <fluent-slider-label position="1">
+                    Less
+                </fluent-slider-label>
+                <fluent-slider-label position="20">
+                    More
+                </fluent-slider-label>
             </fluent-slider>
-            <sl-button size="small" @click={Ev (fun e -> dispatch RefreshFacts)}>Refresh</sl-button>
+            
+            <sl-button style="margin-left: 30px" size="large" @click={Ev (fun e -> dispatch RefreshFacts)}>
+                <bs-icon src="arrow-clockwise" size="30px" color="white" title="Refresh">
+            </sl-button>
         </sl-card>
 
         <table style="max-height: 300px; overflow-y: auto; margin-top: 10px">
