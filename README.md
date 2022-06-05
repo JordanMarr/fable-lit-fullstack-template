@@ -12,6 +12,7 @@ https://github.com/Zaid-Ajaj/SAFE.Simplified
 * `Shoelace` and `FluentUI` web components imported (cherry-picked)
 * A minimal `vite.config.js` file that configures https proxy server + a common proxy redirects
 * `"vite-plugin-mkcert` plugin installed for https support for proxy server
+* Bootstrap icons + a `bs-icon` custom element control.
 
 ### WebApi.fsproj (Server)
 * Giraffe
