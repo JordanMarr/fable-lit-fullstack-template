@@ -19,7 +19,10 @@ let MyApp() =
     let currentPage, setCurrentPage = Hook.useState Page.Welcome
     
     let navLinkIsActive page = 
-        if page = currentPage then "primary" else "default"
+        match currentPage, page with
+        | ViewCatFact _, ListCatFacts -> "primary"
+        | c, p when c = p -> "primary"
+        | _ -> "default"
 
     Hook.useEffectOnce(fun () -> 
         router.get("/", fun _ -> setCurrentPage Page.Welcome)
