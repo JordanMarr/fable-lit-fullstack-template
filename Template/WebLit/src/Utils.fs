@@ -1,53 +1,50 @@
 ﻿module WebLit.Utils
 open Fable.Core
 open Fable.Core.JsInterop
+open Fable.Core.DynamicExtensions
 open Browser.Types
-open Lit
+
+[<AutoOpen>]
+module PromiseExtensions =
+    type PromiseResolution<'ResolutionValue> = 
+        {| status: string; value: 'ResolutionValue option; reason: exn option |}
+    [<Emit("Promise.allSettled($0)")>]
+    let inline allSettled<'T> (promises: JS.Promise<'T> array): JS.Promise<PromiseResolution<'T>> = jsNative
 
 let registerFluentUI() =
-    let provideFluentDesignSystem: unit -> obj = importMember "@fluentui/web-components"
-    
-    // Register all components
-    //let allComponents: obj = importMember "@fluentui/web-components"
-    //provideFluentDesignSystem()?register(allComponents)
-    
-    // Cherrypick components
-    let fluentSlider: unit -> unit = importMember "@fluentui/web-components"
-    let fluentSliderLabel: unit -> unit = importMember "@fluentui/web-components"
-    provideFluentDesignSystem()?register(
-        fluentSlider(), 
-        fluentSliderLabel()
-    )
+    promise {
+        let! fluentModule = importDynamic "@fluentui/web-components"
+        let provideFluentDesignSystem: unit -> obj = unbox (fluentModule.Item "provideFluentDesignSystem")
+        
+        // Register all components
+        //let allComponents: obj = fluentModule.Item "allComponents"
+        //provideFluentDesignSystem()?register(allComponents)
+        
+        // Cherrypick components
+        let fluentSlider: unit -> unit = unbox (fluentModule.Item "fluentSlider")
+        let fluentSliderLabel: unit -> unit = unbox (fluentModule.Item "fluentSliderLabel")
+        provideFluentDesignSystem()?register(
+            fluentSlider(), 
+            fluentSliderLabel()
+        )
+
+    }
+    |> Promise.start
 
 let private registerShoelace() = 
     //importSideEffects "@shoelace-style/shoelace/dist/themes/light.css"
-    importSideEffects "@shoelace-style/shoelace/dist/themes/dark.css"
-    importSideEffects "@shoelace-style/shoelace/dist/components/button/button.js"
-    importSideEffects "@shoelace-style/shoelace/dist/components/card/card.js"
-    importSideEffects "@shoelace-style/shoelace/dist/components/breadcrumb/breadcrumb.js"
-    importSideEffects "@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js"
+    [| importDynamic "@shoelace-style/shoelace/dist/themes/dark.css"
+       importDynamic "@shoelace-style/shoelace/dist/components/button/button.js"
+       importDynamic "@shoelace-style/shoelace/dist/components/card/card.js"
+       importDynamic "@shoelace-style/shoelace/dist/components/breadcrumb/breadcrumb.js"
+       importDynamic "@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js" |]
+    |> allSettled
+    |> Promise.start
 
 /// Imports and registers components
 let registerComponents () = 
     registerFluentUI()
     registerShoelace()
-
-[<LitElement("bs-icon")>]
-let BootstrapIcon() = 
-    let _, props =
-        LitElement.init(fun init ->
-            init.useShadowDom <- false
-            init.props <- 
-                {| 
-                    src = Prop.Of(defaultValue = "SurveyQuestions", attribute = "src")
-                    size = Prop.Of(defaultValue = "20px", attribute = "size")
-                    color = Prop.Of(defaultValue = "#036ac4", attribute = "color")
-                |}
-        )
-    
-    html $"""
-        <i class="bi bi-{props.src.Value}" style="font-size: {props.size.Value}; color: {props.color.Value};"></i>
-    """
 
 /// Grapnel Router bindings.
 module Grapnel =
@@ -71,14 +68,13 @@ module Grapnel =
         [<Emit("new Grapnel({ pushState: true })")>]
         abstract Create: unit -> Router
 
-    open Fable.Core.JsInterop
-
     [<ImportMember("grapnel")>]
     let Router : RouterStatic = jsNative
 
+    let private router = lazy (Router.Create())
+
     let navigate (path: string) = 
-        let router = Router.Create()
-        router.navigate(path)
+        router.Value.navigate(path)
 
     let init () = 
         printfn "Initializing Grapnel Router"
