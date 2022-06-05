@@ -23,3 +23,14 @@ https://github.com/Zaid-Ajaj/SAFE.Simplified
 ### Build.fsproj (FAKE)
 * Zaid's awesome FAKE build setup!
 
+## Notes
+Be sure to install the appropriate IDE extension for html and css syntax coloring within your `html $""" """` templates!
+If using VS Code:
+* [Highlight HTML/SQL Templates in F#](https://marketplace.visualstudio.com/items?itemName=alfonsogarciacaro.vscode-template-fsharp-highlight)
+
+If using Visual Studio:
+* [Html for F# (Lit Template)](https://marketplace.visualstudio.com/items?itemName=daniel-hardt.html-for-fsharp-lit-template)
+
+Currently, VS Code with the "Highlight HTML/SQL Templates in F#" extension provides the best experience because it actually provides contextual IntelliSense for the HTML and CSS, plus you can use all the other amazing HTML extensions.
+
+
