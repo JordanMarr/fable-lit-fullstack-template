@@ -10,6 +10,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="CatFacts.http" />
+    <None Include="Server.http" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Expecto" Version="9.0.4" />
   </ItemGroup>
 

@@ -1,3 +1,4 @@
+# Uses the "httpYac - Rest Client" extension for VS Code or "REST Client" for Visual Studio
 @baseURL = https://localhost:5001
 
 ###

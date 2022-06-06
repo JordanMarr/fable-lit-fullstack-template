@@ -1,9 +1,18 @@
-# Uses the "httpYac - Rest Client" extension
-@baseURL = https://cat-fact.herokuapp.com
+# Uses the "httpYac - Rest Client" extension for VS Code or "REST Client" for Visual Studio
+@baseURL = https://catfact.ninja
 
 ###
-
-# Facts
-
+# Lists facts
 GET {{baseURL}}/facts
 Accept: application/json
+
+###
+# Lists cat facts with paging and limit
+GET {{baseURL}}/facts?page=1&limit=3
+Accept: application/json
+
+###
+# Fact - gets a random cat fact
+GET {{baseURL}}/fact
+Accept: application/json
+
