@@ -11,26 +11,35 @@ type Model =
     {
         CatFacts: Api.CatFact array
         PageSize: Api.PageSize
+        PageNumber: Api.PageNumber
     }
 
 type Msg = 
     | LoadCatFacts of Api.CatFact list
     | SetPageSize of PageSize
+    | NextPage
+    | PrevPage
     | RefreshFacts
     | OnError of System.Exception
 
 let init () = 
-    let model = { CatFacts = [||]; PageSize = 10 }
-    model, Cmd.OfAsync.either Server.api.GetCatFacts model.PageSize LoadCatFacts OnError
+    let model = { CatFacts = [||]; PageSize = 10; PageNumber = 1 }
+    model, Cmd.OfAsync.either Server.api.GetCatFacts (model.PageSize, model.PageNumber) LoadCatFacts OnError
 
 let update msg model = 
     match msg with
-    | LoadCatFacts facts ->
+    | LoadCatFacts facts -> 
         { model with CatFacts = facts |> List.toArray }, Cmd.none
     | SetPageSize size -> 
         { model with PageSize = size }, Cmd.none
+    | NextPage -> 
+        { model with PageNumber = model.PageNumber + 1 }, Cmd.ofMsg RefreshFacts
+    | PrevPage -> 
+        match model.PageNumber - 1 with
+        | page when page < 1 -> model, Cmd.none
+        | page -> { model with PageNumber = page }, Cmd.ofMsg RefreshFacts
     | RefreshFacts -> 
-        model, Cmd.OfAsync.either Server.api.GetCatFacts model.PageSize LoadCatFacts OnError
+        model, Cmd.OfAsync.either Server.api.GetCatFacts (model.PageSize, model.PageNumber) LoadCatFacts OnError
     | OnError ex ->
         Fable.Core.JS.console.error $"Error: {ex.Message}"
         model, Cmd.none
@@ -62,26 +71,38 @@ let Page() =
             <sl-breadcrumb-item>Cat Facts</sl-breadcrumb-item>
         </sl-breadcrumb>
 
-        <sl-card>
-            <fluent-slider 
-                .min={1}
-                .max={20}
-                .value={model.PageSize}
-                style="width: 200px"
-                @change={Ev (fun e -> dispatch (SetPageSize e.target?valueAsNumber))}>
-                <fluent-slider-label position="1">
-                    Less
-                </fluent-slider-label>
-                <fluent-slider-label position="20">
-                    More
-                </fluent-slider-label>
-            </fluent-slider>
-            
-            <sl-button style="margin-left: 30px" size="large" @click={Ev (fun e -> dispatch RefreshFacts)}>
-                <bs-icon src="arrow-clockwise" size="30px" color="white" title="Refresh">
+        <sl-button-group style="margin-top: 20px; padding: 5px 0;">
+            <sl-button @click={Ev (fun e -> dispatch PrevPage)}>
+                <bs-icon src="chevron-left" color="white" size="14px"></bs-icon>
+                Previous
             </sl-button>
-        </sl-card>
-
+            <sl-button>
+                Page: {model.PageNumber}
+            </sl-button>            
+            <sl-dropdown>
+                <sl-button slot="trigger" caret>Limit: {model.PageSize}</sl-button>
+                <sl-menu id="menu-page">
+                    <sl-menu-item id="menu-item-page">
+                        <fluent-slider 
+                            .min={1}
+                            .max={20}
+                            .value={model.PageSize}
+                            style="width: 200px"
+                            @change={Ev (fun e -> dispatch (SetPageSize e.target?valueAsNumber))}
+                            @blur={Ev (fun e -> dispatch RefreshFacts)}>
+                            <fluent-slider-label position="1">1</fluent-slider-label>
+                            <fluent-slider-label position="10">10</fluent-slider-label>
+                            <fluent-slider-label position="20">20</fluent-slider-label>
+                        </fluent-slider>
+                    </sl-menu-item>
+                </sl-menu>
+            </sl-dropdown>
+            <sl-button @click={Ev (fun e -> dispatch NextPage)}>
+                Next
+                <bs-icon src="chevron-right" color="white" size="14px"></bs-icon>
+            </sl-button>
+        </sl-button-group>
+            
         <table style="max-height: 300px; overflow-y: auto; margin-top: 10px">
             <thead>
                 <tr>

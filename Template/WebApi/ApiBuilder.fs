@@ -15,10 +15,10 @@ type ServerApi(logger: ILogger, cfg: IConfiguration) =
     let getCatFactsClient () = new HttpClient(BaseAddress = Uri cfg["CatFactsBaseUrl"])
 
     /// Loads a page of CAT FACTS!
-    let getCatFacts (pageSize: PageSize) = 
+    let getCatFacts (pageSize: PageSize, pageNumber: PageNumber) = 
         async {
             use client = getCatFactsClient ()
-            let! page = Rest.get<CatFactPage> client $"/facts?limit={pageSize}"
+            let! page = Rest.get<CatFactPage> client $"/facts?page={pageNumber}&limit={pageSize}"
             return page.Data
         }
 

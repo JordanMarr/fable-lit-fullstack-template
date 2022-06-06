@@ -23,6 +23,14 @@ nav {
     margin: 20px
 }
 
+#menu-item-page {
+    height: 50px;
+}
+
+    #menu-item-page * {
+        height: 24px;
+    }
+
 .card-overview {
     max-width: 300px;
 }

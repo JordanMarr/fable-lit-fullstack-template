@@ -33,12 +33,17 @@ let registerFluentUI() =
     |> Promise.start
 
 let private registerShoelace() = 
-    //importSideEffects "@shoelace-style/shoelace/dist/themes/light.css"
-    [| importDynamic "@shoelace-style/shoelace/dist/themes/dark.css"
-       importDynamic "@shoelace-style/shoelace/dist/components/button/button.js"
-       importDynamic "@shoelace-style/shoelace/dist/components/card/card.js"
-       importDynamic "@shoelace-style/shoelace/dist/components/breadcrumb/breadcrumb.js"
-       importDynamic "@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js" |]
+    [| 
+        importDynamic "@shoelace-style/shoelace/dist/themes/dark.css"
+        importDynamic "@shoelace-style/shoelace/dist/components/button/button.js"
+        importDynamic "@shoelace-style/shoelace/dist/components/card/card.js"
+        importDynamic "@shoelace-style/shoelace/dist/components/breadcrumb/breadcrumb.js"
+        importDynamic "@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js" 
+        importDynamic "@shoelace-style/shoelace/dist/components/button-group/button-group.js"
+        importDynamic "@shoelace-style/shoelace/dist/components/dropdown/dropdown.js"
+        importDynamic "@shoelace-style/shoelace/dist/components/menu/menu.js"
+        importDynamic "@shoelace-style/shoelace/dist/components/menu-item/menu-item.js"
+    |]
     |> allSettled
     |> Promise.start
 
