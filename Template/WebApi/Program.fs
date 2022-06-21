@@ -1,11 +1,12 @@
 ﻿module WebApi.Program
 
 open Giraffe
-open Serilog
 open Shared
 open System
 open System.IO
 open WebApi
+open Serilog
+open Serilog.Events
 open Fable.Remoting.Server
 open Fable.Remoting.Giraffe
 open Microsoft.Extensions.DependencyInjection
@@ -102,6 +103,7 @@ let configureApp (app : IApplicationBuilder) =
         .UseHttpsRedirection()
         .UseCors(configureCors)
         .UseStaticFiles()
+        .UseSerilogRequestLogging()
         .UseGiraffe(webApp)
 
 [<EntryPoint>]
@@ -120,6 +122,7 @@ let main args =
         )
         .UseSerilog(fun hostingContext configureLogger ->
             configureLogger
+                .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
                 .MinimumLevel.Information()
                 .Enrich.FromLogContext()
                 .WriteTo.Console() 
