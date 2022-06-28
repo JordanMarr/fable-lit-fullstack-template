@@ -19,7 +19,9 @@ type ServerApi(logger: ILogger, cfg: IConfiguration) =
         async {
             use client = getCatFactsClient ()
             let! page = Rest.get<CatFactPage> client $"/facts?page={pageNumber}&limit={pageSize}"
-            return page.Data
+
+            // Replace periods with safe ascii period because Grapnel router chokes on having periods in the url route
+            return page.Data |> List.map (fun row -> { row with Fact = row.Fact.Replace('.', '․')})
         }
 
     /// Builds the Fable.Remoting Api with handlers
