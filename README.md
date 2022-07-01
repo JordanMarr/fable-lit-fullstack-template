@@ -24,11 +24,13 @@ https://github.com/Zaid-Ajaj/SAFE.Simplified
 ### Build.fsproj (FAKE)
 * Zaid's awesome FAKE build setup!
 
-# Debug
+## How to Run
+
+### Debug
 * Launch the WebApi project: `dotnet run`
 * Launch the WebLit project: `npm start`
 
-# Release
+### Release
 * Launch WebApi project: `dotnet run -c Release`
 * Launch WebLit project: `npm run build` 
   * (postbuild task will copy `dist` output to `WebApi/wwwroot`)
