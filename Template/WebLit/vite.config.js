@@ -5,6 +5,7 @@ export default {
     // config options
     server: {
         https: true,
+        port: 3000,
         proxy: {
             '/signin': {
                 target: 'https://localhost:5001/',
@@ -26,7 +27,6 @@ export default {
              }
         }
     },
-    
     plugins: [
         mkcert(),
         splitVendorChunkPlugin()

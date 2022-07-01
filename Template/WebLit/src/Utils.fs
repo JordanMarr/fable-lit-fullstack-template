@@ -46,8 +46,7 @@ module Grapnel =
         [<Emit("new Grapnel({ pushState: true })")>]
         abstract Create: unit -> Router
 
-    [<ImportMember("grapnel")>]
-    let Router : RouterStatic = jsNative
+    let Router : RouterStatic = importAll "../node_modules/grapnel/dist/grapnel.min"
 
     let private router = lazy (Router.Create())
 
@@ -56,5 +55,4 @@ module Grapnel =
 
     let initRouter () = 
         printfn "Initializing Grapnel Router"
-        importAll "../node_modules/grapnel/dist/grapnel.min" |> ignore
         router.Value
