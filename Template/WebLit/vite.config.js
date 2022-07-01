@@ -1,4 +1,5 @@
-import mkcert from'vite-plugin-mkcert'
+import mkcert from 'vite-plugin-mkcert'
+import { splitVendorChunkPlugin } from 'vite';
 
 export default {
     // config options
@@ -26,5 +27,8 @@ export default {
         }
     },
     
-    plugins: [mkcert()]
+    plugins: [
+        mkcert(),
+        splitVendorChunkPlugin()
+    ]
 }

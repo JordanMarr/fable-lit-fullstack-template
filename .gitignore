@@ -11,6 +11,7 @@ config.json
 .env
 *.fs.js
 dist
+wwwroot
 output
 bundle
 Server.fsproj.user
