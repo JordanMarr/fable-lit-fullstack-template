@@ -24,6 +24,15 @@ https://github.com/Zaid-Ajaj/SAFE.Simplified
 ### Build.fsproj (FAKE)
 * Zaid's awesome FAKE build setup!
 
+# Debug
+* Launch the WebApi project: `dotnet run`
+* Launch the WebLit project: `npm start`
+
+# Release
+* Launch WebApi project: `dotnet run -c Release`
+* Launch WebLit project: `npm run build` 
+  * (postbuild task will copy `dist` output to `WebApi/wwwroot`)
+
 ## Notes
 Be sure to install the appropriate IDE extension for html and css syntax coloring within your `html $""" """` templates!
 If using VS Code:
