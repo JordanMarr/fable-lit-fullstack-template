@@ -37,9 +37,9 @@ Or you can manually restore each:
 
 ### Pack in Release Mode
 To build WebApi and WebLit in Release mode and output to the `Template/dist` folder:
-* :open_file_folder: Build: 
-  * `dotnet run Pack`
-  * or `dotnet run PackNoTests`
+* :open_file_folder: Build: `dotnet run Pack`
+or
+* :open_file_folder: Build: `dotnet run PackNoTests`
 
 ## Highlight Extension
 Be sure to install the appropriate IDE extension for html and css syntax coloring within your `html $""" """` templates!
