@@ -23,7 +23,7 @@ https://github.com/Zaid-Ajaj/SAFE.Simplified (thank you Zaid!)
 
 ## Build
 
-### Initial Restore of WebApi and WebLit Projects
+### Initial Restore
 To do the initial restore of both the WebApi and WebLit projects:
 * :open_file_folder: Build: `dotnet run Restore`
 
