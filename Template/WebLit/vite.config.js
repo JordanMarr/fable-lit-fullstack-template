@@ -3,6 +3,11 @@ import { splitVendorChunkPlugin } from 'vite';
 
 export default {
     // config options
+    build: {
+        commonjsOptions: {
+            include: ["/node_modules"]
+        }
+    },
     server: {
         https: true,
         port: 3000,
