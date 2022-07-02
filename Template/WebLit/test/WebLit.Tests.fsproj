@@ -11,4 +11,7 @@
   <ItemGroup>
     <PackageReference Include="Fable.Lit.Test" Version="1.3.1" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="6.0.4" />
+  </ItemGroup>
 </Project>

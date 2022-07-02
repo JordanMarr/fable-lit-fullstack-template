@@ -6,29 +6,29 @@ open Expect.Elmish
 open WebTestRunner
 open Lit.Test
 open Lit.Elmish
-open WebApi.TodoMVC
-open Lit.TodoMVC.Todos.Elmish
+//open WebApi.TodoMVC
+//open Lit.TodoMVC.Todos.Elmish
 
-Todos.register()
+//Todos.register()
 
 describe "Todo" <| fun () ->
     // Test the Elmish app without UI
-    it "TodoApp Elmish" <| fun () -> promise {
-        // Start the Elmish app without UI and get a handler
-        // to access the model and dispatch messages
-        use app =
-            Program.mkHidden init update
-            |> Program.test
+    //it "TodoApp Elmish" <| fun () -> promise {
+    //    // Start the Elmish app without UI and get a handler
+    //    // to access the model and dispatch messages
+    //    use app =
+    //        Program.mkHidden init update
+    //        |> Program.test
 
-        AddNewTodo "Elmish test" |> app.Dispatch
-        app.Model.Todos
-        |> Expect.find "new todo" (fun t -> t.Description = "Elmish test")
-        |> Expect.isFalse "completed" (fun t -> t.Completed)
-    }
+    //    AddNewTodo "Elmish test" |> app.Dispatch
+    //    app.Model.Todos
+    //    |> Expect.find "new todo" (fun t -> t.Description = "Elmish test")
+    //    |> Expect.isFalse "completed" (fun t -> t.Completed)
+    //}
 
     // Test the UI (running Elmish underneath)
     it "TodoApp UI" <| fun () -> promise {
-        use! container = render_html $"<todo-app></todo-app>"
+        use! container = render_html $"<my-app></my-app>"
 
         let el = container.El
         let newTodo = "Elmish test"

@@ -2,9 +2,7 @@
   "private": true,
   "scripts": {
     "install": "dotnet tool restore",
-	"prebuild": "IF NOT EXIST ..\\WebApi\\wwwroot\\ mkdir ..\\WebApi\\wwwroot\\",
     "build": "dotnet fable src -o build/client --run vite build",	
-    "postbuild": "del /s /q ..\\WebApi\\wwwroot\\* && xcopy dist\\* ..\\WebApi\\wwwroot\\ /i /y /e",
     "start": "dotnet fable watch src -s -o build/client --run vite",
     "test": "dotnet fable test -o build/test --run web-test-runner build/test/*Test.js --node-resolve",
     "test:watch": "dotnet fable watch test -o build/test --run web-test-runner build/test/*Test.js --node-resolve --watch",
