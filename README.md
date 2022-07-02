@@ -2,7 +2,7 @@
 A SAFE-style template with Fable.Lit, Fable.Remoting and Giraffe
 
 Based on:
-https://github.com/Zaid-Ajaj/SAFE.Simplified
+https://github.com/Zaid-Ajaj/SAFE.Simplified (thank you Zaid!)
 
 ## Features
 
@@ -21,19 +21,25 @@ https://github.com/Zaid-Ajaj/SAFE.Simplified
 * Environment specific settings files already configured
 * Serilog logger
 
-### Build.fsproj (FAKE)
-* Zaid's awesome FAKE build setup!
+## Build
 
-## How to Run
+### Initial Restore
+To do the initial restore of both the WebApi and WebLit projects:
+* :open_file_folder: Build: `dotnet run Restore`
 
-### Debug
-* Launch the WebApi project: `dotnet run`
-* Launch the WebLit project: `npm start`
+Or you can manually restore each:
+* :open_file_folder: WebApi: `dotnet restore`
+* :open_file_folder: WebLit: `npm install`
 
-### Release
-* Launch WebApi project: `dotnet run -c Release`
-* Launch WebLit project: `npm run build` 
-  * (postbuild task will copy `dist` output to `WebApi/wwwroot`)
+### Run in Debug Mode
+* :open_file_folder: WebApi: `dotnet watch` or `dotnet run`
+* :open_file_folder: WebLit: `npm start`
+
+### Package for in Release Mode
+To build WebApi and WebLit in Release mode and output to the `Template/dist` folder:
+* :open_file_folder: Build: 
+  * With tests (WebApi and WebLit): `dotnet run Pack`
+  * Skip tests: `dotnet run PackNoTests`
 
 ## Notes
 Be sure to install the appropriate IDE extension for html and css syntax coloring within your `html $""" """` templates!
