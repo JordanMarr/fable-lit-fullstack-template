@@ -103,7 +103,11 @@ Target.create "InstallAnalyzers" <| fun _ ->
         // { Name = "NpgsqlFSharpAnalyzer"; Version = "3.8.0" }
     ]
 
+Target.create "Restore" <| fun _ ->
+    printfn "Restoring Server and Client"
+
 let dependencies = [
+    "RestoreServer" ==> "RestoreClient" ==> "Restore"
     "RestoreServer" ==> "Server" ==> "ServerTests"
     "RestoreClient" ==> "Client"
     "RestoreClient" ==> "ClientTests"
@@ -120,8 +124,7 @@ let main (args: string[]) =
         match args with
         | [| "RunDefaultOr" |] -> Target.runOrDefault "Default"
         | [| "RunDefaultOr"; target |] -> Target.runOrDefault target
-        | [| "PackNoTests" |] -> Target.runOrDefault "PackNoTests"
-        | [| "Pack" |] -> Target.runOrDefault "Pack"
+        | [| singleArg |] -> Target.runOrDefault singleArg
         | manyArguments ->
             Console.Write("[Interactive Mode] Run build target: ")
             let target = Console.ReadLine()
