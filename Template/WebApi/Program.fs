@@ -64,7 +64,7 @@ let webApp =
 
 
 #if DEBUG
-        GET >=> htmlView Views.devMode
+        GET >=> redirectTo true "https://localhost:3000"
 #else
         GET >=> htmlFile "wwwroot/index.html"
 #endif
