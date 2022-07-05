@@ -32,17 +32,18 @@ Or you can manually restore each:
 * :open_file_folder: WebLit: `npm install`
 
 ### Run in Debug Mode
-* :open_file_folder: WebApi: `dotnet watch` or `dotnet run`
+* :open_file_folder: WebApi: `dotnet watch`
 * :open_file_folder: WebLit: `npm start`
 
-### Package for in Release Mode
+### Pack in Release Mode
 To build WebApi and WebLit in Release mode and output to the `Template/dist` folder:
-* :open_file_folder: Build: 
-  * With tests (WebApi and WebLit): `dotnet run Pack`
-  * Skip tests: `dotnet run PackNoTests`
+* :open_file_folder: Build: `dotnet run Pack`
+or
+* :open_file_folder: Build: `dotnet run PackNoTests`
 
-## Notes
+## Highlight Extension
 Be sure to install the appropriate IDE extension for html and css syntax coloring within your `html $""" """` templates!
+
 If using VS Code:
 * [Highlight HTML/SQL Templates in F#](https://marketplace.visualstudio.com/items?itemName=alfonsogarciacaro.vscode-template-fsharp-highlight)
 
