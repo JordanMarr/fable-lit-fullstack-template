@@ -19,3 +19,4 @@ analyzers
 deploy
 .local-chromium
 NPGSQL_FSHARP
+.build

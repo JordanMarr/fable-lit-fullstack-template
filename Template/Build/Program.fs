@@ -18,13 +18,14 @@ let webLit =  path [ solutionRoot; "WebLit" ]
 let webApiTests = path [ solutionRoot; "WebApi.Tests" ]
 let webLitTests = path [ solutionRoot; "WebLit.Tests" ]
 let webLitDist = path [ webLit; "dist" ]
-let dist = path [ solutionRoot; "dist" ]
+let build = path [ solutionRoot; ".build" ]
+let dist = path [ solutionRoot; build; "dist" ]
 let clientOutput = path [ dist; "wwwroot" ]
 
 Target.create "Clean" <| fun _ ->
     // sometimes files are locked by VS for a bit, retry again until they can be deleted
     Retry.retry 5 <| fun _ -> Shell.deleteDirs [
-        dist
+        build
         path [ webApi; "bin" ]
         path [ webApi; "obj" ]
         path [ webApiTests; "bin" ]
@@ -89,32 +90,33 @@ Target.create "PackNoTests" <| fun _ ->
     match Shell.Exec(Tools.dotnet, sprintf "publish --configuration Release --output %s" dist, webApi) with
     | 0 ->
         match Shell.Exec(Tools.npm, "run build", webLit) with
-        | 0 ->
-            Shell.copyDir clientOutput webLitDist (fun file -> true)
-        | _ ->
-            failwith "Failed to build the client project"
+        | 0 -> Shell.copyDir clientOutput webLitDist (fun file -> true)
+        | _ -> failwith "Failed to build the client project"
     | _ ->
         failwith "Failed to build the server project"
-
-Target.create "InstallAnalyzers" <| fun _ ->
-    let analyzersPath = path [ solutionRoot; "analyzers" ]
-    Analyzers.install analyzersPath [
-        // Add analyzer entries to download
-        // { Name = "NpgsqlFSharpAnalyzer"; Version = "3.8.0" }
-    ]
 
 Target.create "Restore" <| fun _ ->
     printfn "Restoring Server and Client"
 
+Target.create "AzDeployWeb" <| fun _ -> 
+    // Zip Web App
+    let distZip = path [ solutionRoot; build; "dist.zip"]
+    System.IO.Compression.ZipFile.CreateFromDirectory(dist, distZip)
+    
+    // Azure Web App Service Deployment
+    let azAccountGuid = ""
+    let azResourceGroup = ""
+    let azWebAppName = ""    
+    Shell.Exec(Tools.az, $"account set -s {azAccountGuid}") |> ignore
+    Shell.Exec(Tools.az, $"webapp deploy --resource-group {azResourceGroup} --name {azWebAppName} --src-path {distZip}") |> ignore
+
 let dependencies = [
-    "RestoreServer" ==> "RestoreClient" ==> "Restore"
-    "RestoreServer" ==> "Server" ==> "ServerTests"
-    "RestoreClient" ==> "Client"
-    "RestoreClient" ==> "ClientTests"
-    "ServerTests" ==> "Pack"
-    "ClientTests" ==> "Pack"
-    "Server" ==> "Client" ==> "PackNoTests"
-    "RestoreClient" ==> "PackNoTests"
+    "Clean" ==> "RestoreServer" ==> "RestoreClient" ==> "Restore"
+    "Clean" ==> "RestoreServer" ==> "Server" ==> "ServerTests"
+    "Clean" ==> "RestoreClient" ==> "Client" ==> "ClientTests"
+    "Clean" ==> "ServerTests" ==> "ClientTests" ==> "Pack"
+    "Clean" ==> "Server" ==> "Client" ==> "PackNoTests"
+    "PackNoTests" ==> "AzDeployWeb" // Deploy Web App to Azure
 ]
 
 [<EntryPoint>]
