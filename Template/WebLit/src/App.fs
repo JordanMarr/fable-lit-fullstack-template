@@ -73,4 +73,5 @@ let MyApp() =
                 | CatInfo -> CatInfoPage.Page()
             }
         </main>
+        <footer></footer>
         """

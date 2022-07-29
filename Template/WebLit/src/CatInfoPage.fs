@@ -55,7 +55,7 @@ let Page() =
             <sl-breadcrumb-item>Cat Info</sl-breadcrumb-item>
         </sl-breadcrumb>
 
-        <div style="width: 600px">
+        <div id="cat-info-page">
             {ValidationSummary(model.Validation)}
 
             <div class="{hideIf (not model.Saved)}">
