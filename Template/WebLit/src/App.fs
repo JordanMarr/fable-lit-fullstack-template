@@ -60,7 +60,7 @@ let MyApp() =
                 View Cat Facts
             </sl-button>
             <sl-button href="#" @click={fun _ -> router.navigate("/cat-info")} variant={navLinkIsActive CatInfo} outline>
-                <bs-icon src="info" color="white" size="14px"></bs-icon>
+                <bs-icon src="info-circle-fill" color="white" size="14px"></bs-icon>
                 Cat Info Form
             </sl-button>
         </nav>

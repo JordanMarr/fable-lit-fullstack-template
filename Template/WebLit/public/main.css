@@ -62,7 +62,6 @@ footer {
 
 /* VALIDATION */
 sl-input[invalid]::part(base) {
-    background-color: #ffecef;
     border-color: red;
 }
 
