@@ -3,7 +3,6 @@ module WebLit.App
 open Elmish
 open Lit
 open Lit.Elmish
-open Utils
 
 Registrations.registerComponents()
 let router = Grapnel.initRouter()

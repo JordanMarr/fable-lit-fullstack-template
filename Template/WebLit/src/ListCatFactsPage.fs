@@ -6,7 +6,6 @@ open Lit
 open Lit.Elmish
 open Shared.Api
 open Fable.Core.JsInterop
-open Utils
 
 type Model = 
     {
@@ -61,7 +60,7 @@ let Page() =
         html $"""
         <tr>
             <td>
-                <sl-button size="small" @click={Ev (fun e -> Utils.Grapnel.navigate($"/cat-fact/{catFact.Fact}"))}>View</sl-button>
+                <sl-button size="small" @click={Ev (fun e -> Grapnel.navigate($"/cat-fact/{catFact.Fact}"))}>View</sl-button>
             </td>
             <td>{catFact.Fact}</td>
         </tr>

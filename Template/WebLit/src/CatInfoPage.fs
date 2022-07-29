@@ -7,7 +7,7 @@ open Fable.Core.JsInterop
 open Elmish
 open Lit
 open Lit.Elmish
-open Utils
+open Ctrls
 
 type Model = 
     {
@@ -89,8 +89,7 @@ let Page() =
                     <sl-input 
                         label="Last Vet Checkup" 
                         class="label-on-left"
-                        type="date"
-                        .pattern="MM/dd/yyyy"
+                        type="date"                        
                         .invalid={model.Validation.HasErrors(nameof model.Cat.LastVetCheckup)}
                         .value={model.Cat.LastVetCheckup.ToString("yyyy-MM-dd")}
                         @sl-change={Ev (fun e -> 
