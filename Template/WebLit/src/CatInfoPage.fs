@@ -71,7 +71,6 @@ let Page() =
 
                     <sl-input 
                         label="Cat Name" 
-                        class="label-on-left"
                         .value={model.Cat.Name}
                         .invalid={model.Validation.HasErrors(nameof model.Cat.Name)}
                         @sl-change={Ev (fun e -> SetCat { model.Cat with Name = e.target.Value } |> dispatch)}>
@@ -79,7 +78,6 @@ let Page() =
 
                     <sl-input 
                         label="Age" 
-                        class="label-on-left"
                         type="number"
                         .invalid={model.Validation.HasErrors(nameof model.Cat.Age)}
                         .value={model.Cat.Age}
@@ -88,7 +86,6 @@ let Page() =
 
                     <sl-input 
                         label="Last Vet Checkup" 
-                        class="label-on-left"
                         type="date"                        
                         .invalid={model.Validation.HasErrors(nameof model.Cat.LastVetCheckup)}
                         .value={model.Cat.LastVetCheckup.ToString("yyyy-MM-dd")}
