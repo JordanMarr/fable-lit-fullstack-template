@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Validation.fs" />
     <Compile Include="Api.fs" />
   </ItemGroup>
 

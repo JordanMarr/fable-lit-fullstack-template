@@ -50,3 +50,22 @@ nav {
         color: darkgray;
         font-style: italic;
     }
+
+.hide {
+    display: none;
+}
+
+
+/* VALIDATION */
+sl-input[invalid]::part(base) {
+    background-color: #ffecef;
+    border-color: red;
+}
+
+ul.validation-summary {
+    color: darkred;
+    background-color: #ffecef;
+    padding: 10px 40px;
+    border: 1px solid #ffb3b3;
+    border-radius: 5px;
+}

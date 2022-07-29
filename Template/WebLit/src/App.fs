@@ -12,6 +12,7 @@ type Page =
     | Welcome
     | ListCatFacts
     | ViewCatFact of fact: string
+    | CatInfo
 
 type Model = { CurrentPage: Page }
 
@@ -46,6 +47,7 @@ let MyApp() =
         router.get("/cat-fact/:fact", fun (req: Req<{| fact: string |}>) -> 
             dispatch (SetCurrentPage (Page.ViewCatFact req.``params``.fact))
         )
+        router.get("/cat-info", fun _ -> dispatch (SetCurrentPage CatInfo))
     )
     
     html $"""
@@ -58,6 +60,10 @@ let MyApp() =
                 <bs-icon src="list-ul" color="white" size="14px"></bs-icon>
                 View Cat Facts
             </sl-button>
+            <sl-button href="#" @click={fun _ -> router.navigate("/cat-info")} variant={navLinkIsActive CatInfo} outline>
+                <bs-icon src="info" color="white" size="14px"></bs-icon>
+                Cat Info Form
+            </sl-button>
         </nav>
         <main style="margin: 20px;">
             {
@@ -65,6 +71,7 @@ let MyApp() =
                 | Welcome -> WelcomePage.Page()
                 | ListCatFacts -> ListCatFactsPage.Page()
                 | ViewCatFact fact -> ViewCatFactPage.Page(fact)
+                | CatInfo -> CatInfoPage.Page()
             }
         </main>
         """

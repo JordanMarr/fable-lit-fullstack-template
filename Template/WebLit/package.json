@@ -14,7 +14,8 @@
     "lit": "^2.0.0",
     "grapnel": "^0.7.6",
     "@fluentui/web-components": "^2.5.0",
-    "@shoelace-style/shoelace": "^2.0.0-beta.74"
+    "@shoelace-style/shoelace": "^2.0.0-beta.74",
+    "date-fns": "2.16.1"
   },
   "devDependencies": {
     "@web/test-runner": "^0.13.18",

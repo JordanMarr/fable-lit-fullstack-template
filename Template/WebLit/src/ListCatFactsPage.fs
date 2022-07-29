@@ -6,6 +6,7 @@ open Lit
 open Lit.Elmish
 open Shared.Api
 open Fable.Core.JsInterop
+open Utils
 
 type Model = 
     {
@@ -68,6 +69,7 @@ let Page() =
 
     html $"""
         <sl-breadcrumb style="margin: 10px;">
+            <sl-breadcrumb-item href="#" @click={fun () -> Grapnel.navigate ("/")}>Home</sl-breadcrumb-item>
             <sl-breadcrumb-item>Cat Facts</sl-breadcrumb-item>
         </sl-breadcrumb>
 

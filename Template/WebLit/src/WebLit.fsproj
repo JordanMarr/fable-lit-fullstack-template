@@ -6,6 +6,7 @@
     <Compile Include="Server.fs" />
     <Compile Include="Registrations.fs" />
     <Compile Include="Utils.fs" />
+    <Compile Include="CatInfoPage.fs" />
     <Compile Include="ViewCatFactPage.fs" />
     <Compile Include="ListCatFactsPage.fs" />
     <Compile Include="WelcomePage.fs" />
