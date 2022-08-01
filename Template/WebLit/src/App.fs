@@ -3,6 +3,7 @@ module WebLit.App
 open Elmish
 open Lit
 open Lit.Elmish
+open UseContextHook
 
 Registrations.registerComponents()
 let router = Grapnel.initRouter()
@@ -33,6 +34,7 @@ let update msg model =
 let MyApp() =
     let _ = LitElement.init(fun cfg -> cfg.useShadowDom <- false)
     let model, dispatch = Hook.useElmish(init, update)
+    let ctx = Hook.useContext(AppContext.store)
     
     let navLinkIsActive page = 
         match model.CurrentPage, page with
@@ -63,6 +65,11 @@ let MyApp() =
                 <bs-icon src="info-circle-fill" color="white" size="14px"></bs-icon>
                 Cat Info Form
             </sl-button>
+            
+            <div style="float: right; padding: 10px">  
+                <bs-icon src="person-fill" color="white" size="18px"></bs-icon>
+                {ctx.Username}
+            </div>
         </nav>
         <main style="margin: 20px;">
             {

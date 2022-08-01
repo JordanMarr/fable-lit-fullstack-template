@@ -3,6 +3,8 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="UseContextHook.fs" />
+    <Compile Include="AppContext.fs" />
     <Compile Include="Server.fs" />
     <Compile Include="Registrations.fs" />
     <Compile Include="Grapnel.fs" />
@@ -17,6 +19,7 @@
     <PackageReference Include="Fable.Lit" Version="1.4.1" />
     <PackageReference Include="Fable.Lit.Elmish" Version="1.4.0" />
     <PackageReference Include="Fable.Remoting.Client" Version="7.19.0" />
+    <PackageReference Include="Fable.Store" Version="1.0.0-beta-005" />
     <PackageReference Include="Thoth.Json" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
