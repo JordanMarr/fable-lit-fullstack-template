@@ -1,11 +1,10 @@
 ﻿module WebLit.UseContextHook
 
 open Lit
-open Fable
 open System
 
 type UseContextStore<'Model>(store: Fable.IStore<'Model>, defaultModel: 'Model) =
-    member val Current = defaultModel with get,set
+    member val internal Current = defaultModel with get,set
     interface Fable.IStore<'Model> with
         member this.Dispose() = store.Dispose()
         member this.Update(f) = store.Update(f)

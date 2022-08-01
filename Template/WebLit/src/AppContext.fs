@@ -1,4 +1,4 @@
-﻿module AppContext
+﻿module WebLit.AppContext
 
 open ElmishStore
 
@@ -21,5 +21,5 @@ let update (msg: Msg) (model: Model) =
 let private dispose (m: Model) = 
     printfn "Disposing context"
     
-let context = WebLit.UseContextHook.makeElmishContext init update dispose
+let context = UseContextHook.makeElmishContext init update dispose
 let store, dispatch = context ()
