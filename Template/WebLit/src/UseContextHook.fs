@@ -10,10 +10,10 @@ type UseContextStore<'Model>(store: Fable.IStore<'Model>, defaultModel: 'Model) 
         member this.Update(f) = store.Update(f)
         member this.Subscribe(observer: IObserver<'Model>) = store.Subscribe(observer)
 
-let makeElmishContext init update dispose props = 
-    let context = Store.makeElmish init update dispose props
+let makeElmishContext init update = 
+    let dispose = fun _ -> printfn "store.Dispose()"
+    let store, dispatch = Store.makeElmish init update dispose ()
     let defaultModel = init () |> fst
-    let store, dispatch = context
     let ucStore = new UseContextStore<'Model>(store, defaultModel)
     ucStore, dispatch
 
