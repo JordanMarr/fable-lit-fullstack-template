@@ -20,7 +20,6 @@ type HookContext with
                 // Susbscribe
                 let initialModel, subscription = 
                     Store.subscribeImmediate (fun newModel -> 
-                        printfn "Setting model..."
                         setModelRef.Value newModel
                     ) store 
 
