@@ -5,7 +5,7 @@ open Elmish
 open Lit
 open Lit.Elmish
 open Shared.Api
-open UseContextHook
+open UseContext
 
 [<HookComponent>]
 let Page() = 

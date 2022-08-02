@@ -3,7 +3,7 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="UseContextHook.fs" />
+    <Compile Include="UseContext.fs" />
     <Compile Include="AppContext.fs" />
     <Compile Include="Server.fs" />
     <Compile Include="Registrations.fs" />
