@@ -10,7 +10,7 @@ open UseStore
 [<HookComponent>]
 let Page() = 
     let ctx = Hook.useStore(AppContext.store)
-
+    
     html $"""
         <h1>Welcome to Cat Facts!</h1>
         <sl-input 
