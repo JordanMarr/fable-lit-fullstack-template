@@ -17,7 +17,7 @@ type HookContext with
         let model, setModel = 
             ctx.useState(fun () ->            
 
-                printfn "Susbscribing..."
+                // Susbscribe
                 let initialModel, subscription = 
                     Store.subscribeImmediate (fun newModel -> 
                         printfn "Setting model..."
@@ -25,13 +25,7 @@ type HookContext with
                     ) store 
 
                 // Assign subscription ref (to be disposed with component)                
-                //subscriptionRef.Value <- subscription
-                subscriptionRef.Value <- 
-                    { new IDisposable with 
-                        member _.Dispose() = 
-                            printf "Disposing subscription" 
-                            subscription.Dispose()
-                    }
+                subscriptionRef.Value <- subscription
 
                 initialModel
             )
