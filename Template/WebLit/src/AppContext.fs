@@ -18,7 +18,6 @@ let update (msg: Msg) (model: Model) =
     | SetUsername username -> 
         { model with Username = username }, Cmd.none
 
-let dispose (model: Model) = 
-    printfn "Disposing"
+let dispose _ = ()
 
 let store, dispatch = Store.makeElmish init update dispose ()
