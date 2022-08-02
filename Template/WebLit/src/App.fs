@@ -34,7 +34,7 @@ let update msg model =
 let MyApp() =
     let _ = LitElement.init(fun cfg -> cfg.useShadowDom <- false)
     let model, dispatch = Hook.useElmish(init, update)
-    let ctx = Hook.useContext(AppContext.store)
+    let ctx = Hook.useStore(AppContext.store)
     
     let navLinkIsActive page = 
         match model.CurrentPage, page with

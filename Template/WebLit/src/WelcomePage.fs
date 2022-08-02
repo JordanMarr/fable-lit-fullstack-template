@@ -9,7 +9,7 @@ open UseContextHook
 
 [<HookComponent>]
 let Page() = 
-    let ctx = Hook.useContext(AppContext.store)
+    let ctx = Hook.useStore(AppContext.store)
 
     html $"""
         <h1>Welcome to Cat Facts!</h1>

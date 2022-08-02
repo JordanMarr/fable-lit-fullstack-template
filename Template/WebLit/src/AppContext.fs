@@ -18,4 +18,7 @@ let update (msg: Msg) (model: Model) =
     | SetUsername username -> 
         { model with Username = username }, Cmd.none
 
-let store, dispatch = UseContextHook.makeElmishContext init update
+let dispose (model: Model) = 
+    printfn "Disposing"
+
+let store, dispatch = Store.makeElmish init update dispose ()
