@@ -5,6 +5,8 @@ open Fable.Core
 open Fable.Core.JsInterop
 open Browser.Types
 
+let register () = ()
+
 [<HookComponent>]
 let ValidationSummary(validation: Shared.Validation.ValidationResult) =
     let renderError (error: Shared.Validation.Error) = html $"<li>{error.ErrorMessage}</li>"

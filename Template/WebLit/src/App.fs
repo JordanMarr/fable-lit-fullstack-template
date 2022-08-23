@@ -6,6 +6,7 @@ open Lit.Elmish
 open UseStore
 
 Registrations.registerComponents()
+Ctrls.register()
 let router = Grapnel.initRouter()
 
 type Page = 
