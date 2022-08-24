@@ -3,7 +3,7 @@ module WebLit.App
 open Elmish
 open Lit
 open Lit.Elmish
-open UseStore
+open LitStore
 
 Registrations.registerComponents()
 Ctrls.register()
