@@ -17,5 +17,6 @@ let Page() =
             style="width: 300px;"
             label="Please enter a username:"
             value={ctx.Username} 
-            @sl-change={Ev (fun e -> AppContext.dispatch (AppContext.SetUsername e.target.Value))}></sl-input>
+            @sl-change={Ev (fun e -> AppContext.dispatch (AppContext.SetUsername e.target.Value))}>
+        </sl-input>
         """
