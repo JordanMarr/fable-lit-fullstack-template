@@ -6,14 +6,15 @@ open Lit
 open Lit.Elmish
 open Shared.Api
 open Ctrls
+open Router
 
 [<HookComponent>]
 let Page (fact: string) =
     html
         $"""
         <sl-breadcrumb style="margin: 10px;">
-            <sl-breadcrumb-item href="#" @click={fun () -> Grapnel.navigate ("/")}>Home</sl-breadcrumb-item>
-            <sl-breadcrumb-item href="#" @click={fun () -> Grapnel.navigate ("/cat-facts")}>Cat Facts</sl-breadcrumb-item>
+            <sl-breadcrumb-item href="#" @click={fun () -> Router.navigatePath("/")}>Home</sl-breadcrumb-item>
+            <sl-breadcrumb-item href="#" @click={fun () -> Router.navigatePath("/cat-facts")}>Cat Facts</sl-breadcrumb-item>
             <sl-breadcrumb-item style="font-weight: bold;">Fact</sl-breadcrumb-item>
         </sl-breadcrumb>
 
@@ -28,7 +29,7 @@ let Page (fact: string) =
           <small>Meow!</small>
 
           <div slot="footer">
-            <sl-button variant="primary" pill @click={Ev (fun e -> Grapnel.navigate("/cat-facts"))}>Tell me more!!</sl-button>            
+            <sl-button variant="primary" pill @click={Ev (fun e -> Router.navigatePath("/cat-facts"))}>Tell me more!!</sl-button>            
           </div>
         </sl-card>
         """

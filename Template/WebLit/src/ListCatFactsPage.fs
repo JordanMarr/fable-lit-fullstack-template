@@ -6,6 +6,7 @@ open Lit
 open Lit.Elmish
 open Shared.Api
 open Fable.Core.JsInterop
+open Router
 
 type Model = 
     {
@@ -60,7 +61,7 @@ let Page() =
         html $"""
         <tr>
             <td>
-                <sl-button size="small" @click={Ev (fun e -> Grapnel.navigate($"/cat-fact/{catFact.Fact}"))}>View</sl-button>
+                <sl-button size="small" href="#" @click={fun _ -> Router.navigatePath($"/cat-fact/{catFact.Fact}")}>View</sl-button>
             </td>
             <td>{catFact.Fact}</td>
         </tr>
@@ -68,7 +69,7 @@ let Page() =
 
     html $"""
         <sl-breadcrumb style="margin: 10px;">
-            <sl-breadcrumb-item href="#" @click={fun () -> Grapnel.navigate ("/")}>Home</sl-breadcrumb-item>
+            <sl-breadcrumb-item href="#" @click={fun () -> Router.navigatePath("/")}>Home</sl-breadcrumb-item>
             <sl-breadcrumb-item>Cat Facts</sl-breadcrumb-item>
         </sl-breadcrumb>
 

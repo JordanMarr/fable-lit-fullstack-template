@@ -4,32 +4,36 @@ open Elmish
 open Lit
 open Lit.Elmish
 open LitStore
+open Router
 
 Registrations.registerComponents()
 Ctrls.register()
-let router = Grapnel.initRouter()
 
-type Page = 
-    | Welcome
-    | ListCatFacts
-    | ViewCatFact of fact: string
-    | CatInfo
-
-type Model = { CurrentPage: Page }
+type Model = { CurrentPath: string list }
 
 let init () = 
     { 
-        CurrentPage = Welcome 
+        CurrentPath = Router.currentPath ()
     }, Cmd.none
 
 type Msg = 
-    | SetCurrentPage of Page
+    | SetCurrentPath of string list
 
 let update msg model = 
     match msg with
-    | SetCurrentPage page ->
-        { model with CurrentPage = page }, Cmd.none
+    | SetCurrentPath path ->
+        { model with CurrentPath = path }, Cmd.none
 
+let getRoutedPage path = 
+    printfn "getRoutedPage"
+    match path with
+    | [ ] -> WelcomePage.Page()
+    | [ "cat-fact"; fact ] -> 
+        printfn "Page: cat-fact"
+        ViewCatFactPage.Page(fact)
+    | [ "cat-facts" ] -> ListCatFactsPage.Page()
+    | [ "cat-info" ] -> CatInfoPage.Page()
+    | _ -> html $"<h1>Page not found.</h1>"
 
 [<LitElement("my-app")>]
 let MyApp() =
@@ -37,32 +41,25 @@ let MyApp() =
     let model, dispatch = Hook.useElmish(init, update)
     let ctx = Hook.useStore(AppContext.store)
     
-    let navLinkIsActive page = 
-        match model.CurrentPage, page with
-        | ViewCatFact _, ListCatFacts -> "primary"
+    let navLinkIsActive path = 
+        //printfn $"current: {model.CurrentPath}; path: {path}"
+        match model.CurrentPath, path with
+        //| "cat-facts" :: _, "cat-fact" :: _ -> "primary"
         | c, p when c = p -> "primary"
+        | head1 :: _, head2 :: _ when head1 = head2 -> "primary"
         | _ -> "default"
 
-    Hook.useEffectOnce(fun () -> 
-        router.get("/", fun _ -> dispatch (SetCurrentPage Welcome))
-        router.get("/cat-facts", fun _ -> dispatch (SetCurrentPage ListCatFacts))
-        router.get("/cat-fact/:fact", fun (req: Req<{| fact: string |}>) -> 
-            dispatch (SetCurrentPage (Page.ViewCatFact req.``params``.fact))
-        )
-        router.get("/cat-info", fun _ -> dispatch (SetCurrentPage CatInfo))
-    )
-    
     html $"""
         <nav>
-            <sl-button href="#" @click={fun _ -> router.navigate("/")} variant={navLinkIsActive Welcome} outline>
+            <sl-button href="#" @click={fun _ -> Router.navigatePath("/")} variant={navLinkIsActive []} outline>
                 <bs-icon src="house" color="white" size="14px"></bs-icon>
                 Home
             </sl-button>
-            <sl-button href="#" @click={fun _ -> router.navigate("/cat-facts")} variant={navLinkIsActive ListCatFacts} outline>
+            <sl-button href="#" @click={fun _ -> Router.navigatePath("/cat-facts")} variant={navLinkIsActive ["cat-facts"]} outline>
                 <bs-icon src="list-ul" color="white" size="14px"></bs-icon>
                 View Cat Facts
             </sl-button>
-            <sl-button href="#" @click={fun _ -> router.navigate("/cat-info")} variant={navLinkIsActive CatInfo} outline>
+            <sl-button href="#" @click={fun _ -> Router.navigatePath("/cat-info")} variant={navLinkIsActive ["cat-info"]} outline>
                 <bs-icon src="info-circle-fill" color="white" size="14px"></bs-icon>
                 Cat Info Form
             </sl-button>
@@ -74,11 +71,14 @@ let MyApp() =
         </nav>
         <main style="margin: 20px;">
             {
-                match model.CurrentPage with
-                | Welcome -> WelcomePage.Page()
-                | ListCatFacts -> ListCatFactsPage.Page()
-                | ViewCatFact fact -> ViewCatFactPage.Page(fact)
-                | CatInfo -> CatInfoPage.Page()
+                let page = getRoutedPage model.CurrentPath
+
+                Hook.router [
+                    router.pathMode
+                    router.onUrlChanged (SetCurrentPath >> dispatch)
+                    router.children page
+                ]
+                
             }
         </main>
         <footer></footer>

@@ -6,7 +6,7 @@
     <Compile Include="AppContext.fs" />
     <Compile Include="Server.fs" />
     <Compile Include="Registrations.fs" />
-    <Compile Include="Grapnel.fs" />
+    <Compile Include="Router.fs" />
     <Compile Include="Ctrls.fs" />
     <Compile Include="CatInfoPage.fs" />
     <Compile Include="ViewCatFactPage.fs" />
