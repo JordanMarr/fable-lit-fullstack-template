@@ -25,7 +25,6 @@ let update msg model =
         { model with CurrentPath = path }, Cmd.none
 
 let getRoutedPage path = 
-    printfn "getRoutedPage"
     match path with
     | [ ] -> WelcomePage.Page()
     | [ "cat-fact"; fact ] -> ViewCatFactPage.Page(fact)
