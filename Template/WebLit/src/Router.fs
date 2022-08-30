@@ -162,6 +162,7 @@ module Router =
         then window.onhashchange <- onChange
         else window.onpopstate <- onChange
 
+        window.onload <- onChange
         //React.useWindowListener.on(customNavigationEvent, onChange)
 
         match input.application with

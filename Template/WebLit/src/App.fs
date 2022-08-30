@@ -28,9 +28,7 @@ let getRoutedPage path =
     printfn "getRoutedPage"
     match path with
     | [ ] -> WelcomePage.Page()
-    | [ "cat-fact"; fact ] -> 
-        printfn "Page: cat-fact"
-        ViewCatFactPage.Page(fact)
+    | [ "cat-fact"; fact ] -> ViewCatFactPage.Page(fact)
     | [ "cat-facts" ] -> ListCatFactsPage.Page()
     | [ "cat-info" ] -> CatInfoPage.Page()
     | _ -> html $"<h1>Page not found.</h1>"
@@ -42,9 +40,7 @@ let MyApp() =
     let ctx = Hook.useStore(AppContext.store)
     
     let navLinkIsActive path = 
-        //printfn $"current: {model.CurrentPath}; path: {path}"
         match model.CurrentPath, path with
-        //| "cat-facts" :: _, "cat-fact" :: _ -> "primary"
         | c, p when c = p -> "primary"
         | head1 :: _, head2 :: _ when head1 = head2 -> "primary"
         | _ -> "default"
