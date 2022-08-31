@@ -169,23 +169,6 @@ module Router =
         | Some elem -> elem
         | None -> Lit.nothing
 
-    //let router = React.memo(fun (input: RouterProps) ->
-    //    let onChange = React.useCallbackRef(fun (ev: Event) ->
-    //        let urlChanged = Option.defaultValue ignore input.onUrlChanged
-    //        let routeMode = Option.defaultValue RouteMode.Hash input.hashMode
-
-    //        onUrlChange routeMode urlChanged ev)
-
-    //    if navigatorUserAgent.Contains "Trident" || navigatorUserAgent.Contains "MSIE"
-    //    then React.useWindowListener.onHashChange(onChange)
-    //    else React.useWindowListener.onPopState(onChange)
-
-    //    React.useWindowListener.on(customNavigationEvent, onChange)
-
-    //    match input.application with
-    //    | Some elem -> elem
-    //    | None -> Html.none)
-
 /// Defines a property for the `router` element
 type IRouterProperty = interface end
 
