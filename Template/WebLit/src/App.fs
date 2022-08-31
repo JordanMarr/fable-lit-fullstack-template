@@ -24,14 +24,6 @@ let update msg model =
     | SetCurrentPath path ->
         { model with CurrentPath = path }, Cmd.none
 
-let getRoutedPage path = 
-    match path with
-    | [ ] -> WelcomePage.Page()
-    | [ "cat-fact"; fact ] -> ViewCatFactPage.Page(fact)
-    | [ "cat-facts" ] -> ListCatFactsPage.Page()
-    | [ "cat-info" ] -> CatInfoPage.Page()
-    | _ -> html $"<h1>Page not found.</h1>"
-
 [<LitElement("my-app")>]
 let MyApp() =
     let _ = LitElement.init(fun cfg -> cfg.useShadowDom <- false)
@@ -41,7 +33,7 @@ let MyApp() =
     let navLinkIsActive path = 
         match model.CurrentPath, path with
         | c, p when c = p -> "primary"
-        | head1 :: _, head2 :: _ when head1 = head2 -> "primary"
+        | "cat-fact" :: _, "cat-facts" :: _ -> "primary"
         | _ -> "default"
 
     html $"""
@@ -66,14 +58,18 @@ let MyApp() =
         </nav>
         <main style="margin: 20px;">
             {
-                let page = getRoutedPage model.CurrentPath
-
-                Hook.router [
+                Lit.router [
                     router.pathMode
                     router.onUrlChanged (SetCurrentPath >> dispatch)
-                    router.children page
-                ]
-                
+                    router.children [ 
+                        match model.CurrentPath with
+                        | [ ] ->                    WelcomePage.Page()
+                        | [ "cat-facts" ] ->        ListCatFactsPage.Page()
+                        | [ "cat-fact"; fact ] ->   ViewCatFactPage.Page(fact)
+                        | [ "cat-info" ] ->         CatInfoPage.Page()
+                        | _ ->                      html $"<h1>Page not found.</h1>"
+                    ]
+                ]                
             }
         </main>
         <footer></footer>

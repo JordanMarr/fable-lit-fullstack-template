@@ -175,7 +175,7 @@ type IRouterProperty = interface end
 
 [<AutoOpen>]
 module LitExtension =
-    type Hook with
+    type Lit with
         /// Initializes the router as an element of the page and starts listening to URL changes.
         static member inline router (props: IRouterProperty list) =
             Router.router (unbox<Router.RouterProps> (createObj !!props))
@@ -212,7 +212,7 @@ type router =
     /// The content that is rendered inside where the `router` is placed. Usually this contains the root application but it could also be part of another root element.
     ///
     /// It will keep listening for URL changes as long as the `router` is rendered on screen somewhere.
-    //static member inline children (elements: TemplateResult list) : IRouterProperty = unbox ("application", React.fragment elements)
+    static member inline children (elements: TemplateResult list) : IRouterProperty = unbox ("application", Lit.ofList elements)
 
     /// Use # based routes (default)
     static member inline hashMode : IRouterProperty = unbox ("hashMode", RouteMode.Hash)
