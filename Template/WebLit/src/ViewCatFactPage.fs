@@ -13,8 +13,8 @@ let Page (fact: string) =
     html
         $"""
         <sl-breadcrumb style="margin: 10px;">
-            <sl-breadcrumb-item href="#" @click={fun () -> Router.navigatePath("/")}>Home</sl-breadcrumb-item>
-            <sl-breadcrumb-item href="#" @click={fun () -> Router.navigatePath("/cat-facts")}>Cat Facts</sl-breadcrumb-item>
+            <sl-breadcrumb-item @click={fun () -> Router.navigatePath("/")}>Home</sl-breadcrumb-item>
+            <sl-breadcrumb-item @click={fun () -> Router.navigatePath("/cat-facts")}>Cat Facts</sl-breadcrumb-item>
             <sl-breadcrumb-item style="font-weight: bold;">Fact</sl-breadcrumb-item>
         </sl-breadcrumb>
 

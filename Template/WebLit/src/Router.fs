@@ -154,6 +154,7 @@ module Router =
 
     let router (input: RouterProps) = 
         let onChange (e: Event) = 
+            printfn "onchange"
             let urlChanged = Option.defaultValue ignore input.onUrlChanged
             let routeMode = Option.defaultValue RouteMode.Hash input.hashMode
             onUrlChange routeMode urlChanged e
@@ -162,8 +163,7 @@ module Router =
         then window.onhashchange <- onChange
         else window.onpopstate <- onChange
 
-        window.onload <- onChange
-        //React.useWindowListener.on(customNavigationEvent, onChange)
+        window.onload <- fun e -> window.addEventListener(customNavigationEvent, onChange)
 
         match input.application with
         | Some elem -> elem

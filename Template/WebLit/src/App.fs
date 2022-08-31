@@ -46,15 +46,15 @@ let MyApp() =
 
     html $"""
         <nav>
-            <sl-button href="#" @click={fun _ -> Router.navigatePath("/")} variant={navLinkIsActive []} outline>
+            <sl-button @click={fun _ -> Router.navigatePath("/")} variant={navLinkIsActive []} outline>
                 <bs-icon src="house" color="white" size="14px"></bs-icon>
                 Home
             </sl-button>
-            <sl-button href="#" @click={fun _ -> Router.navigatePath("/cat-facts")} variant={navLinkIsActive ["cat-facts"]} outline>
+            <sl-button @click={fun _ -> Router.navigatePath("/cat-facts")} variant={navLinkIsActive ["cat-facts"]} outline>
                 <bs-icon src="list-ul" color="white" size="14px"></bs-icon>
                 View Cat Facts
             </sl-button>
-            <sl-button href="#" @click={fun _ -> Router.navigatePath("/cat-info")} variant={navLinkIsActive ["cat-info"]} outline>
+            <sl-button @click={fun _ -> Router.navigatePath("/cat-info")} variant={navLinkIsActive ["cat-info"]} outline>
                 <bs-icon src="info-circle-fill" color="white" size="14px"></bs-icon>
                 Cat Info Form
             </sl-button>
