@@ -163,7 +163,9 @@ module Router =
         then window.onhashchange <- onChange
         else window.onpopstate <- onChange
 
-        window.onload <- fun e -> window.addEventListener(customNavigationEvent, onChange)
+        window.onload <- fun e -> 
+            onChange e
+            window.addEventListener(customNavigationEvent, onChange)
 
         match input.application with
         | Some elem -> elem
