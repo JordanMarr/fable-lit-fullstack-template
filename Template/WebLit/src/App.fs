@@ -9,29 +9,14 @@ open Router
 Registrations.registerComponents()
 Ctrls.register()
 
-type Model = { CurrentPath: string list }
-
-let init () = 
-    { 
-        CurrentPath = Router.currentPath ()
-    }, Cmd.none
-
-type Msg = 
-    | SetCurrentPath of string list
-
-let update msg model = 
-    match msg with
-    | SetCurrentPath path ->
-        { model with CurrentPath = path }, Cmd.none
-
 [<LitElement("my-app")>]
 let MyApp() =
     let _ = LitElement.init(fun cfg -> cfg.useShadowDom <- false)
-    let model, dispatch = Hook.useElmish(init, update)
     let ctx = Hook.useStore(AppContext.store)
+    let path = Hook.useRouter(RouteMode.Path)
     
-    let navLinkIsActive path = 
-        match model.CurrentPath, path with
+    let navLinkIsActive pathToCheck = 
+        match path, pathToCheck with
         | c, p when c = p -> "primary"
         | "cat-fact" :: _, "cat-facts" :: _ -> "primary"
         | _ -> "default"
@@ -58,18 +43,12 @@ let MyApp() =
         </nav>
         <main style="margin: 20px;">
             {
-                Lit.router [
-                    router.pathMode
-                    router.onUrlChanged (SetCurrentPath >> dispatch)
-                    router.children [ 
-                        match model.CurrentPath with
-                        | [ ] ->                    WelcomePage.Page()
-                        | [ "cat-facts" ] ->        ListCatFactsPage.Page()
-                        | [ "cat-fact"; fact ] ->   ViewCatFactPage.Page(fact)
-                        | [ "cat-info" ] ->         CatInfoPage.Page()
-                        | _ ->                      html $"<h1>Page not found.</h1>"
-                    ]
-                ]                
+                match path with
+                | [ ] ->                    WelcomePage.Page()
+                | [ "cat-facts" ] ->        ListCatFactsPage.Page()
+                | [ "cat-fact"; fact ] ->   ViewCatFactPage.Page(fact)
+                | [ "cat-info" ] ->         CatInfoPage.Page()
+                | _ ->                      html $"<h1>Page not found.</h1>"
             }
         </main>
         <footer></footer>

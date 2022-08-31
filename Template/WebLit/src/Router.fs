@@ -173,13 +173,6 @@ module Router =
 /// Defines a property for the `router` element
 type IRouterProperty = interface end
 
-[<AutoOpen>]
-module LitExtension =
-    type Lit with
-        /// Initializes the router as an element of the page and starts listening to URL changes.
-        static member inline router (props: IRouterProperty list) =
-            Router.router (unbox<Router.RouterProps> (createObj !!props))
-
 [<Erase>]
 type router =
     /// An event that is triggered when the URL in the address bar changes, whether by hand or programmatically using `Router.navigate(...)`.
@@ -1462,3 +1455,23 @@ module Route =
             Some [ for entry in urlParams.entries() -> entry.[0], entry.[1] ]
         with
         | _ -> None
+
+[<AutoOpen>]
+module LitExtension =
+    type Hook with
+
+        /// Listens for url changes and returns the current path.
+        static member inline useRouter (routeMode: RouteMode) = 
+            let path, setPath = Hook.useState (Router.currentPath ())
+
+            let onChange (e: Event) = 
+                Router.onUrlChange routeMode setPath e
+        
+            Hook.useEffectOnce (fun () -> 
+                if Router.navigatorUserAgent.Contains "Trident" || Router.navigatorUserAgent.Contains "MSIE" 
+                then window.onhashchange <- onChange
+                else window.onpopstate <- onChange
+                window.addEventListener(Router.customNavigationEvent, onChange)
+            )
+
+            path
