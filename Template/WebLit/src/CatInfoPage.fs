@@ -8,6 +8,7 @@ open Elmish
 open Lit
 open Lit.Elmish
 open Ctrls
+open Router
 
 type Model = 
     {
@@ -51,7 +52,7 @@ let Page() =
 
     html $"""
         <sl-breadcrumb style="margin: 10px;">
-            <sl-breadcrumb-item href="#" @click={fun () -> Grapnel.navigate ("/")}>Home</sl-breadcrumb-item>
+            <sl-breadcrumb-item @click={fun () -> Router.navigatePath("/")}>Home</sl-breadcrumb-item>
             <sl-breadcrumb-item>Cat Info</sl-breadcrumb-item>
         </sl-breadcrumb>
 
