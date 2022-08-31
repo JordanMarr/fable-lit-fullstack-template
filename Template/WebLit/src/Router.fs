@@ -154,7 +154,6 @@ module Router =
 
     let router (input: RouterProps) = 
         let onChange (e: Event) = 
-            printfn "onchange"
             let urlChanged = Option.defaultValue ignore input.onUrlChanged
             let routeMode = Option.defaultValue RouteMode.Hash input.hashMode
             onUrlChange routeMode urlChanged e
