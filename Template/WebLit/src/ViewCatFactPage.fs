@@ -6,7 +6,7 @@ open Lit
 open Lit.Elmish
 open Shared.Api
 open Ctrls
-open Router
+open LitRouter
 
 [<HookComponent>]
 let Page (fact: string) =

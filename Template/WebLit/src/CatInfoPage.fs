@@ -8,7 +8,7 @@ open Elmish
 open Lit
 open Lit.Elmish
 open Ctrls
-open Router
+open LitRouter
 
 type Model = 
     {

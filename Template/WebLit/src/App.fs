@@ -4,7 +4,7 @@ open Elmish
 open Lit
 open Lit.Elmish
 open LitStore
-open Router
+open LitRouter
 
 Registrations.registerComponents()
 Ctrls.register()

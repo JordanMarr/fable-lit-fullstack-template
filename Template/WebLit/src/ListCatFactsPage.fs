@@ -6,7 +6,7 @@ open Lit
 open Lit.Elmish
 open Shared.Api
 open Fable.Core.JsInterop
-open Router
+open LitRouter
 
 type Model = 
     {
