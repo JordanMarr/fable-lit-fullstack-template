@@ -1468,11 +1468,14 @@ module LitExtension =
             let onChange (e: Event) = 
                 Router.onUrlChange routeMode setPath e
         
-            Hook.useEffectOnce (fun () -> 
+            Hook.useEffectOnce(fun () -> 
                 if Router.navigatorUserAgent.Contains "Trident" || Router.navigatorUserAgent.Contains "MSIE" 
                 then window.onhashchange <- onChange
                 else window.onpopstate <- onChange
                 window.addEventListener(Router.customNavigationEvent, onChange)
+                Hook.createDisposable(fun () -> 
+                    window.removeEventListener(Router.customNavigationEvent, onChange)
+                )
             )
 
             path
