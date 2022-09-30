@@ -26,15 +26,15 @@ module Toast =
         console.info msg
         toast "neutral" $"<bs-icon slot='icon' src='gear' color='var(--sl-color-neutral-600)'></bs-icon> {msg}"
 
-    open Elmish
-
     module Cmd =
+        open Elmish
+
         let private onFail ex = failwith "toast failed"
-        let toastInfo (msg: string) = Cmd.OfFunc.attempt info msg onFail
-        let toastWarning (msg: string) = Cmd.OfFunc.attempt warn msg onFail
-        let toastNeutral (msg: string) = Cmd.OfFunc.attempt error msg onFail
-        let toastSuccess (msg: string) = Cmd.OfFunc.attempt success msg onFail
-        let toastError (msg: string) = Cmd.OfFunc.attempt error msg onFail
+        let info (msg: string) = Cmd.OfFunc.attempt info msg onFail
+        let warning (msg: string) = Cmd.OfFunc.attempt warn msg onFail
+        let neutral (msg: string) = Cmd.OfFunc.attempt error msg onFail
+        let success (msg: string) = Cmd.OfFunc.attempt success msg onFail
+        let error (msg: string) = Cmd.OfFunc.attempt error msg onFail
 
 
 open Lit

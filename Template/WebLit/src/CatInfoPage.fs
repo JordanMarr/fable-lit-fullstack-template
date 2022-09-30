@@ -43,10 +43,10 @@ let update msg model =
         { model with
             Validation = validation
             Saved = validation.HasErrors() = false
-        }, Cmd.toastSuccess "Changes saved."
+        }, Toast.Cmd.success "Changes saved."
     | Cancel -> 
         let m, _ = init ()
-        m, Cmd.toastInfo "Changes canceled."
+        m, Toast.Cmd.info "Changes canceled."
 
 [<HookComponent>]
 let Page() = 
