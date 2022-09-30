@@ -1,9 +1,33 @@
 ﻿module WebLit.Ctrls
 
+module Toast = 
+    open Fable.Core.JsInterop
+
+    let private toaster = lazy Browser.Dom.document.getElementById("toaster")
+    let private toast (variant: string) (msg: string) = 
+        toaster.Value.innerHTML <- msg
+        toaster.Value?variant <- variant
+        toaster.Value?toast() |> ignore
+
+    let info msg =      toast "primary" $"<bs-icon slot='icon' src='info-circle' color='var(--sl-color-primary-600)'></bs-icon> {msg}"
+    let warning msg =   toast "warning" $"<bs-icon slot='icon' src='exclamation-triangle' color='var(--sl-color-warning-600)'></bs-icon> {msg}"
+    let error msg =     toast "danger" $"<bs-icon slot='icon' src='exclamation-octagon' color='var(--sl-color-danger-600)'></bs-icon> {msg}"
+    let success msg =   toast "success" $"<bs-icon slot='icon' src='check2-circle' color='var(--sl-color-success-600)'></bs-icon> {msg}"
+    let neutral msg =   toast "neutral" $"<bs-icon slot='icon' src='gear' color='var(--sl-color-neutral-600)'></bs-icon> {msg}"
+
+    open Elmish
+
+    module Cmd =
+        let private onFail ex = failwith "toast failed"
+        let toastInfo (msg: string) = Cmd.OfFunc.attempt info msg onFail
+        let toastWarning (msg: string) = Cmd.OfFunc.attempt warning msg onFail
+        let toastError (msg: string) = Cmd.OfFunc.attempt error msg onFail
+        let toastNeutral (msg: string) = Cmd.OfFunc.attempt error msg onFail
+        let toastSuccess (msg: string) = Cmd.OfFunc.attempt success msg onFail
+
+
 open Lit
 open Fable.Core
-open Fable.Core.JsInterop
-open Browser.Types
 
 let register () = ()
 
@@ -118,4 +142,3 @@ let VerticalStack() =
             <slot></slot>
         </div>
     """
-

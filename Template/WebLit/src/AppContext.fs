@@ -1,6 +1,11 @@
 ﻿module WebLit.AppContext
 
 open ElmishStore
+open Ctrls
+
+module Cmd = 
+    let ofMsg (msg: 'Msg) = 
+        Cmd.OfFunc.result msg
 
 type Model = 
     {
@@ -16,6 +21,7 @@ type Msg =
 let update (msg: Msg) (model: Model) =
     match msg with
     | SetUsername username -> 
+        Toast.success $"Name changed to {username}."
         { model with Username = username }, Cmd.none
 
 let dispose _ = ()

@@ -52,4 +52,6 @@ let MyApp() =
             }
         </main>
         <footer></footer>
+
+        <sl-alert id="toaster" duration="3000" closable></sl-alert>
         """

@@ -44,6 +44,7 @@ let private registerShoelace() =
         importDynamic "@shoelace-style/shoelace/dist/components/menu/menu.js"
         importDynamic "@shoelace-style/shoelace/dist/components/menu-item/menu-item.js"
         importDynamic "@shoelace-style/shoelace/dist/components/input/input.js"
+        importDynamic "@shoelace-style/shoelace/dist/components/alert/alert.js"
     |]
     |> allSettled
     |> Promise.start
