@@ -95,3 +95,120 @@ let update (msg: Msg) (model: Model) =
     | OnError ex ->
         model, Toast.Cmd.error ex.Message
 ```
+
+## Validation
+The `Validation.fs` module lives in the Shared.fs project and contains functions for creating validation rules.
+
+Usage:
+
+### Shared.fs
+1) Create a custom validation method (or function) alongside your entity in the Shared.fs project:
+
+```F#
+type CatInfo = 
+    {
+        Name: string
+        Age: int
+        LastVetCheckup: System.DateTime
+    }
+    member this.Validate() = 
+        rules
+        |> rulesFor (nameof this.Name) [ 
+            this.Name |> Rules.required
+            this.Name |> Rules.maxLen 10
+        ]
+        |> rulesFor (nameof this.Age) [
+            Rules.isTrue (this.Age > 0) "Age must be a positive number."
+        ]
+        |> rulesFor (nameof this.LastVetCheckup) [
+            // A custom rule
+            let timeSinceLastVetCheckup = System.DateTime.Today - this.LastVetCheckup.Date
+            printfn $"Total days since last checkup: {timeSinceLastVetCheckup.TotalDays}"
+            if this.Age >= 10 && timeSinceLastVetCheckup.TotalDays > 90 then 
+                Error "Cats over 10 years old should get a vet checkup every three months."
+            elif timeSinceLastVetCheckup.TotalDays > 180 then 
+                Error "Cats under 10 years old should get a vet checkup every six months."
+            else 
+                Ok ()
+        ]
+        |> validate
+```
+
+### WebLit.fs
+2) In your WebLit.fs UI / form, track the entity state in your model using the `ValidationResult`:
+
+```F#
+type Model = 
+    {
+        Cat: CatInfo
+        Validation: ValidationResult
+        Saved: bool
+    }
+    
+let init () = 
+    { 
+        Cat = 
+            { CatInfo.Name = ""
+            ; CatInfo.Age = 0
+            ; CatInfo.LastVetCheckup = System.DateTime.MinValue }
+        Validation = noErrors
+        Saved = false
+    }, Cmd.none
+```
+
+3) In the Elmish `update` function, update the `Validation` state by calling the custom `Validate` method when saving:
+```F#
+let update msg model = 
+    match msg with
+    | Save -> 
+        let validation = model.Cat.Validate()
+        { model with
+            Validation = validation
+            Saved = validation.HasErrors() = false
+        }, Toast.Cmd.success "Changes saved."
+```
+
+4) In the form, set the `invalid` attributes of your inputs by checking the `model.Validation` state property for the given property:
+```F#
+    <sl-input 
+        label="Cat Name" 
+        .value={model.Cat.Name}
+        .invalid={model.Validation.HasErrors(nameof model.Cat.Name)}
+        @sl-change={Ev (fun e -> SetCat { model.Cat with Name = e.target.Value } |> dispatch)}>
+    </sl-input>
+
+    <sl-input 
+        label="Age" 
+        type="number"
+        .invalid={model.Validation.HasErrors(nameof model.Cat.Age)}
+        .value={model.Cat.Age}
+        @sl-change={Ev (fun e -> SetCat { model.Cat with Age = e.target?valueAsNumber } |> dispatch)}>
+    </sl-input>
+
+    <sl-input 
+        label="Last Vet Checkup" 
+        type="date"                        
+        .invalid={model.Validation.HasErrors(nameof model.Cat.LastVetCheckup)}
+        .value={model.Cat.LastVetCheckup.ToString("yyyy-MM-dd")}
+        @sl-change={Ev (fun e -> 
+            let date = System.DateTime.Parse(e.target.Value)
+            SetCat { model.Cat with LastVetCheckup = date } |> dispatch
+        )}>
+    </sl-input>
+```
+
+5) At the top of the form, display the validation errors using the `Ctrls.ValidationSummary`:
+```F#
+<div>
+    {ValidationSummary(model.Validation)}
+</div>
+```
+
+### WebApi.fs
+6) The validation rules may also be reused on the server side:
+```F#
+let saveCatInfo(catInfo: CatInfo) = 
+    match catInfo.Validate().IsValid() with
+    | true -> // save
+    | false -> // reject
+```
