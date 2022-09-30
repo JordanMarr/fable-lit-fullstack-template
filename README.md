@@ -55,3 +55,26 @@ If using Visual Studio:
 Currently, VS Code with the "Highlight HTML/SQL Templates in F#" extension provides the best experience because it actually provides contextual IntelliSense for the HTML and CSS, plus you can use all the other amazing HTML extensions.
 
 
+## Toast Module
+You can create toast messages in two ways:
+
+1) Call a `Toast` function directly:
+```F#
+let update (msg: Msg) (model: Model) =
+    match msg with
+    | SetUsername username -> 
+        Toast.success $"Name changed to {username}."
+        { model with Username = username }, Cmd.none
+```
+
+2) Return a `Toast` `Cmd` (if using Elmish):
+```F#
+let update (msg: Msg) (model: Model) =
+    match msg with
+    | Save -> 
+        model, Cmd.OfAsync.either Server.api.SaveProjectFiles model.FilesRootNode SaveCompleted OnError
+    | SaveCompleted _ -> 
+        model, Cmd.toastSuccess "Files saved."
+    | OnError ex ->
+        { model with IsLoading = false }, Cmd.toastError ex.Message
+```
