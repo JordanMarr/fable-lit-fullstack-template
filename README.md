@@ -7,12 +7,14 @@ https://github.com/Zaid-Ajaj/SAFE.Simplified (thank you Zaid!)
 ## Features
 
 ### WebLit.fsproj (Client)
-* Fable.Remoting
-* Bindings for `Grapnel` Router
+* RPC to WebApi via [Fable.Remoting](https://zaid-ajaj.github.io/Fable.Remoting/#/)
+* Page routing via [Fable.LitRouter](https://github.com/JordanMarr/Fable.LitRouter)
+* Shared context via [Fable.LitStore](https://www.nuget.org/packages/Fable.LitStore)
 * `Shoelace` and `FluentUI` web components imported (cherry-picked)
 * A minimal `vite.config.js` file that configures https proxy server + a common proxy redirects
 * `"vite-plugin-mkcert` plugin installed for https support for proxy server
 * Bootstrap icons + a `bs-icon` custom element control.
+* Toast notifications
 
 ### WebApi.fsproj (Server)
 * Giraffe
@@ -53,3 +55,41 @@ If using Visual Studio:
 Currently, VS Code with the "Highlight HTML/SQL Templates in F#" extension provides the best experience because it actually provides contextual IntelliSense for the HTML and CSS, plus you can use all the other amazing HTML extensions.
 
 
+## Toast Module
+
+![image](https://user-images.githubusercontent.com/1030435/193339122-fdf130d7-ed00-4f18-92e2-a87cba44d0ef.png)
+
+You can create toast messages in two ways:
+
+1) Call a `Toast` function directly:
+```F#
+module WebLit.WelcomePage
+
+open Lit
+open Ctrls
+
+[<HookComponent>]
+let Render() = 
+    
+    let sayHello() = 
+        Toast.info "Hello, world!"
+
+    html $"""
+        <sl-button 
+            @click={Ev (fun e -> sayHello())}>
+            Say Hello
+        </sl-button>
+    """
+```
+
+2) Return a `Toast` `Cmd` (if using Elmish):
+```F#
+let update (msg: Msg) (model: Model) =
+    match msg with
+    | Save -> 
+        model, Cmd.OfAsync.either Server.api.SaveProjectFiles model.FilesRootNode SaveCompleted OnError
+    | SaveCompleted _ -> 
+        model, Cmd.toastSuccess "Files saved."
+    | OnError ex ->
+        { model with IsLoading = false }, Cmd.toastError ex.Message
+```
