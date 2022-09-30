@@ -8,6 +8,7 @@ open Elmish
 open Lit
 open Lit.Elmish
 open Ctrls
+open Ctrls.Toast
 open LitRouter
 
 type Model = 
@@ -42,9 +43,10 @@ let update msg model =
         { model with
             Validation = validation
             Saved = validation.HasErrors() = false
-        }, Cmd.none
+        }, Cmd.toastSuccess "Changes saved."
     | Cancel -> 
-        init ()
+        let m, _ = init ()
+        m, Cmd.toastInfo "Changes canceled."
 
 [<HookComponent>]
 let Page() = 
