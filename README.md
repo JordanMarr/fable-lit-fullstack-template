@@ -15,6 +15,7 @@ https://github.com/Zaid-Ajaj/SAFE.Simplified (thank you Zaid!)
 * `"vite-plugin-mkcert` plugin installed for https support for proxy server
 * Bootstrap icons + a `bs-icon` custom element control.
 * Toast notifications
+* Form Validation (rules lives with entities in Shared.fs)
 
 ### WebApi.fsproj (Server)
 * Giraffe
@@ -22,6 +23,7 @@ https://github.com/Zaid-Ajaj/SAFE.Simplified (thank you Zaid!)
 * A very simple REST module
 * Environment specific settings files already configured
 * Serilog logger
+* Entity Validation (rules live with entities in Shared.fs)
 
 ## Build
 
