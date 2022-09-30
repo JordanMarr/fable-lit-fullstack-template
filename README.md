@@ -56,6 +56,9 @@ Currently, VS Code with the "Highlight HTML/SQL Templates in F#" extension provi
 
 
 ## Toast Module
+
+![image](https://user-images.githubusercontent.com/1030435/193339122-fdf130d7-ed00-4f18-92e2-a87cba44d0ef.png)
+
 You can create toast messages in two ways:
 
 1) Call a `Toast` function directly:
