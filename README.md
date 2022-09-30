@@ -60,11 +60,23 @@ You can create toast messages in two ways:
 
 1) Call a `Toast` function directly:
 ```F#
-let update (msg: Msg) (model: Model) =
-    match msg with
-    | SetUsername username -> 
-        Toast.success $"Name changed to {username}."
-        { model with Username = username }, Cmd.none
+module WebLit.WelcomePage
+
+open Lit
+open Ctrls
+
+[<HookComponent>]
+let Render() = 
+    
+    let sayHello() = 
+        Toast.info "Hello, world!"
+
+    html $"""
+        <sl-button 
+            @click={Ev (fun e -> sayHello())}>
+            Say Hello
+        </sl-button>
+    """
 ```
 
 2) Return a `Toast` `Cmd` (if using Elmish):
