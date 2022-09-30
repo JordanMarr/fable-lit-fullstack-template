@@ -89,7 +89,7 @@ let update (msg: Msg) (model: Model) =
     | Save -> 
         model, Cmd.OfAsync.either Server.api.SaveProjectFiles model.FilesRootNode SaveCompleted OnError
     | SaveCompleted _ -> 
-        model, Cmd.toastSuccess "Files saved."
+        model, Toast.Cmd.success "Files saved."
     | OnError ex ->
-        { model with IsLoading = false }, Cmd.toastError ex.Message
+        { model with IsLoading = false }, Toast.Cmd.error ex.Message
 ```
