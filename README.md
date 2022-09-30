@@ -7,12 +7,14 @@ https://github.com/Zaid-Ajaj/SAFE.Simplified (thank you Zaid!)
 ## Features
 
 ### WebLit.fsproj (Client)
-* Fable.Remoting
-* Bindings for `Grapnel` Router
+* RPC to WebApi via [Fable.Remoting](https://zaid-ajaj.github.io/Fable.Remoting/#/)
+* Page routing via [Fable.LitRouter](https://github.com/JordanMarr/Fable.LitRouter)
+* Shared context via [Fable.LitStore](https://www.nuget.org/packages/Fable.LitStore)
 * `Shoelace` and `FluentUI` web components imported (cherry-picked)
 * A minimal `vite.config.js` file that configures https proxy server + a common proxy redirects
 * `"vite-plugin-mkcert` plugin installed for https support for proxy server
 * Bootstrap icons + a `bs-icon` custom element control.
+* Toast notifications
 
 ### WebApi.fsproj (Server)
 * Giraffe
