@@ -87,9 +87,9 @@ let Render() =
 let update (msg: Msg) (model: Model) =
     match msg with
     | Save -> 
-        { model with IsSaving = true }, Cmd.OfAsync.either Server.api.SaveProjectFiles model.Files SaveCompleted OnError
+        model, Cmd.OfAsync.either Server.api.SaveProjectFiles model.Files SaveCompleted OnError
     | SaveCompleted _ -> 
-        { model with IsSaving = false }, Toast.Cmd.success "Files saved."
+        model, Toast.Cmd.success "Files saved."
     | OnError ex ->
-        { model with IsSaving = false }, Toast.Cmd.error ex.Message
+        model, Toast.Cmd.error ex.Message
 ```
