@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>fable-lit-fullstack-template</id>
+    <version>0.1.0</version>
+    <authors>Jordan Marr</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/iayti/Matech.Sample.Template</projectUrl>
+    <repository type="git" url="https://github.com/JordanMarr/fable-lit-fullstack-template" branch="main" />
+    <description>A SAFE-style template with Fable.Lit, Fable.Remoting and Giraffe</description>
+    <copyright>$copyright$</copyright>
+    <tags>dotnet webapi fsharp fable lit giraffe safe template</tags>
+    <packageTypes>
+      <packageType name="Template" />
+    </packageTypes>
+  </metadata>
+  <files>
+    <file src="**" exclude="**\bin\**\*;**\obj\**\*;**\*.user;**\*.lock.json;**\.DS_Store;**\.git\**\*;**\.github\**\*;**\.vs\**\*;**\*LICENSE;**\*.gitattributes;**\*README.md;**\*.gitignore;**\*nuget.config;**\WebLit\build\**\*;**\docs\**\*;**\dist\**.*;**\node_modules\**\*;nuget.exe;" target="/content" />
+  </files>
+</package>

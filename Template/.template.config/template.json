@@ -1,41 +1,42 @@
 {
-    "$schema": "http://json.schemastore.org/template",
-    "author": "Jordan Marr",
-    "classifications": [
-        "fsharp",
-        "F#",
-        "Fable",
-        "lit"
-    ],
-    "identity": "fable-lit-fullstack-template",
-    "name": "Fable.Lit Fullstack Template",
-    "shortName": "flft",
-    "tags": {
-        "language": "F#",
-        "type": "solution"
-    },
-    "sourceName": "Fullstack",
-    "preferNameDirectory": true,
-    "sources": [
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Jordan Marr",
+  "classifications": [
+    "fsharp",
+    "F#",
+    "Fable",
+    "lit"
+  ],
+  "identity": "fable-lit-fullstack-template",
+  "name": "Fable.Lit Fullstack Template",
+  "shortName": "flft",
+  "tags": {
+    "language": "F#",
+    "type": "solution"
+  },
+  "sourceName": "Fullstack",
+  "preferNameDirectory": true,
+  "sources": [
+    {
+      "modifiers": [
         {
-            "modifiers": [
-                {
-                    "exclude": [
-                        "**/[Bb]in/**",
-                        "**/[Oo]bj/**",
-                        ".template.config/**/*",
-                        ".vs/**/*",
-                        "**/*.filelist",
-                        "**/*.user",
-                        "**/*.lock.json",
-                        "**/node_modules/**/*",
-                        "**/dist/**/*",
-                        "**/.build/**/*",
-                        "**/WebLit/build/**/*",
-                        "**/docs/**/*"
-                    ]
-                }
-            ]
+          "exclude": [
+            "**/[Bb]in/**",
+            "**/[Oo]bj/**",
+            ".template.config/**/*",
+            ".vs/**/*",
+            "**/*.filelist",
+            "**/*.user",
+            "**/*.lock.json",
+            "**/node_modules/**/*",
+            "**/dist/**/*",
+            "**/.build/**/*",
+            "**/WebLit/build/**/*",
+            "**/docs/**/*",
+            "**/.nuspec"
+          ]
         }
-    ]
+      ]
+    }
+  ]
 }

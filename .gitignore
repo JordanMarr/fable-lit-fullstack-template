@@ -20,3 +20,5 @@ deploy
 .local-chromium
 NPGSQL_FSHARP
 .build
+nuget.exe
+*.nupkg
