@@ -33,7 +33,8 @@
             "**/.build/**/*",
             "**/WebLit/build/**/*",
             "**/docs/**/*",
-            "**/.nuspec"
+            "**/.nuspec",
+            "**/run_pack.cmd"
           ]
         }
       ]
