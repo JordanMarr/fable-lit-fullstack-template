@@ -1,21 +1,9 @@
-# fable-lit-fullstack-template
+# fable-lit-fullstack-template [![NuGet version (fable-lit-fullstack-template)](https://img.shields.io/nuget/v/fable-lit-fullstack-template.svg?style=flat-square)](https://www.nuget.org/packages/fable-lit-fullstack-template/)
+
 A SAFE-style template with Fable.Lit, Fable.Remoting and Giraffe
 
 Based on:
 https://github.com/Zaid-Ajaj/SAFE.Simplified (thank you Zaid!)
-
-## Install Template [![NuGet version (fable-lit-fullstack-template)](https://img.shields.io/nuget/v/fable-lit-fullstack-template.svg?style=flat-square)](https://www.nuget.org/packages/fable-lit-fullstack-template/)
-
-```cmd
-dotnet new install fable-lit-fullstack-template
-```
-
-## Use Template
-This will create a new subfolder, `MyLitApp`, which will contain a `MyLitApp.sln`:
-
-```cmd
-dotnet new flft -o MyLitApp
-```
 
 ## Features
 
@@ -37,6 +25,21 @@ dotnet new flft -o MyLitApp
 * Environment specific settings files already configured
 * Serilog logger
 * Entity Validation (rules live with entities in Shared.fs)
+
+
+## Install Template [![NuGet version (fable-lit-fullstack-template)](https://img.shields.io/nuget/v/fable-lit-fullstack-template.svg?style=flat-square)](https://www.nuget.org/packages/fable-lit-fullstack-template/)
+
+```cmd
+dotnet new install fable-lit-fullstack-template
+```
+
+## Use Template
+This will create a new subfolder, `MyLitApp`, which will contain a `MyLitApp.sln`:
+
+```cmd
+dotnet new flft -o MyLitApp
+```
+
 
 ## Build
 
