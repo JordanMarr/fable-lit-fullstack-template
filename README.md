@@ -80,25 +80,8 @@ Currently, VS Code with the "Highlight HTML/SQL Templates in F#" extension provi
 You can create toast messages in two ways:
 
 1) Call a `Toast` function directly:
-```F#
-module WebLit.WelcomePage
+![image](https://github.com/JordanMarr/fable-lit-fullstack-template/assets/1030435/fe5dd2c0-f0da-4b6e-aa62-e36b07e0f746)
 
-open Lit
-open Ctrls
-
-[<HookComponent>]
-let Render() = 
-    
-    let sayHello() = 
-        Toast.info "Hello, world!"
-
-    html $"""
-        <sl-button 
-            @click={Ev (fun e -> sayHello())}>
-            Say Hello
-        </sl-button>
-    """
-```
 
 2) Return a `Toast` `Cmd` (if using Elmish):
 ```F#
