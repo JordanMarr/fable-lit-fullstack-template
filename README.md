@@ -72,7 +72,8 @@ If using Visual Studio:
 
 Currently, VS Code with the "Highlight HTML/SQL Templates in F#" extension provides the best experience because it actually provides contextual IntelliSense for the HTML and CSS, plus you can use all the other amazing HTML extensions.
 
-![image](https://github.com/JordanMarr/fable-lit-fullstack-template/assets/1030435/fe5dd2c0-f0da-4b6e-aa62-e36b07e0f746)
+![image](https://github.com/JordanMarr/fable-lit-fullstack-template/assets/1030435/a80afa1c-544d-402c-8bc0-4200eb41ef67)
+
 
 ## Toast Module
 
