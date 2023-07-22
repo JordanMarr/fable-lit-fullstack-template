@@ -1,10 +1,6 @@
 ﻿module WebLit.WelcomePage
 
-open Shared
-open Elmish
 open Lit
-open Lit.Elmish
-open Shared.Api
 open LitStore
 
 [<HookComponent>]
