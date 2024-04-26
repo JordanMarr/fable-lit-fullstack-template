@@ -7,6 +7,7 @@ open Lit.Elmish
 open Shared.Api
 open Fable.Core.JsInterop
 open LitRouter
+let private hmr = HMR.createToken()
 
 type Model = 
     {
@@ -47,6 +48,7 @@ let update msg model =
 
 [<HookComponent>]
 let Page() = 
+    Hook.useHmr(hmr)
     let model, dispatch = Hook.useElmish(init, update)
 
     let emptyRow () = 
@@ -89,7 +91,7 @@ let Page() =
                             .min={1}
                             .max={20}
                             .value={model.PageSize}
-                            style="width: 200px"
+                            style="width: 200px; height: 70px;"
                             @change={Ev (fun e -> dispatch (SetPageSize e.target?valueAsNumber))}
                             @blur={Ev (fun e -> dispatch RefreshFacts)}>
                             <fluent-slider-label position="1">1</fluent-slider-label>

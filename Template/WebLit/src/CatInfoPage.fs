@@ -10,6 +10,7 @@ open Lit.Elmish
 open Ctrls
 open Ctrls.Toast
 open LitRouter
+let private hmr = HMR.createToken()
 
 type Model = 
     {
@@ -50,6 +51,7 @@ let update msg model =
 
 [<HookComponent>]
 let Page() = 
+    Hook.useHmr(hmr)
     let model, dispatch = Hook.useElmish(init, update)
 
     html $"""

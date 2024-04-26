@@ -7,9 +7,11 @@ open Lit.Elmish
 open Shared.Api
 open Ctrls
 open LitRouter
+let private hmr = HMR.createToken()
 
 [<HookComponent>]
 let Page (fact: string) =
+    Hook.useHmr(hmr)
     html
         $"""
         <sl-breadcrumb style="margin: 10px;">
@@ -29,7 +31,7 @@ let Page (fact: string) =
           <small>Meow!</small>
 
           <div slot="footer">
-            <sl-button variant="primary" pill @click={Ev (fun e -> Router.navigatePath("/cat-facts"))}>Tell me more!!</sl-button>            
+              <sl-button variant="primary" pill @click={Ev (fun e -> Router.navigatePath("/cat-facts"))}>Tell me more!!</sl-button>            
           </div>
         </sl-card>
         """
