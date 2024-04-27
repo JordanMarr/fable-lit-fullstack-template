@@ -31,17 +31,12 @@ let init () =
     let model = { CatFacts = [||]; PageSize = 10; PageNumber = 1 }
     model, Cmd.OfAsync.either Server.api.GetCatFacts (model.PageSize, model.PageNumber) LoadCatFacts OnError
 
-let loadCatFactsGrid (data: CatFact list) = 
-    printfn "Loading cat facts grid..."
-    let grid = Browser.Dom.document.getElementById "catFactsGrid"
-    grid?rowsData <- data |> List.toArray
-    
-
 let update msg model = 
     match msg with
     | LoadCatFacts facts -> 
-        { model with CatFacts = facts |> List.toArray 
-        }, Cmd.OfFunc.perform loadCatFactsGrid facts OnCatFactsLoaded
+        let factArr = facts |> List.toArray
+        { model with CatFacts = factArr
+        }, Cmd.OfFunc.perform (Ctrls.loadDataGrid "catFactsGrid") factArr OnCatFactsLoaded
     | OnCatFactsLoaded _ -> 
         model, Cmd.info "Cat facts loaded."
     | SetPageSize size -> 

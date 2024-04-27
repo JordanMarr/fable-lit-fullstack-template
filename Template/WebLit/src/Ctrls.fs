@@ -153,3 +153,10 @@ let VerticalStack() =
             <slot></slot>
         </div>
     """
+
+open Fable.Core.JsInterop
+
+/// Loads the fluent-data-grid with the provided data.
+let loadDataGrid (gridId: string) (data: 'T array) = 
+    let grid = Browser.Dom.document.getElementById gridId
+    grid?rowsData <- data
