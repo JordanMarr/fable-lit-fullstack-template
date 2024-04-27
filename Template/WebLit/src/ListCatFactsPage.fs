@@ -34,9 +34,7 @@ let init () =
 let update msg model = 
     match msg with
     | LoadCatFacts facts -> 
-        let factArr = facts |> List.toArray
-        { model with CatFacts = factArr
-        }, Cmd.OfFunc.perform (Ctrls.loadDataGrid "catFactsGrid") factArr OnCatFactsLoaded
+        { model with CatFacts = facts |> List.toArray }, Cmd.none
     | OnCatFactsLoaded _ -> 
         model, Cmd.info "Cat facts loaded."
     | SetPageSize size -> 
@@ -60,20 +58,25 @@ let Page() =
 
     let emptyRow () = 
         html $"""
-        <tr>
-            <td></td>
-            <td colspan="2">Fetching cat facts...</td>
-        </tr>
+        <fluent-data-grid-row role="row" row-type="default" style="border-color: rgb(137, 119, 112) rgb(137, 119, 112) rgb(135, 117, 110) !important; color: rgb(230, 226, 224) !important; grid-template-columns: 100px 1fr;" row-type="default"; grid-template-columns="100px 1fr">
+            <fluent-data-grid-cell grid-column="1" tabindex="-1" role="gridcell" cell-type="default" style="grid-column: 1; color: rgb(230, 226, 224) !important;">
+            </fluent-data-grid-cell>
+            <fluent-data-grid-cell grid-column="2" tabindex="-1" role="gridcell" cell-type="default" style="grid-column: 2; color: rgb(230, 226, 224) !important;">
+                Fetching cat facts...
+            </fluent-data-grid-cell>
+        </fluent-data-grid-row>
         """
 
     let renderRow (catFact: CatFact) = 
         html $"""
-        <tr>
-            <td>
+        <fluent-data-grid-row role="row" row-type="default" style="border-color: rgb(137, 119, 112) rgb(137, 119, 112) rgb(135, 117, 110) !important; color: rgb(230, 226, 224) !important; grid-template-columns: 100px 1fr;" row-type="default"; grid-template-columns="100px 1fr">
+            <fluent-data-grid-cell grid-column="1" tabindex="-1" role="gridcell" cell-type="default" style="grid-column: 1; color: rgb(230, 226, 224) !important;">
                 <sl-button size="small" @click={fun _ -> Router.navigatePath($"/cat-fact/{catFact.Fact}")}>View</sl-button>
-            </td>
-            <td>{catFact.Fact}</td>
-        </tr>
+            </fluent-data-grid-cell>
+            <fluent-data-grid-cell grid-column="2" tabindex="-1" role="gridcell" cell-type="default" style="grid-column: 2; color: rgb(230, 226, 224) !important;">
+                {catFact.Fact}
+            </fluent-data-grid-cell>
+        </fluent-data-grid-row>
         """
 
     html $"""
@@ -114,9 +117,24 @@ let Page() =
             </sl-button>
         </sl-button-group>
             
-        <fluent-data-grid id="catFactsGrid" style="margin-top: 20px;">
-        </fluent-data-grid>
+        <fluent-data-grid id="catFactsGrid" style="margin-top: 20px; color: rgb(230, 226, 224) !important;" role="grid" tabindex="0" generate-header="default">
+            
+            <fluent-data-grid-row role="row" class="header" style="border-color: rgb(137, 119, 112) rgb(137, 119, 112) rgb(135, 117, 110) !important; grid-template-columns: 100px 1fr; color: rgb(230, 226, 224) !important;" row-type="header" grid-template-columns="100px 1fr">
+                <fluent-data-grid-cell cell-type="columnheader" grid-column="1" tabindex="-1" role="columnheader" class="column-header" style="grid-column: 1; color: rgb(230, 226, 224) !important;">
+                </fluent-data-grid-cell>
+                <fluent-data-grid-cell cell-type="columnheader" grid-column="2" tabindex="-1" role="columnheader" class="column-header" style="grid-column: 2; color: rgb(230, 226, 224) !important;">
+                    Fact
+                </fluent-data-grid-cell>
+            </fluent-data-grid-row>
+        {
+            match model.CatFacts with
+            | [||] -> [| emptyRow () |]
+            | catFacts -> catFacts |> Array.map renderRow
+        }
+
         """
+        //<fluent-data-grid id="catFactsGrid" style="margin-top: 20px;">
+        //</fluent-data-grid>
 
         //<table style="max-height: 300px; overflow-y: auto; margin-top: 10px">
         //    <thead>
