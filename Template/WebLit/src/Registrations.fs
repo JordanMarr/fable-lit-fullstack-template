@@ -23,10 +23,16 @@ let registerFluentUI() =
         // Cherrypick components
         let fluentSlider: unit -> unit = unbox (fluentModule.Item "fluentSlider")
         let fluentSliderLabel: unit -> unit = unbox (fluentModule.Item "fluentSliderLabel")
+        let fluentDataGridRow: unit -> unit = unbox (fluentModule.Item "fluentDataGridRow")
+        let fluentDataGridCell: unit -> unit = unbox (fluentModule.Item "fluentDataGridCell")
+        let fluentDataGrid: unit -> unit = unbox (fluentModule.Item "fluentDataGrid")
 
         provideFluentDesignSystem()?register(
             fluentSlider(), 
-            fluentSliderLabel()
+            fluentSliderLabel(),
+            fluentDataGridRow(),
+            fluentDataGridCell(),
+            fluentDataGrid()
         )
 
     }

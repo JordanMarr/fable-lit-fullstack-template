@@ -7,6 +7,8 @@ open Lit.Elmish
 open Shared.Api
 open Fable.Core.JsInterop
 open LitRouter
+open Ctrls.Toast
+
 let private hmr = HMR.createToken()
 
 type Model = 
@@ -18,6 +20,7 @@ type Model =
 
 type Msg = 
     | LoadCatFacts of Api.CatFact list
+    | OnCatFactsLoaded of unit
     | SetPageSize of PageSize
     | NextPage
     | PrevPage
@@ -28,10 +31,19 @@ let init () =
     let model = { CatFacts = [||]; PageSize = 10; PageNumber = 1 }
     model, Cmd.OfAsync.either Server.api.GetCatFacts (model.PageSize, model.PageNumber) LoadCatFacts OnError
 
+let loadCatFactsGrid (data: CatFact list) = 
+    printfn "Loading cat facts grid..."
+    let grid = Browser.Dom.document.getElementById "catFactsGrid"
+    grid?rowsData <- data |> List.toArray
+    
+
 let update msg model = 
     match msg with
     | LoadCatFacts facts -> 
-        { model with CatFacts = facts |> List.toArray }, Cmd.none
+        { model with CatFacts = facts |> List.toArray 
+        }, Cmd.OfFunc.perform loadCatFactsGrid facts OnCatFactsLoaded
+    | OnCatFactsLoaded _ -> 
+        model, Cmd.info "Cat facts loaded."
     | SetPageSize size -> 
         { model with PageSize = size }, Cmd.none
     | NextPage -> 
@@ -107,19 +119,22 @@ let Page() =
             </sl-button>
         </sl-button-group>
             
-        <table style="max-height: 300px; overflow-y: auto; margin-top: 10px">
-            <thead>
-                <tr>
-                    <th style="width: 80px"></th>
-                    <th style="width: 800px">Cat Fact</th>
-                </tr>
-            </thead>
-            <tbody>
-                { 
-                    match model.CatFacts with
-                    | [||] -> [| emptyRow () |]
-                    | catFacts -> catFacts |> Array.map renderRow
-                }
-            </tbody>
-        </table>
+        <fluent-data-grid id="catFactsGrid" style="margin-top: 20px;">
+        </fluent-data-grid>
         """
+
+        //<table style="max-height: 300px; overflow-y: auto; margin-top: 10px">
+        //    <thead>
+        //        <tr>
+        //            <th style="width: 80px"></th>
+        //            <th style="width: 800px">Cat Fact</th>
+        //        </tr>
+        //    </thead>
+        //    <tbody>
+        //        { 
+        //            match model.CatFacts with
+        //            | [||] -> [| emptyRow () |]
+        //            | catFacts -> catFacts |> Array.map renderRow
+        //        }
+        //    </tbody>
+        //</table>
