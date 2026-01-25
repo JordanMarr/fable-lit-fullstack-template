@@ -39,7 +39,7 @@ let private basicElementsDemo () =
                 code { "code" }
                 " text."
             }
-            hr { () }
+            hr { nothing }
             div {
                 class' "demo-box"
                 style "padding: 10px; background: #f0f0f0; border-radius: 4px;"
@@ -238,7 +238,7 @@ let private propsAndEventsDemo
                 strong { inputValue }
             }
 
-            hr { () }
+            hr { nothing }
 
             // Switch with property binding
             div {

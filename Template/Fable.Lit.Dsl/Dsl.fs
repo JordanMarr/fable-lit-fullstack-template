@@ -23,6 +23,7 @@ type Node =
     | RawHtml of string
     | Template of TemplateResult
     | AttrNode of Attr
+    | Nothing
 
 // =============================================================================
 // Computation Expression Builders
@@ -44,13 +45,15 @@ type ElementBuilder(tag: string) =
         Template template
 
     member _.Yield(()) : Node =
-        Fragment []
+        Nothing
 
     member _.YieldFrom(nodes: Node seq) : Node =
         nodes |> Seq.toList |> Fragment
 
     member _.Combine(a: Node, b: Node) : Node =
         match a, b with
+        | Nothing, x -> x
+        | x, Nothing -> x
         | Fragment xs, Fragment ys -> Fragment (xs @ ys)
         | Fragment xs, n -> Fragment (xs @ [ n ])
         | n, Fragment ys -> Fragment (n :: ys)
@@ -60,7 +63,7 @@ type ElementBuilder(tag: string) =
         f()
 
     member _.Zero() : Node =
-        Fragment []
+        Nothing
 
     member _.For(xs: 'T seq, f: 'T -> Node) : Node =
         xs |> Seq.map f |> Seq.toList |> Fragment
@@ -70,6 +73,7 @@ type ElementBuilder(tag: string) =
         let rec flatten node =
             match node with
             | Fragment nodes -> nodes |> List.collect flatten
+            | Nothing -> []
             | other -> [ other ]
 
         let flatContent = flatten content
@@ -79,6 +83,7 @@ type ElementBuilder(tag: string) =
             |> List.fold (fun (attrs, children) node ->
                 match node with
                 | AttrNode attr -> (attr :: attrs, children)
+                | Nothing -> (attrs, children)
                 | other -> (attrs, other :: children)
             ) ([], [])
 
@@ -100,13 +105,15 @@ type HtmlBuilder() =
         Template template
 
     member _.Yield(()) : Node =
-        Fragment []
+        Nothing
 
     member _.YieldFrom(nodes: Node seq) : Node =
         nodes |> Seq.toList |> Fragment
 
     member _.Combine(a: Node, b: Node) : Node =
         match a, b with
+        | Nothing, x -> x
+        | x, Nothing -> x
         | Fragment xs, Fragment ys -> Fragment (xs @ ys)
         | Fragment xs, n -> Fragment (xs @ [ n ])
         | n, Fragment ys -> Fragment (n :: ys)
@@ -116,7 +123,7 @@ type HtmlBuilder() =
         f()
 
     member _.Zero() : Node =
-        Fragment []
+        Nothing
 
     member _.For(xs: 'T seq, f: 'T -> Node) : Node =
         xs |> Seq.map f |> Seq.toList |> Fragment
@@ -124,6 +131,7 @@ type HtmlBuilder() =
     member _.Run(content: Node) : Node =
         // For HtmlBuilder, just return the content as-is (possibly wrapped in Fragment)
         match content with
+        | Nothing -> Nothing
         | Fragment [ single ] -> single
         | other -> other
 
@@ -138,6 +146,9 @@ module HtmlDsl =
 
     /// Creates a custom element with the specified tag name.
     let el (tag: string) = ElementBuilder(tag)
+
+    /// Represents an empty node that renders nothing.
+    let nothing = Node.Nothing
 
 // =============================================================================
 // Standard HTML Elements

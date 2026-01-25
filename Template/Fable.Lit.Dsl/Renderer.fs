@@ -134,6 +134,10 @@ module Renderer =
             // AttrNodes should be filtered out before rendering
             Lit.nothing
 
+        | Nothing ->
+            // Empty node
+            Lit.nothing
+
         | Element(tag, attrs, children) ->
             renderElement tag attrs children
 
