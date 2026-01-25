@@ -14,6 +14,7 @@ type Attr =
     | BoolAttr of name: string * enabled: bool
     | Prop of name: string * value: obj
     | Event of name: string * handler: obj
+    | Ref of setter: (obj option -> unit)
 
 /// Represents a node in the HTML tree.
 type Node =
@@ -381,6 +382,11 @@ module Attrs =
         Event("mouseenter", handler)
     let onMouseLeave (handler: Browser.Types.MouseEvent -> unit) : Attr =
         Event("mouseleave", handler)
+
+    /// Creates a ref binding that captures the DOM element after rendering.
+    /// The callback receives Some(element) when attached and None when detached.
+    let bindRef (setter: obj option -> unit) : Attr =
+        Ref setter
 
 // =============================================================================
 // Interop Helpers

@@ -1,20 +1,10 @@
 module WebLit.ShoelaceDslDemoPage
 
-open Fable.Core
 open Fable.Core.JsInterop
 open Lit
 open LitStore
 open Fable.Lit.Dsl
 open Fable.Lit.Dsl.Shoelace
-open Browser.Dom
-
-/// Helper to call show() on a Shoelace dialog element
-[<Emit("document.querySelector($0)?.show()")>]
-let showDialog (selector: string) : unit = jsNative
-
-/// Helper to call hide() on a Shoelace dialog element
-[<Emit("document.querySelector($0)?.hide()")>]
-let hideDialog (selector: string) : unit = jsNative
 
 let private hmr = HMR.createToken()
 
@@ -41,8 +31,11 @@ let Page() =
     // Toggle state
     let featureEnabled, setFeatureEnabled = Hook.useState false
 
-    // Dialog state
-    let dialogOpen, setDialogOpen = Hook.useState false
+    // Dialog state - use ref for imperative show/hide
+    // Shoelace dialogs must be opened via .show() and .hide(), not by setting the open property.
+    let dialogRef = Hook.useRef<obj option>(None)
+    let showDialogRef () = match dialogRef.Value with Some el -> el?show() |> ignore | None -> ()
+    let hideDialogRef () = match dialogRef.Value with Some el -> el?hide() |> ignore | None -> ()
     let confirmCount, setConfirmCount = Hook.useState 0
 
     // Button click counter
@@ -169,26 +162,39 @@ let Page() =
 
                         slButton {
                             variantPrimary
-                            onClick (fun _ ->
-                                printfn "Opening dialog, current state: %b" dialogOpen
-                                setDialogOpen true
-                            )
+                            onClick (fun _ -> showDialogRef())
                             slIcon { slot' "prefix"; iconName "box-arrow-up-right" }
                             "Open Dialog"
                         }
 
-                        p { $"Confirmed {confirmCount} times (dialog open: {dialogOpen})" }
+                        p { $"Confirmed {confirmCount} times" }
 
-                        // Use Lit template directly for dialog since it needs proper property binding
-                        lit (Lit.html $"""
-                            <sl-dialog label="Confirmation" ?open={dialogOpen} @sl-request-close={fun _ -> setDialogOpen false}>
-                                <p>Are you sure you want to proceed with this action?</p>
-                                <div slot="footer" style="display: flex; gap: 10px; justify-content: flex-end;">
-                                    <sl-button variant="default" @click={fun _ -> setDialogOpen false}>Cancel</sl-button>
-                                    <sl-button variant="primary" @click={fun _ -> setConfirmCount (confirmCount + 1); setDialogOpen false}>Confirm</sl-button>
-                                </div>
-                            </sl-dialog>
-                        """)
+                        slDialog {
+                            bindRef (fun el -> dialogRef.Value <- el)
+                            label' "Confirmation"
+                            onSlRequestClose (fun _ -> hideDialogRef())
+
+                            p { "Are you sure you want to proceed with this action?" }
+
+                            div {
+                                slot' "footer"
+                                style "display: flex; gap: 10px; justify-content: flex-end;"
+
+                                slButton {
+                                    variantDefault
+                                    onClick (fun _ -> hideDialogRef())
+                                    "Cancel"
+                                }
+                                slButton {
+                                    variantPrimary
+                                    onClick (fun _ ->
+                                        setConfirmCount (confirmCount + 1)
+                                        hideDialogRef()
+                                    )
+                                    "Confirm"
+                                }
+                            }
+                        }
                     }
                 }
             )
