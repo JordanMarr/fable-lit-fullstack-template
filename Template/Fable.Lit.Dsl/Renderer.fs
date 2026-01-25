@@ -84,8 +84,9 @@ module Renderer =
         | Ref setter ->
             // Ref bindings use Lit's built-in ref directive.
             // The callback receives the element (or undefined when disconnected).
+            // Empty string ensures proper element position binding.
             let refDirective = LitBindings.ref setter
-            " ", Some refDirective
+            "", Some refDirective
 
     /// Renders a list of attributes, returning the static string parts and dynamic values.
     let private renderAttrs (attrs: Attr list) : string list * obj list =
@@ -149,30 +150,38 @@ module Renderer =
     /// Renders an element node with its attributes and children.
     and private renderElement (tag: string) (attrs: Attr list) (children: Node list) : TemplateResult =
         // Build the template strings and values
-        // Pattern: ["<tag attrs>", "", ..., "</tag>"] with child TemplateResults as values
+        // Pattern: ["<tag ", " attrs>", "", ..., "</tag>"] with ref directive first in element position
 
-        // Separate static vs dynamic attributes
-        let attrStrings, attrValues = renderAttrs attrs
+        // Separate ref directives from other attributes (refs must be in element position, before other attrs)
+        let refs, otherAttrs = attrs |> List.partition (function Ref _ -> true | _ -> false)
+
+        // Get ref directive values (rendered refs return empty string, so we just need the values)
+        let refValues = refs |> List.choose (function
+            | Ref setter -> Some (LitBindings.ref setter :> obj)
+            | _ -> None)
+
+        // Render other attributes
+        let attrStrings, attrValues = renderAttrs otherAttrs
 
         // Render children
         let renderedChildren = children |> List.map render
 
-        // Build the complete template
-        match attrStrings, attrValues, renderedChildren with
-        | [attrStr], [], [] ->
-            // No dynamic attrs, no children: simple static element
+        // Build the complete template with refs in element position (right after tag name)
+        match refValues, attrStrings, attrValues, renderedChildren with
+        | [], [attrStr], [], [] ->
+            // No refs, no dynamic attrs, no children: simple static element
             let template = $"<{tag}{attrStr}></{tag}>"
             createTemplate [template] []
 
-        | [attrStr], [], children ->
-            // No dynamic attrs, with children
+        | [], [attrStr], [], children ->
+            // No refs, no dynamic attrs, with children
             let openTag = $"<{tag}{attrStr}>"
             let closeTag = $"</{tag}>"
             let strings = [openTag] @ List.replicate (children.Length - 1) "" @ [closeTag]
             createTemplate strings (children |> List.map box)
 
-        | attrStrs, attrVals, [] ->
-            // Dynamic attrs, no children
+        | [], attrStrs, attrVals, [] ->
+            // No refs, dynamic attrs, no children
             let openParts = attrStrs |> List.mapi (fun i s ->
                 if i = 0 then $"<{tag}{s}"
                 else s
@@ -185,8 +194,8 @@ module Renderer =
                 )
             createTemplate openParts' attrVals
 
-        | attrStrs, attrVals, children ->
-            // Dynamic attrs and children
+        | [], attrStrs, attrVals, children ->
+            // No refs, dynamic attrs and children
             let openParts = attrStrs |> List.mapi (fun i s ->
                 if i = 0 then $"<{tag}{s}"
                 else s
@@ -198,12 +207,48 @@ module Renderer =
                     else s
                 )
             let closeTag = $"</{tag}>"
-
-            // Combine: open parts + (empty strings between children) + close tag
             let childStrings = List.replicate (children.Length - 1) ""
             let allStrings = openParts' @ childStrings @ [closeTag]
             let allValues = attrVals @ (children |> List.map box)
+            createTemplate allStrings allValues
 
+        | refVals, attrStrs, attrVals, children ->
+            // Has refs - place them in element position right after tag name
+            // Pattern: <tag ${ref1} ${ref2} attr1="val" .prop=${val}>children</tag>
+            let refPlaceholders = List.replicate (refVals.Length - 1) ""
+            let openTag = $"<{tag} "
+
+            // Build attribute parts
+            let attrParts = attrStrs |> List.mapi (fun i s ->
+                if i = 0 then s  // First attr string (may be empty or have static attrs)
+                else s
+            )
+
+            // Combine: "<tag " + ref placeholders + attr parts + children + "</tag>"
+            let lastAttrIdx = attrParts.Length - 1
+            let attrParts' =
+                if children.Length = 0 then
+                    attrParts |> List.mapi (fun i s ->
+                        if i = lastAttrIdx then s + $"></{tag}>"
+                        else s
+                    )
+                else
+                    attrParts |> List.mapi (fun i s ->
+                        if i = lastAttrIdx then s + ">"
+                        else s
+                    )
+
+            let closeTag = $"</{tag}>"
+            let childCount = List.length children
+            let childStrings = if childCount > 1 then List.replicate (childCount - 1) "" else []
+
+            let allStrings =
+                if childCount = 0 then
+                    [openTag] @ refPlaceholders @ attrParts'
+                else
+                    [openTag] @ refPlaceholders @ attrParts' @ childStrings @ [closeTag]
+
+            let allValues = refVals @ attrVals @ (children |> List.map box)
             createTemplate allStrings allValues
 
     /// Renders a Node to a TemplateResult (alias for render).
