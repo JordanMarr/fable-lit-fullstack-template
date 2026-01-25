@@ -42,6 +42,9 @@ type ElementBuilder(tag: string) =
     member _.Yield(template: TemplateResult) : Node =
         Template template
 
+    member _.Yield(()) : Node =
+        Fragment []
+
     member _.YieldFrom(nodes: Node seq) : Node =
         nodes |> Seq.toList |> Fragment
 
@@ -94,6 +97,9 @@ type HtmlBuilder() =
 
     member _.Yield(template: TemplateResult) : Node =
         Template template
+
+    member _.Yield(()) : Node =
+        Fragment []
 
     member _.YieldFrom(nodes: Node seq) : Node =
         nodes |> Seq.toList |> Fragment

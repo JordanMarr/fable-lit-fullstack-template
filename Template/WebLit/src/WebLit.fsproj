@@ -10,8 +10,12 @@
     <Compile Include="CatInfoPage.fs" />
     <Compile Include="ViewCatFactPage.fs" />
     <Compile Include="ListCatFactsPage.fs" />
+    <Compile Include="DslDemoPage.fs" />
     <Compile Include="WelcomePage.fs" />
     <Compile Include="App.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Fable.Lit.Dsl\Fable.Lit.Dsl.fsproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Fable.Lit" Version="1.4.2" />
