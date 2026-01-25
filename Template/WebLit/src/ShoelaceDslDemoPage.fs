@@ -170,14 +170,8 @@ let Page() =
                         p { $"Confirmed {confirmCount} times" }
 
                         slDialog {
-                            //bindRef (fun el -> dialogRef.Value <- Some el)
-                            //bindRef (fun part ->
-                            //    let el = part?element 
-                            //    printfn $"Dialog element bound: {el}"
-                            //    dialogRef.Value <- Some el 
-                            //)
                             bindRef (fun el -> 
-                                printfn $"Ref received: {el}"  // should read: "Ref received: [object HTMLSlDialogElement]"
+                                //printfn $"Tag: {el?tagName}"
                                 dialogRef.Value <- Some el 
                             )
                             label' "Confirmation"
