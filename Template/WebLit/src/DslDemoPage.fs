@@ -1,5 +1,6 @@
 module WebLit.DslDemoPage
 
+open Fable.Core.JsInterop
 open Lit
 open LitStore
 open Fable.Lit.Dsl
@@ -213,11 +214,77 @@ let private nestedDemo () =
         }
     )
 
+/// Demo of property bindings and event handlers.
+let private propsAndEventsDemo
+    (inputValue: string, setInputValue: string -> unit)
+    (switchEnabled: bool, setSwitchEnabled: bool -> unit)
+    (clickCount: int, setClickCount: int -> unit) =
+
+    card "Property & Event Bindings" (
+        html {
+            // Input with property binding and event handler
+            div {
+                style "margin-bottom: 15px;"
+                el "sl-input" {
+                    attr "label" "Text Input (using .value property)"
+                    prop "value" inputValue
+                    onInput (fun ev -> setInputValue(ev.target?value))
+                }
+            }
+
+            // Display the current input value
+            p {
+                "Current value: "
+                strong { inputValue }
+            }
+
+            hr { () }
+
+            // Switch with property binding
+            div {
+                style "margin-bottom: 15px;"
+                el "sl-switch" {
+                    prop "checked" switchEnabled
+                    on "sl-change" (fun ev -> setSwitchEnabled(ev.target?``checked``))
+                    "Enable feature"
+                }
+            }
+
+            // Conditional content based on switch
+            if switchEnabled then
+                el "sl-alert" {
+                    attr "variant" "success"
+                    attr "open" "true"
+                    el "sl-icon" { attr "slot" "icon"; attr "name" "check2-circle" }
+                    "Feature is now enabled!"
+                }
+
+            hr { () }
+
+            // Button with click event
+            div {
+                style "display: flex; gap: 10px; align-items: center;"
+                el "sl-button" {
+                    attr "variant" "primary"
+                    onClick (fun _ -> setClickCount(clickCount + 1))
+                    el "sl-icon" { attr "slot" "prefix"; attr "name" "hand-index-thumb" }
+                    "Click me!"
+                }
+                span { $"Clicked {clickCount} times" }
+            }
+        }
+    )
+
 [<HookComponent>]
 let Page() =
     Hook.useHmr(hmr)
     let ctx = Hook.useStore(AppContext.store)
     let isLoggedIn = not (System.String.IsNullOrWhiteSpace ctx.Username)
+
+    // State for the props and events demo
+    let inputValue, setInputValue = Hook.useState "Hello, DSL!"
+    let switchEnabled, setSwitchEnabled = Hook.useState false
+    let clickCount, setClickCount = Hook.useState 0
 
     // Render the entire page using the DSL
     html {
@@ -243,6 +310,7 @@ let Page() =
             interopDemo ()
             tableDemo ()
             nestedDemo ()
+            propsAndEventsDemo (inputValue, setInputValue) (switchEnabled, setSwitchEnabled) (clickCount, setClickCount)
         }
     }
     |> Renderer.render

@@ -23,13 +23,39 @@ module internal JsInterop =
     [<Emit("$0``")>]
     let emptyTemplate (tagFn: obj) : TemplateResult = jsNative
 
+    /// JavaScript Map for caching template strings.
+    [<Emit("new Map()")>]
+    let createMap () : obj = jsNative
+
+    [<Emit("$0.get($1)")>]
+    let mapGet (map: obj) (key: string) : obj option = jsNative
+
+    [<Emit("$0.set($1, $2)")>]
+    let mapSet (map: obj) (key: string) (value: obj) : unit = jsNative
+
+/// Template strings cache to ensure Lit can efficiently diff templates.
+/// Lit uses the template strings array reference as a cache key.
+module internal TemplateCache =
+    let private cache = JsInterop.createMap ()
+
+    /// Gets or creates a cached template strings array for the given strings.
+    let getTemplateStrings (strings: string list) : obj =
+        let key = String.concat "\u0000" strings
+        match JsInterop.mapGet cache key with
+        | Some cached -> cached
+        | None ->
+            let templateStrings = JsInterop.makeTemplateStrings (List.toArray strings)
+            JsInterop.mapSet cache key templateStrings
+            templateStrings
+
 /// Converts DSL Nodes to Lit TemplateResults.
 [<RequireQualifiedAccess>]
 module Renderer =
 
     /// Creates a Lit template from string parts and interpolated values.
+    /// Uses cached template strings to ensure Lit can efficiently diff templates.
     let private createTemplate (strings: string list) (values: obj list) : TemplateResult =
-        let templateStrings = JsInterop.makeTemplateStrings (List.toArray strings)
+        let templateStrings = TemplateCache.getTemplateStrings strings
         JsInterop.callTagFn JsInterop.htmlTagFn templateStrings (List.toArray values)
 
     /// Renders a single attribute to a string for static attributes,
@@ -49,7 +75,10 @@ module Renderer =
         | BoolAttr(name, enabled) ->
             if enabled then $" {name}", None
             else "", None
-        | EventAttr(name, handler) ->
+        | Prop(name, value) ->
+            // Property bindings use Lit's .property=${value} syntax
+            $" .{name}=", Some value
+        | Event(name, handler) ->
             // Event handlers need to be interpolated with Lit's @event syntax
             $" @{name}=", Some handler
 

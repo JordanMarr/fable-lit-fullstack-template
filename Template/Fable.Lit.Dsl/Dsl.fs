@@ -12,7 +12,8 @@ open Lit
 type Attr =
     | Attr of name: string * value: obj
     | BoolAttr of name: string * enabled: bool
-    | EventAttr of name: string * handler: obj
+    | Prop of name: string * value: obj
+    | Event of name: string * handler: obj
 
 /// Represents a node in the HTML tree.
 type Node =
@@ -273,9 +274,13 @@ module Attrs =
     let boolAttr (name: string) (enabled: bool) : Attr =
         BoolAttr(name, enabled)
 
-    /// Creates an event handler attribute.
+    /// Creates a property binding (Lit's .property=${value} syntax).
+    let prop (name: string) (value: obj) : Attr =
+        Prop(name, value)
+
+    /// Creates an event handler attribute (Lit's @event=${handler} syntax).
     let on (eventName: string) (handler: Browser.Types.Event -> unit) : Attr =
-        EventAttr(eventName, handler)
+        Event(eventName, handler)
 
     // Common attributes
     let id (value: string) : Attr = Attr("id", value)
@@ -346,25 +351,25 @@ module Attrs =
 
     // Common event handlers
     let onClick (handler: Browser.Types.MouseEvent -> unit) : Attr =
-        EventAttr("click", handler)
+        Event("click", handler)
     let onInput (handler: Browser.Types.Event -> unit) : Attr =
-        EventAttr("input", handler)
+        Event("input", handler)
     let onChange (handler: Browser.Types.Event -> unit) : Attr =
-        EventAttr("change", handler)
+        Event("change", handler)
     let onSubmit (handler: Browser.Types.Event -> unit) : Attr =
-        EventAttr("submit", handler)
+        Event("submit", handler)
     let onKeyDown (handler: Browser.Types.KeyboardEvent -> unit) : Attr =
-        EventAttr("keydown", handler)
+        Event("keydown", handler)
     let onKeyUp (handler: Browser.Types.KeyboardEvent -> unit) : Attr =
-        EventAttr("keyup", handler)
+        Event("keyup", handler)
     let onFocus (handler: Browser.Types.FocusEvent -> unit) : Attr =
-        EventAttr("focus", handler)
+        Event("focus", handler)
     let onBlur (handler: Browser.Types.FocusEvent -> unit) : Attr =
-        EventAttr("blur", handler)
+        Event("blur", handler)
     let onMouseEnter (handler: Browser.Types.MouseEvent -> unit) : Attr =
-        EventAttr("mouseenter", handler)
+        Event("mouseenter", handler)
     let onMouseLeave (handler: Browser.Types.MouseEvent -> unit) : Attr =
-        EventAttr("mouseleave", handler)
+        Event("mouseleave", handler)
 
 // =============================================================================
 // Interop Helpers
