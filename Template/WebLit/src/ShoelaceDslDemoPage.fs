@@ -34,8 +34,8 @@ let Page() =
     // Dialog state - use ref for imperative show/hide
     // Shoelace dialogs must be opened via .show() and .hide(), not by setting the open property.
     let dialogRef = Hook.useRef<obj option>(None)
-    let showDialogRef () = match dialogRef.Value with Some el -> el?show() |> ignore | None -> ()
-    let hideDialogRef () = match dialogRef.Value with Some el -> el?hide() |> ignore | None -> ()
+    let showDialogRef () = dialogRef.Value |> Option.iter (fun el -> el?show() |> ignore)
+    let hideDialogRef () = dialogRef.Value |> Option.iter (fun el -> el?hide() |> ignore)
     let confirmCount, setConfirmCount = Hook.useState 0
 
     // Button click counter
@@ -170,7 +170,7 @@ let Page() =
                         p { $"Confirmed {confirmCount} times" }
 
                         slDialog {
-                            bindRef (fun el -> dialogRef.Value <- el)
+                            bindRef (fun el -> dialogRef.Value <- Some el)
                             label' "Confirmation"
                             onSlRequestClose (fun _ -> hideDialogRef())
 

@@ -4,7 +4,8 @@
       "WebSearch",
       "WebFetch(domain:fable.io)",
       "Bash(dotnet build:*)",
-      "Bash(dotnet restore:*)"
+      "Bash(dotnet restore:*)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ]
   }
 }

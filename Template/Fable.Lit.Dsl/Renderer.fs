@@ -19,10 +19,6 @@ module internal JsInterop =
     [<Import("html", "lit")>]
     let htmlTagFn : obj = jsNative
 
-    /// The Lit ref directive for capturing element references.
-    [<Import("ref", "lit/directives/ref.js")>]
-    let litRef : (obj -> obj) = jsNative
-
     /// Creates an empty TemplateResult (Lit.nothing equivalent).
     [<Emit("$0``")>]
     let emptyTemplate (tagFn: obj) : TemplateResult = jsNative
@@ -62,14 +58,6 @@ module Renderer =
         let templateStrings = TemplateCache.getTemplateStrings strings
         JsInterop.callTagFn JsInterop.htmlTagFn templateStrings (List.toArray values)
 
-    /// Wraps a setter callback to convert undefined to None.
-    let private wrapRefCallback (setter: obj option -> unit) : obj -> unit =
-        fun el ->
-            if isNull el || el = Fable.Core.JS.undefined then
-                setter None
-            else
-                setter (Some el)
-
     /// Renders a single attribute to a string for static attributes,
     /// or returns the value for dynamic binding.
     let private renderAttrString (attr: Attr) : string * obj option =
@@ -94,9 +82,9 @@ module Renderer =
             // Event handlers need to be interpolated with Lit's @event syntax
             $" @{name}=", Some handler
         | Ref setter ->
-            // Ref bindings use Lit's ref directive: ${ref(callback)}
-            let wrappedCallback = wrapRefCallback setter
-            let refDirective = JsInterop.litRef wrappedCallback
+            // Ref bindings use Lit's built-in ref directive.
+            // The callback receives the element (or undefined when disconnected).
+            let refDirective = LitBindings.ref setter
             " ", Some refDirective
 
     /// Renders a list of attributes, returning the static string parts and dynamic values.
