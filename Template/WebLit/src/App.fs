@@ -39,6 +39,10 @@ let MyApp() =
                 <bs-icon src="code-slash" color="white" size="14px"></bs-icon>
                 DSL Demo
             </sl-button>
+            <sl-button @click={fun _ -> Router.navigatePath("/shoelace-dsl-demo")} variant={navLinkIsActive ["shoelace-dsl-demo"]} outline>
+                <bs-icon src="brush" color="white" size="14px"></bs-icon>
+                Shoelace DSL
+            </sl-button>
             
             <div style="float: right; padding: 10px">  
                 <bs-icon src="person-fill" color="white" size="18px"></bs-icon>
@@ -53,6 +57,7 @@ let MyApp() =
                 | [ "cat-fact"; fact ] ->   ViewCatFactPage.Page(fact)
                 | [ "cat-info" ] ->         CatInfoPage.Page()
                 | [ "dsl-demo" ] ->         DslDemoPage.Page()
+                | [ "shoelace-dsl-demo" ] -> ShoelaceDslDemoPage.Page()
                 | _ ->                      html $"<h1>Page not found.</h1>"
             }
         </main>
