@@ -46,7 +46,7 @@ let Page() =
     ]
 
     // Render the entire page using the DSL
-    html {
+    view {
         el "sl-breadcrumb" {
             style "margin: 10px;"
             el "sl-breadcrumb-item" { "Home" }
@@ -64,7 +64,7 @@ let Page() =
 
             // Basic Elements Demo
             card "Basic Elements" (
-                html {
+                template {
                     p { "This paragraph is rendered using the DSL." }
                     p {
                         "You can mix "
@@ -86,7 +86,7 @@ let Page() =
 
             // Lists Demo
             card "Lists with For Loops" (
-                html {
+                template {
                     p { "Cat names:" }
                     ul {
                         for item in catNames do
@@ -100,7 +100,7 @@ let Page() =
 
             // Conditional Demo
             card "Conditional Rendering" (
-                html {
+                template {
                     if isLoggedIn then
                         p {
                             el "sl-icon" { attr "name" "person-fill" }
@@ -122,7 +122,7 @@ let Page() =
 
             // Custom Elements Demo
             card "Custom Elements (Shoelace)" (
-                html {
+                template {
                     div {
                         style "display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;"
                         badge "primary" "Primary"
@@ -155,7 +155,7 @@ let Page() =
 
             // Lit Interop Demo
             card "Lit Interop" (
-                html {
+                template {
                     p { "DSL content above..." }
 
                     // Embed a raw Lit template inside the DSL
@@ -172,7 +172,7 @@ let Page() =
 
             // Table Demo
             card "Data Table" (
-                html {
+                template {
                     table {
                         style "width: 100%; border-collapse: collapse;"
                         thead {
@@ -208,7 +208,7 @@ let Page() =
 
             // Nested Components Demo
             card "Nested Components" (
-                html {
+                template {
                     div {
                         style "display: flex; flex-direction: column; gap: 10px;"
                         el "sl-alert" {
@@ -235,7 +235,7 @@ let Page() =
 
             // Property & Event Bindings Demo
             card "Property & Event Bindings" (
-                html {
+                template {
                     // Input with property binding and event handler
                     div {
                         style "margin-bottom: 15px;"
@@ -290,4 +290,3 @@ let Page() =
             )
         }
     }
-    |> Renderer.render

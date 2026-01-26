@@ -50,7 +50,7 @@ let Page() =
     // Button click counter
     let clickCount, setClickCount = Hook.useState 0
 
-    html {
+    view {
         slBreadcrumb {
             style "margin: 10px;"
             slBreadcrumbItem { "Home" }
@@ -68,7 +68,7 @@ let Page() =
 
             // Form Demo
             card "Form with slInput + slButton" (
-                html {
+                template {
                     div {
                         style "display: flex; flex-direction: column; gap: 15px;"
 
@@ -129,7 +129,7 @@ let Page() =
 
             // Toggle Demo
             card "Toggle with slSwitch" (
-                html {
+                template {
                     div {
                         style "display: flex; flex-direction: column; gap: 15px;"
 
@@ -165,7 +165,7 @@ let Page() =
 
             // Dialog Demo
             card "Dialog with slDialog" (
-                html {
+                template {
                     div {
                         style "display: flex; flex-direction: column; gap: 15px;"
 
@@ -209,7 +209,7 @@ let Page() =
 
             // Drawer Demo
             card "Drawer with slDrawer" (
-                html {
+                template {
                     div {
                         style "display: flex; flex-direction: column; gap: 15px;"
 
@@ -259,7 +259,7 @@ let Page() =
 
             // Tooltip Demo
             card "Tooltip with slTooltip" (
-                html {
+                template {
                     div {
                         style "display: flex; flex-direction: column; gap: 15px;"
 
@@ -311,7 +311,7 @@ let Page() =
 
             // Details Demo
             card "Details with slDetails" (
-                html {
+                template {
                     div {
                         style "display: flex; flex-direction: column; gap: 15px;"
 
@@ -353,7 +353,7 @@ let Page() =
 
             // Animation Demo
             card "Animation with slAnimation" (
-                html {
+                template {
                     div {
                         style "display: flex; flex-direction: column; gap: 15px;"
 
@@ -386,7 +386,7 @@ let Page() =
 
             // Button Variants Demo
             card "Button Variants & Sizes" (
-                html {
+                template {
                     div {
                         style "display: flex; flex-direction: column; gap: 15px;"
 
@@ -424,7 +424,7 @@ let Page() =
 
             // Badges Demo
             card "Badges & Tags" (
-                html {
+                template {
                     div {
                         style "display: flex; flex-direction: column; gap: 15px;"
 
@@ -458,7 +458,7 @@ let Page() =
 
             // Click Counter Demo
             card "Event Handling" (
-                html {
+                template {
                     div {
                         style "display: flex; flex-direction: column; gap: 15px;"
 
@@ -490,4 +490,3 @@ let Page() =
             )
         }
     }
-    |> Renderer.render

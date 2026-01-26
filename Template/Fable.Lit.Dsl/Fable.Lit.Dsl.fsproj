@@ -5,8 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Dsl.fs" />
+    <Compile Include="Types.fs" />
     <Compile Include="Renderer.fs" />
+    <Compile Include="Dsl.fs" />
   </ItemGroup>
 
   <ItemGroup>

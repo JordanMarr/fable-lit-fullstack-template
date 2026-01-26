@@ -1,30 +1,6 @@
 namespace Fable.Lit.Dsl
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Lit
-
-// =============================================================================
-// AST Types (renderer-agnostic)
-// =============================================================================
-
-/// Represents an HTML attribute.
-type Attr =
-    | Attr of name: string * value: obj
-    | BoolAttr of name: string * enabled: bool
-    | Prop of name: string * value: obj
-    | Event of name: string * handler: obj
-    | Ref of setter: (obj -> unit)
-
-/// Represents a node in the HTML tree.
-type Node =
-    | Element of tag: string * attrs: Attr list * children: Node list
-    | Text of string
-    | Fragment of Node list
-    | RawHtml of string
-    | Template of TemplateResult
-    | AttrNode of Attr
-    | Nothing
 
 // =============================================================================
 // Computation Expression Builders
@@ -91,7 +67,8 @@ type ElementBuilder(tag: string) =
         Element(tag, List.rev attrs, List.rev children)
 
 /// Builder for creating HTML fragments (no wrapper element).
-type HtmlBuilder() =
+/// Returns a Node for use in nested contexts.
+type TemplateBuilder() =
 
     member _.Yield(text: string) : Node =
         Text text
@@ -102,8 +79,8 @@ type HtmlBuilder() =
     member _.Yield(attr: Attr) : Node =
         AttrNode attr
 
-    member _.Yield(template: TemplateResult) : Node =
-        Template template
+    member _.Yield(t: TemplateResult) : Node =
+        Template t
 
     member _.Yield(()) : Node =
         Nothing
@@ -130,11 +107,24 @@ type HtmlBuilder() =
         xs |> Seq.map f |> Seq.toList |> Fragment
 
     member _.Run(content: Node) : Node =
-        // For HtmlBuilder, just return the content as-is (possibly wrapped in Fragment)
+        // Return the content as-is (possibly simplified)
         match content with
         | Nothing -> Nothing
         | Fragment [ single ] -> single
         | other -> other
+
+/// Builder for creating views that auto-render to TemplateResult.
+/// Use this at the top level of components.
+type ViewBuilder() =
+    inherit TemplateBuilder()
+
+    member _.Run(content: Node) : TemplateResult =
+        let node =
+            match content with
+            | Nothing -> Nothing
+            | Fragment [ single ] -> single
+            | other -> other
+        Renderer.render node
 
 // =============================================================================
 // DSL Entry Points
@@ -142,8 +132,13 @@ type HtmlBuilder() =
 
 [<AutoOpen>]
 module HtmlDsl =
-    /// Creates an HTML fragment or node.
-    let html = HtmlBuilder()
+    /// Creates an HTML fragment or node (returns Node).
+    /// Use this for nested fragments inside elements.
+    let template = TemplateBuilder()
+
+    /// Creates a view that auto-renders to TemplateResult.
+    /// Use this at the top level of components.
+    let view = ViewBuilder()
 
     /// Creates a custom element with the specified tag name.
     let el (tag: string) = ElementBuilder(tag)
@@ -288,7 +283,7 @@ module Attrs =
 
     /// Creates a property binding (Lit's .property=${value} syntax).
     let prop (name: string) (value: obj) : Attr =
-        Prop(name, value)
+        Attr.Prop(name, value)
 
     /// Creates an event handler attribute (Lit's @event=${handler} syntax).
     let on (eventName: string) (handler: Browser.Types.Event -> unit) : Attr =

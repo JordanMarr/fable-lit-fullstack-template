@@ -11,7 +11,7 @@ let private hmr = HMR.createToken()
 let Page (fact: string) =
     Hook.useHmr(hmr)
 
-    html {
+    view {
         slBreadcrumb {
             style "margin: 10px;"
             slBreadcrumbItem {
@@ -53,4 +53,3 @@ let Page (fact: string) =
             }
         }
     }
-    |> Renderer.render

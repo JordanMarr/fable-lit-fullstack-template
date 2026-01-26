@@ -22,7 +22,7 @@ let MyApp() =
         | "cat-fact" :: _, ["cat-facts"] -> true
         | _ -> false
 
-    html {
+    view {
         nav {
             navButton "Home" "house" "/" (isActive [])
             navButton "View Cat Facts" "list-ul" "/cat-facts" (isActive ["cat-facts"])
@@ -64,4 +64,3 @@ let MyApp() =
             closable true
         }
     }
-    |> Renderer.render

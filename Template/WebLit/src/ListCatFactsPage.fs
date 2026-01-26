@@ -55,7 +55,7 @@ let Page() =
     Hook.useHmr(hmr)
     let model, dispatch = Hook.useElmish(init, update)
 
-    html {
+    view {
         slBreadcrumb {
             style "margin: 10px;"
             slBreadcrumbItem {
@@ -119,7 +119,7 @@ let Page() =
             }
             tbody {
                 match model.CatFacts with
-                | [||] -> 
+                | [||] ->
                     tr {
                         td { nothing }
                         td { attr "colspan" "2"; "Fetching cat facts..." }
@@ -139,4 +139,3 @@ let Page() =
             }
         }
     }
-    |> Renderer.render
