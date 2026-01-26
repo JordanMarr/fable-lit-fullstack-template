@@ -38,7 +38,7 @@ let Page (fact: string) =
             }
 
             strong { "Fact" }
-            br { nothing }
+            br { }
             div { fact }
             small { "Meow!" }
 

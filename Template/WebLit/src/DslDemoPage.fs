@@ -75,7 +75,7 @@ let Page() =
                         code { "code" }
                         " text."
                     }
-                    hr { nothing }
+                    hr { }
                     div {
                         class' "demo-box"
                         style "padding: 10px; background: #f0f0f0; border-radius: 4px;"
@@ -252,7 +252,7 @@ let Page() =
                         strong { inputValue }
                     }
 
-                    hr { nothing }
+                    hr { }
 
                     // Switch with property binding
                     div {

@@ -113,7 +113,7 @@ let Page() =
             style "max-height: 300px; overflow-y: auto; margin-top: 10px"
             thead {
                 tr {
-                    th { style "width: 80px"; nothing }
+                    th { style "width: 80px" }
                     th { style "width: 800px"; "Cat Fact" }
                 }
             }

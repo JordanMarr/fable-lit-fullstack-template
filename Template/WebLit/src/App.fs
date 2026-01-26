@@ -56,7 +56,7 @@ let MyApp() =
                 h1 { "Page not found." }
         }
 
-        footer { nothing }
+        footer { }
 
         slAlert {
             id "toaster"
