@@ -1,10 +1,11 @@
 module WebLit.App
 
-open Elmish
 open Lit
-open Lit.Elmish
 open LitStore
 open LitRouter
+open Fable.Lit.Dsl
+open Fable.Lit.Dsl.Shoelace
+open Ctrls.Bootstrap
 
 Registrations.registerComponents()
 Ctrls.register()
@@ -14,54 +15,53 @@ let MyApp() =
     let _ = LitElement.init(fun cfg -> cfg.useShadowDom <- false)
     let ctx = Hook.useStore(AppContext.store)
     let path = Hook.useRouter(RouteMode.Path)
-    
-    let navLinkIsActive pathToCheck = 
+
+    let isActive pathToCheck =
         match path, pathToCheck with
-        | c, p when c = p -> "primary"
-        | "cat-fact" :: _, "cat-facts" :: _ -> "primary"
-        | _ -> "default"
+        | c, p when c = p -> true
+        | "cat-fact" :: _, ["cat-facts"] -> true
+        | _ -> false
 
-    html $"""
-        <nav>
-            <sl-button @click={fun _ -> Router.navigatePath("/")} variant={navLinkIsActive []} outline>
-                <bs-icon src="house" color="white" size="14px"></bs-icon>
-                Home
-            </sl-button>
-            <sl-button @click={fun _ -> Router.navigatePath("/cat-facts")} variant={navLinkIsActive ["cat-facts"]} outline>
-                <bs-icon src="list-ul" color="white" size="14px"></bs-icon>
-                View Cat Facts
-            </sl-button>
-            <sl-button @click={fun _ -> Router.navigatePath("/cat-info")} variant={navLinkIsActive ["cat-info"]} outline>
-                <bs-icon src="info-circle-fill" color="white" size="14px"></bs-icon>
-                Cat Info Form
-            </sl-button>
-            <sl-button @click={fun _ -> Router.navigatePath("/dsl-demo")} variant={navLinkIsActive ["dsl-demo"]} outline>
-                <bs-icon src="code-slash" color="white" size="14px"></bs-icon>
-                DSL Demo
-            </sl-button>
-            <sl-button @click={fun _ -> Router.navigatePath("/shoelace-dsl-demo")} variant={navLinkIsActive ["shoelace-dsl-demo"]} outline>
-                <bs-icon src="brush" color="white" size="14px"></bs-icon>
-                Shoelace DSL
-            </sl-button>
-            
-            <div style="float: right; padding: 10px">  
-                <bs-icon src="person-fill" color="white" size="18px"></bs-icon>
-                {ctx.Username}
-            </div>
-        </nav>
-        <main style="margin: 20px;">
-            {
-                match path with
-                | [ ] ->                    WelcomePage.Page()
-                | [ "cat-facts" ] ->        ListCatFactsPage.Page()
-                | [ "cat-fact"; fact ] ->   ViewCatFactPage.Page(fact)
-                | [ "cat-info" ] ->         CatInfoPage.Page()
-                | [ "dsl-demo" ] ->         DslDemoPage.Page()
-                | [ "shoelace-dsl-demo" ] -> ShoelaceDslDemoPage.Page()
-                | _ ->                      html $"<h1>Page not found.</h1>"
+    html {
+        nav {
+            navButton "Home" "house" "/" (isActive [])
+            navButton "View Cat Facts" "list-ul" "/cat-facts" (isActive ["cat-facts"])
+            navButton "Cat Info Form" "info-circle-fill" "/cat-info" (isActive ["cat-info"])
+            navButton "DSL Demo" "code-slash" "/dsl-demo" (isActive ["dsl-demo"])
+            navButton "Shoelace DSL" "brush" "/shoelace-dsl-demo" (isActive ["shoelace-dsl-demo"])
+
+            div {
+                style "float: right; padding: 10px"
+                bsIcon "person-fill" "white" "18px"
+                ctx.Username
             }
-        </main>
-        <footer></footer>
+        }
 
-        <sl-alert id="toaster" duration="3000" closable></sl-alert>
-        """
+        main {
+            style "margin: 20px;"
+            match path with
+            | [] ->
+                lit (WelcomePage.Page())
+            | ["cat-facts"] ->
+                lit (ListCatFactsPage.Page())
+            | ["cat-fact"; fact] ->
+                lit (ViewCatFactPage.Page(fact))
+            | ["cat-info"] ->
+                lit (CatInfoPage.Page())
+            | ["dsl-demo"] ->
+                lit (DslDemoPage.Page())
+            | ["shoelace-dsl-demo"] ->
+                lit (ShoelaceDslDemoPage.Page())
+            | _ ->
+                h1 { "Page not found." }
+        }
+
+        footer { nothing }
+
+        slAlert {
+            id "toaster"
+            prop "duration" 3000
+            closable true
+        }
+    }
+    |> Renderer.render

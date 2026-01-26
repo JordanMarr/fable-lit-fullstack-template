@@ -39,8 +39,35 @@ module Toast =
 
 open Lit
 open Fable.Core
+open Fable.Lit.Dsl
+open Fable.Lit.Dsl.Shoelace
+open LitRouter
 
 let register () = ()
+
+module Bootstrap =
+    /// Bootstrap icon helper
+    let bsIcon (src: string) (color: string) (size: string) =
+        el "bs-icon" {
+            attr "src" src
+            attr "color" color
+            attr "size" size
+        }
+
+    /// Navigation button helper
+    let navButton (label: string) (iconSrc: string) (path: string) (isActive: bool) =
+        slButton {
+            if isActive then variantPrimary else variantDefault
+            outline true
+            onClick (fun _ -> Router.navigatePath(path))
+            el "bs-icon" {
+                slot' "prefix"
+                attr "src" iconSrc
+                attr "color" "white"
+                attr "size" "14px"
+            }
+            label
+        }
 
 [<HookComponent>]
 let ValidationSummary(validation: Shared.Validation.ValidationResult) =
