@@ -337,5 +337,3 @@ The new DSL removes years of friction and opens the door to a more expressive, m
 Have fun — and build something amazing.
 
 ---
-
-If you want, I can help you refine the tone, add badges, or generate a small architecture diagram to include in the README.
