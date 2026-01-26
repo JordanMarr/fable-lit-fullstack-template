@@ -1,1 +1,2 @@
-nuget.exe pack package.nuspec
+nuget.exe pack package.nuspec -OutputDirectory .build
+pause
