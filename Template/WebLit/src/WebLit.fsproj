@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Ctrls.fs" />
+    <Compile Include="LitStore.fs" />
     <Compile Include="AppContext.fs" />
     <Compile Include="Server.fs" />
     <Compile Include="Registrations.fs" />
@@ -16,15 +17,13 @@
     <Compile Include="App.fs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Fable.Lit.Dsl\Fable.Lit.Dsl.fsproj" />
-    <ProjectReference Include="..\..\Fable.Lit.Dsl.Shoelace\Fable.Lit.Dsl.Shoelace.fsproj" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Fable.Lit" Version="1.4.2" />
+    <PackageReference Include="Fable.Lit.Dsl" Version="1.0.1" />
+    <PackageReference Include="Fable.Lit.Dsl.Shoelace" Version="1.0.1" />
     <PackageReference Include="Fable.Lit.Elmish" Version="1.4.0" />
     <PackageReference Include="Fable.LitRouter" Version="1.0.0" />
-    <PackageReference Include="Fable.LitStore" Version="1.0.0-beta-001" />
     <PackageReference Include="Fable.Remoting.Client" Version="7.19.0" />
+    <PackageReference Include="Fable.Store" Version="1.0.0-beta-005" />
     <PackageReference Include="Thoth.Json" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
