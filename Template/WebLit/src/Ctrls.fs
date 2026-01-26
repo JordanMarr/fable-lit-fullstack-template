@@ -39,13 +39,14 @@ module Toast =
 
 open Lit
 open Fable.Core
-open Fable.Lit.Dsl
-open Fable.Lit.Dsl.Shoelace
-open LitRouter
 
 let register () = ()
 
 module Bootstrap =
+    open Fable.Lit.Dsl
+    open Fable.Lit.Dsl.Shoelace
+    open LitRouter
+
     /// Bootstrap icon helper
     let bsIcon (src: string) (color: string) (size: string) =
         el "bs-icon" {

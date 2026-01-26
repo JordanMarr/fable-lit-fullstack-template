@@ -45,15 +45,18 @@ let registerComponents () =
         importDynamic Shoelace.Asset.Breadcrumb
         importDynamic Shoelace.Asset.BreadcrumbItem
         importDynamic Shoelace.Asset.Button
+        importDynamic Shoelace.Asset.ButtonGroup
         importDynamic Shoelace.Asset.Card
         importDynamic Shoelace.Asset.Details
         importDynamic Shoelace.Asset.Dialog
         importDynamic Shoelace.Asset.Drawer
+        importDynamic Shoelace.Asset.Dropdown
         importDynamic Shoelace.Asset.Icon
         importDynamic Shoelace.Asset.Input
+        importDynamic Shoelace.Asset.Menu
+        importDynamic Shoelace.Asset.MenuItem
         importDynamic Shoelace.Asset.Switch
         importDynamic Shoelace.Asset.Tag
         importDynamic Shoelace.Asset.Tooltip
-        importDynamic Shoelace.Asset.Dropdown
     |]
     |> Shoelace.startImports
