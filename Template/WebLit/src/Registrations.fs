@@ -36,38 +36,24 @@ let registerFluentUI() =
 /// Imports and registers components
 let registerComponents () =
     registerFluentUI()
-    Shoelace.registerWithAssets Shoelace.Profile.all [ Shoelace.DarkTheme ]
-
-/// This module contains manual registration examples that are intentionally preserved for educational purposes.
-/// It demonstrates how to import and register third-party Web Components using Fable's JS interop.
-/// You can use this pattern when integrating other libraries beyond Shoelace.
-module Raw =
-    let private registerShoelace() =
-        // Set the base path for Shoelace assets (icons, etc.)
-        let setBasePath: string -> unit = import "setBasePath" "@shoelace-style/shoelace/dist/utilities/base-path.js"
-        setBasePath "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/"
-
-        [|
-            importDynamic "@shoelace-style/shoelace/dist/themes/dark.css"
-            importDynamic "@shoelace-style/shoelace/dist/components/button/button.js"
-            importDynamic "@shoelace-style/shoelace/dist/components/card/card.js"
-            importDynamic "@shoelace-style/shoelace/dist/components/breadcrumb/breadcrumb.js"
-            importDynamic "@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js"
-            importDynamic "@shoelace-style/shoelace/dist/components/button-group/button-group.js"
-            importDynamic "@shoelace-style/shoelace/dist/components/dropdown/dropdown.js"
-            importDynamic "@shoelace-style/shoelace/dist/components/menu/menu.js"
-            importDynamic "@shoelace-style/shoelace/dist/components/menu-item/menu-item.js"
-            importDynamic "@shoelace-style/shoelace/dist/components/input/input.js"
-            importDynamic "@shoelace-style/shoelace/dist/components/alert/alert.js"
-            importDynamic "@shoelace-style/shoelace/dist/components/dialog/dialog.js"
-            importDynamic "@shoelace-style/shoelace/dist/components/drawer/drawer.js"
-            importDynamic "@shoelace-style/shoelace/dist/components/tooltip/tooltip.js"
-            importDynamic "@shoelace-style/shoelace/dist/components/details/details.js"
-            importDynamic "@shoelace-style/shoelace/dist/components/animation/animation.js"
-            importDynamic "@shoelace-style/shoelace/dist/components/switch/switch.js"
-            importDynamic "@shoelace-style/shoelace/dist/components/icon/icon.js"
-            importDynamic "@shoelace-style/shoelace/dist/components/badge/badge.js"
-            importDynamic "@shoelace-style/shoelace/dist/components/tag/tag.js"
-        |]
-        |> allSettled
-        |> Promise.start
+    Shoelace.setBasePath()
+    [|
+        importDynamic Shoelace.Asset.DarkTheme
+        importDynamic Shoelace.Asset.Alert
+        importDynamic Shoelace.Asset.Animation
+        importDynamic Shoelace.Asset.Badge
+        importDynamic Shoelace.Asset.Breadcrumb
+        importDynamic Shoelace.Asset.BreadcrumbItem
+        importDynamic Shoelace.Asset.Button
+        importDynamic Shoelace.Asset.Card
+        importDynamic Shoelace.Asset.Details
+        importDynamic Shoelace.Asset.Dialog
+        importDynamic Shoelace.Asset.Drawer
+        importDynamic Shoelace.Asset.Icon
+        importDynamic Shoelace.Asset.Input
+        importDynamic Shoelace.Asset.Switch
+        importDynamic Shoelace.Asset.Tag
+        importDynamic Shoelace.Asset.Tooltip
+        importDynamic Shoelace.Asset.Dropdown
+    |]
+    |> Shoelace.startImports
