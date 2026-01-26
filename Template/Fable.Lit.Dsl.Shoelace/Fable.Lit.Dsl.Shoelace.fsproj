@@ -7,6 +7,11 @@
 
   <ItemGroup>
     <Compile Include="Dialog.fs" />
+    <Compile Include="Drawer.fs" />
+    <Compile Include="Tooltip.fs" />
+    <Compile Include="Menu.fs" />
+    <Compile Include="Details.fs" />
+    <Compile Include="Animation.fs" />
     <Compile Include="ShoelaceElements.fs" />
     <Compile Include="ShoelaceAttrs.fs" />
     <Compile Include="ShoelaceEvents.fs" />

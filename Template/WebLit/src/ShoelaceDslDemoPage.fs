@@ -35,6 +35,18 @@ let Page() =
     let dialog = Dialog.createRef()
     let confirmCount, setConfirmCount = Hook.useState 0
 
+    // Drawer state
+    let drawer = Drawer.createRef()
+
+    // Tooltip state (for imperative demo)
+    let tooltip = Tooltip.createRef()
+
+    // Details state
+    let details = Details.createRef()
+
+    // Animation state - commented out for testing
+    // let animation = Animation.createRef()
+
     // Button click counter
     let clickCount, setClickCount = Hook.useState 0
 
@@ -194,6 +206,183 @@ let Page() =
                     }
                 }
             )
+
+            // Drawer Demo
+            card "Drawer with slDrawer" (
+                html {
+                    div {
+                        style "display: flex; flex-direction: column; gap: 15px;"
+
+                        slButton {
+                            variantPrimary
+                            onClick (fun _ -> Drawer.show drawer)
+                            slIcon { slot' "prefix"; iconName "layout-sidebar" }
+                            "Open Drawer"
+                        }
+
+                        slDrawer {
+                            Drawer.bind drawer
+                            label' "Settings Panel"
+
+                            div {
+                                style "display: flex; flex-direction: column; gap: 15px;"
+
+                                slInput {
+                                    label' "Setting 1"
+                                    placeholder' "Enter value"
+                                }
+
+                                slSwitch { "Enable notifications" }
+
+                                slSwitch { "Auto-save" }
+                            }
+
+                            div {
+                                slot' "footer"
+                                style "display: flex; gap: 10px; justify-content: flex-end;"
+
+                                slButton {
+                                    variantDefault
+                                    onClick (fun _ -> Drawer.hide drawer)
+                                    "Close"
+                                }
+                                slButton {
+                                    variantPrimary
+                                    onClick (fun _ -> Drawer.hide drawer)
+                                    "Save"
+                                }
+                            }
+                        }
+                    }
+                }
+            )
+
+            // Tooltip Demo
+            card "Tooltip with slTooltip" (
+                html {
+                    div {
+                        style "display: flex; flex-direction: column; gap: 15px;"
+
+                        div {
+                            style "display: flex; gap: 10px; flex-wrap: wrap;"
+
+                            slTooltip {
+                                content' "This is a helpful tooltip!"
+                                slButton { variantPrimary; "Hover me" }
+                            }
+
+                            slTooltip {
+                                content' "Tooltip on the right"
+                                placement "right"
+                                slButton { variantSuccess; "Right tooltip" }
+                            }
+
+                            slTooltip {
+                                content' "Tooltip below"
+                                placement "bottom"
+                                slButton { variantNeutral; "Bottom tooltip" }
+                            }
+                        }
+
+                        div {
+                            style "display: flex; gap: 10px; align-items: center;"
+
+                            slTooltip {
+                                Tooltip.bind tooltip
+                                content' "Controlled via ref!"
+                                trigger' "manual"
+                                slBadge { variantWarning; "Manual tooltip target" }
+                            }
+
+                            slButton {
+                                sizeSmall
+                                onClick (fun _ -> Tooltip.show tooltip)
+                                "Show"
+                            }
+                            slButton {
+                                sizeSmall
+                                onClick (fun _ -> Tooltip.hide tooltip)
+                                "Hide"
+                            }
+                        }
+                    }
+                }
+            )
+
+            // Details Demo
+            card "Details with slDetails" (
+                html {
+                    div {
+                        style "display: flex; flex-direction: column; gap: 15px;"
+
+                        slDetails {
+                            summary' "Click to expand"
+                            "This content is hidden by default and revealed when you click the summary."
+                        }
+
+                        slDetails {
+                            summary' "Another section"
+                            open' true
+                            "This section starts open. You can collapse it by clicking."
+                        }
+
+                        slDetails {
+                            Details.bind details
+                            summary' "Controlled via ref"
+                            "This details panel can be controlled programmatically."
+                        }
+
+                        div {
+                            style "display: flex; gap: 10px;"
+                            slButton {
+                                sizeSmall
+                                variantPrimary
+                                onClick (fun _ -> Details.show details)
+                                "Expand"
+                            }
+                            slButton {
+                                sizeSmall
+                                variantNeutral
+                                onClick (fun _ -> Details.hide details)
+                                "Collapse"
+                            }
+                        }
+                    }
+                }
+            )
+
+            // Animation Demo - commented out for testing
+            // card "Animation with slAnimation" (
+            //     html {
+            //         div {
+            //             style "display: flex; flex-direction: column; gap: 15px;"
+
+            //             slAnimation {
+            //                 Animation.bind animation
+            //                 name' "bounce"
+            //                 duration 1000
+            //                 iterations 1
+            //                 slBadge { variantPrimary; pill true; "Bounce me!" }
+            //             }
+
+            //             div {
+            //                 style "display: flex; gap: 10px;"
+            //                 slButton {
+            //                     variantPrimary
+            //                     onClick (fun _ -> Animation.play animation)
+            //                     slIcon { slot' "prefix"; iconName "play-fill" }
+            //                     "Play Animation"
+            //                 }
+            //                 slButton {
+            //                     variantNeutral
+            //                     onClick (fun _ -> Animation.cancel animation)
+            //                     slIcon { slot' "prefix"; iconName "stop-fill" }
+            //                     "Cancel"
+            //                 }
+            //             }
+            //         }
+            //     }
+            // )
 
             // Button Variants Demo
             card "Button Variants & Sizes" (

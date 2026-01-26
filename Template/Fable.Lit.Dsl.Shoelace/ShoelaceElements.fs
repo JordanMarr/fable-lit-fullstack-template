@@ -79,3 +79,4 @@ module ShoelaceElements =
     let slInclude = ElementBuilder("sl-include")
     let slMutationObserver = ElementBuilder("sl-mutation-observer")
     let slResizeObserver = ElementBuilder("sl-resize-observer")
+    let slAnimation = ElementBuilder("sl-animation")

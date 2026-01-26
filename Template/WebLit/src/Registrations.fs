@@ -42,7 +42,7 @@ let private registerShoelace() =
         importDynamic "@shoelace-style/shoelace/dist/components/button/button.js"
         importDynamic "@shoelace-style/shoelace/dist/components/card/card.js"
         importDynamic "@shoelace-style/shoelace/dist/components/breadcrumb/breadcrumb.js"
-        importDynamic "@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js" 
+        importDynamic "@shoelace-style/shoelace/dist/components/breadcrumb-item/breadcrumb-item.js"
         importDynamic "@shoelace-style/shoelace/dist/components/button-group/button-group.js"
         importDynamic "@shoelace-style/shoelace/dist/components/dropdown/dropdown.js"
         importDynamic "@shoelace-style/shoelace/dist/components/menu/menu.js"
@@ -50,6 +50,14 @@ let private registerShoelace() =
         importDynamic "@shoelace-style/shoelace/dist/components/input/input.js"
         importDynamic "@shoelace-style/shoelace/dist/components/alert/alert.js"
         importDynamic "@shoelace-style/shoelace/dist/components/dialog/dialog.js"
+        importDynamic "@shoelace-style/shoelace/dist/components/drawer/drawer.js"
+        importDynamic "@shoelace-style/shoelace/dist/components/tooltip/tooltip.js"
+        importDynamic "@shoelace-style/shoelace/dist/components/details/details.js"
+        importDynamic "@shoelace-style/shoelace/dist/components/animation/animation.js"
+        importDynamic "@shoelace-style/shoelace/dist/components/switch/switch.js"
+        importDynamic "@shoelace-style/shoelace/dist/components/icon/icon.js"
+        importDynamic "@shoelace-style/shoelace/dist/components/badge/badge.js"
+        importDynamic "@shoelace-style/shoelace/dist/components/tag/tag.js"
     |]
     |> allSettled
     |> Promise.start

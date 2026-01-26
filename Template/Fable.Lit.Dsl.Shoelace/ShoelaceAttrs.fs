@@ -223,6 +223,60 @@ module ShoelaceAttrs =
     let noHeader (hide: bool) = prop "noHeader" hide
 
     // =========================================================================
+    // Tooltip specific
+    // =========================================================================
+
+    /// Sets the content property (for tooltips).
+    let content' (text: string) = prop "content" text
+
+    /// Sets the trigger property (for tooltips: hover, focus, click, manual).
+    let trigger' (value: string) = prop "trigger" value
+
+    /// Sets the distance from the target (for tooltips, popups).
+    let distance (value: int) = prop "distance" value
+
+    /// Sets the skidding offset (for tooltips, popups).
+    let skidding (value: int) = prop "skidding" value
+
+    // =========================================================================
+    // Details specific
+    // =========================================================================
+
+    /// Sets the summary property (for details).
+    let summary' (text: string) = prop "summary" text
+
+    // =========================================================================
+    // Animation specific
+    // =========================================================================
+
+    /// Sets the animation duration in milliseconds.
+    let duration (ms: int) = prop "duration" ms
+
+    /// Sets the number of iterations (use int for finite, or "Infinity" for infinite).
+    let iterations (count: int) = prop "iterations" count
+
+    /// Sets infinite iterations.
+    let iterationsInfinite = prop "iterations" "Infinity"
+
+    /// Sets the animation delay in milliseconds.
+    let delay (ms: int) = prop "delay" ms
+
+    /// Sets the animation direction (normal, reverse, alternate, alternate-reverse).
+    let direction (value: string) = prop "direction" value
+
+    /// Sets the easing function.
+    let easing (value: string) = prop "easing" value
+
+    /// Sets the fill mode (none, forwards, backwards, both).
+    let fill (value: string) = prop "fill" value
+
+    /// Sets the playback rate.
+    let playbackRate (rate: float) = prop "playbackRate" rate
+
+    /// Sets whether the animation plays on load.
+    let play (autoPlay: bool) = prop "play" autoPlay
+
+    // =========================================================================
     // Tab specific
     // =========================================================================
 
