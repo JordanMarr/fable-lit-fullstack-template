@@ -83,39 +83,6 @@ module ShoelaceRegistration =
             let [<Literal>] TreeItem = "@shoelace-style/shoelace/dist/components/tree-item/tree-item.js"
             let [<Literal>] VisuallyHidden = "@shoelace-style/shoelace/dist/components/visually-hidden/visually-hidden.js"
 
-            /// Convenience groups for common registration patterns.
-            module All =
-                let core = [
-                    Button; Card; Input; Alert; Dropdown; Menu; MenuItem; MenuLabel
-                    Checkbox; Radio; RadioButton; RadioGroup; Select; Option; Switch; Textarea; Range
-                ]
-
-                let overlays = [
-                    Dialog; Drawer; Tooltip; Details; Popup
-                ]
-
-                let navigation = [
-                    Breadcrumb; BreadcrumbItem; ButtonGroup; Tab; TabGroup; TabPanel
-                ]
-
-                let feedback = [
-                    Alert; Badge; Tag; Spinner; ProgressBar; ProgressRing; Skeleton
-                ]
-
-                let media = [
-                    Avatar; Icon; IconButton; AnimatedImage; Carousel; CarouselItem; ImageComparer
-                ]
-
-                let utilities = [
-                    Animation; CopyButton; Divider; FormatBytes; FormatDate; FormatNumber
-                    Include; MutationObserver; QrCode; Rating; RelativeTime; ResizeObserver
-                    SplitPanel; Tree; TreeItem; VisuallyHidden; ColorPicker
-                ]
-
-                let all =
-                    core @ overlays @ navigation @ feedback @ media @ utilities
-                    |> List.distinct
-
         /// Sets the base path for Shoelace assets (icons, etc.).
         /// Call this before importing components.
         let setBasePath () : unit =
