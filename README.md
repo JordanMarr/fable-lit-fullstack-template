@@ -37,7 +37,7 @@ You can still use interpolated string templates directly with `html { ... }`.
 
 ```fsharp
 html $"""
-  <sl-button @click=${fun _ -> dispatch Increment}>
+  <sl-button @click=${fun _ -> setCount(count + 1)}>
     Count: {state.Count}
   </sl-button>
 """
