@@ -30,6 +30,23 @@ No HTML strings.
 No dependency arrays.  
 Just clean, strongly‑typed F#.
 
+<details>
+  <summary>Prefer raw Lit templates instead?</summary>
+
+You can still use interpolated string templates directly with `html { ... }`.
+
+```fsharp
+html $"""
+  <sl-button @click=${fun _ -> dispatch Increment}>
+    Count: {state.Count}
+  </sl-button>
+"""
+```
+
+For best results, install the VS Code extension for F# template highlighting:  
+https://marketplace.visualstudio.com/items?itemName=alfonsogarciacaro.vscode-template-fsharp-highlight
+</details>
+
 ---
 
 # 🚀 Getting Started
