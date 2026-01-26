@@ -44,8 +44,8 @@ let Page() =
     // Details state
     let details = Details.createRef()
 
-    // Animation state - commented out for testing
-    // let animation = Animation.createRef()
+    // Animation state
+    let animation = Animation.createRef()
 
     // Button click counter
     let clickCount, setClickCount = Hook.useState 0
@@ -351,38 +351,38 @@ let Page() =
                 }
             )
 
-            // Animation Demo - commented out for testing
-            // card "Animation with slAnimation" (
-            //     html {
-            //         div {
-            //             style "display: flex; flex-direction: column; gap: 15px;"
+            // Animation Demo
+            card "Animation with slAnimation" (
+                html {
+                    div {
+                        style "display: flex; flex-direction: column; gap: 15px;"
 
-            //             slAnimation {
-            //                 Animation.bind animation
-            //                 name' "bounce"
-            //                 duration 1000
-            //                 iterations 1
-            //                 slBadge { variantPrimary; pill true; "Bounce me!" }
-            //             }
+                        slAnimation {
+                            Animation.bind animation
+                            name' "bounce"
+                            duration 1000
+                            iterations 1
+                            slBadge { variantPrimary; pill true; "Bounce me!" }
+                        }
 
-            //             div {
-            //                 style "display: flex; gap: 10px;"
-            //                 slButton {
-            //                     variantPrimary
-            //                     onClick (fun _ -> Animation.play animation)
-            //                     slIcon { slot' "prefix"; iconName "play-fill" }
-            //                     "Play Animation"
-            //                 }
-            //                 slButton {
-            //                     variantNeutral
-            //                     onClick (fun _ -> Animation.cancel animation)
-            //                     slIcon { slot' "prefix"; iconName "stop-fill" }
-            //                     "Cancel"
-            //                 }
-            //             }
-            //         }
-            //     }
-            // )
+                        div {
+                            style "display: flex; gap: 10px;"
+                            slButton {
+                                variantPrimary
+                                onClick (fun _ -> Animation.play animation)
+                                slIcon { slot' "prefix"; iconName "play-fill" }
+                                "Play Animation"
+                            }
+                            slButton {
+                                variantNeutral
+                                onClick (fun _ -> Animation.stop animation)
+                                slIcon { slot' "prefix"; iconName "stop-fill" }
+                                "Stop"
+                            }
+                        }
+                    }
+                }
+            )
 
             // Button Variants Demo
             card "Button Variants & Sizes" (

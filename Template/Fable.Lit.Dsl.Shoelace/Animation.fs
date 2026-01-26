@@ -42,12 +42,24 @@ module Animation =
                 r.Element <- Some el
         )
 
+    /// Starts the animation by setting the play property to true.
     let play (r: AnimationRef) =
         match r.Element with
-        | Some el -> el?play() |> ignore
+        | Some el -> el?play <- true
         | None -> ()
 
+    /// Stops the animation by setting the play property to false.
+    let stop (r: AnimationRef) =
+        r.Element 
+        |> Option.iter (fun el -> el?play <- false)
+
+    /// Cancels the animation and resets it to the initial state.
     let cancel (r: AnimationRef) =
         match r.Element with
-        | Some el -> el?cancel() |> ignore
+        | Some el ->
+            el?play <- false
+            // Access the underlying Web Animation API to cancel
+            let animation = el?animation
+            if not (isNullOrUndefined animation) then
+                animation?cancel() |> ignore
         | None -> ()
