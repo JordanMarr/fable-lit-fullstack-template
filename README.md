@@ -1,216 +1,334 @@
-# fable-lit-fullstack-template [![NuGet version (fable-lit-fullstack-template)](https://img.shields.io/nuget/v/fable-lit-fullstack-template.svg?style=flat-square)](https://www.nuget.org/packages/fable-lit-fullstack-template/)
+﻿# 📘 Fable Lit Fullstack Template  
+NuGet version [(nuget.org in Bing)](https://www.bing.com/search?q="https%3A%2F%2Fwww.nuget.org%2Fpackages%2Ffable-lit-fullstack-template%2F")
 
-A SAFE-style template with Fable.Lit, Fable.Remoting and Giraffe
+A modern, ergonomic starter template for building full‑stack F# applications with **Fable**, **Lit**, and **Web Components** — powered by a brand‑new, strongly‑typed UI DSL that removes the biggest pain points of traditional Lit development.
 
-Based on:
-https://github.com/Zaid-Ajaj/SAFE.Simplified (thank you Zaid!)
+This template is designed to give you a smooth, productive experience from day one, whether you're building a small prototype or a full production app.
 
-## Features
+---
 
-### WebLit.fsproj (Client)
-* RPC to WebApi via [Fable.Remoting](https://zaid-ajaj.github.io/Fable.Remoting/#/)
-* Page routing via [Fable.LitRouter](https://github.com/JordanMarr/Fable.LitRouter)
-* Shared context via [Fable.LitStore](https://www.nuget.org/packages/Fable.LitStore)
-* `Shoelace` and `FluentUI` web components imported (cherry-picked)
-* A minimal `vite.config.js` file that configures https proxy server + a common proxy redirects
-* `"vite-plugin-mkcert` plugin installed for https support for proxy server
-* Bootstrap icons + a `bs-icon` custom element control.
-* Toast notifications
-* Form Validation (rules lives with entities in Shared.fs)
+# 🚀 Getting Started
 
-### WebApi.fsproj (Server)
-* Giraffe
-* Fable.Remoting + custom error handler
-* A very simple REST module
-* Environment specific settings files already configured
-* Serilog logger
-* Entity Validation (rules live with entities in Shared.fs)
+Install the template globally:
 
-
-## Install Template [![NuGet version (fable-lit-fullstack-template)](https://img.shields.io/nuget/v/fable-lit-fullstack-template.svg?style=flat-square)](https://www.nuget.org/packages/fable-lit-fullstack-template/)
-
-```cmd
-dotnet new install fable-lit-fullstack-template
+```bash
+dotnet new -i fable-lit-fullstack-template
 ```
 
-## Use Template
-This will create a new subfolder, `MyLitApp`, which will contain a `MyLitApp.sln`:
+Create a new project:
 
-```cmd
-dotnet new flft -o MyLitApp
+```bash
+dotnet new fable-lit-fullstack -n MyApp
 ```
 
+Run it:
 
-## Build
-
-### Initial Restore
-To do the initial restore of both the WebApi and WebLit projects:
-* :open_file_folder: Build: `dotnet run Restore`
-
-Or you can manually restore each:
-* :open_file_folder: WebApi: `dotnet restore`
-* :open_file_folder: WebLit: `npm install`
-
-### Run in Debug Mode
-* :open_file_folder: WebApi: `dotnet watch`
-* :open_file_folder: WebLit: `npm start`
-
-### Pack in Release Mode
-To build WebApi and WebLit in Release mode and output to the `Template/dist` folder:
-* :open_file_folder: Build: `dotnet run Pack`
-or
-* :open_file_folder: Build: `dotnet run PackNoTests`
-
-## Highlight Extension
-Be sure to install the appropriate IDE extension for html and css syntax coloring within your `html $""" """` templates!
-
-If using VS Code:
-* [Highlight HTML/SQL Templates in F#](https://marketplace.visualstudio.com/items?itemName=alfonsogarciacaro.vscode-template-fsharp-highlight)
-
-If using Visual Studio:
-* [Html for F# (Lit Template)](https://marketplace.visualstudio.com/items?itemName=daniel-hardt.html-for-fsharp-lit-template)
-
-Currently, VS Code with the "Highlight HTML/SQL Templates in F#" extension provides the best experience because it actually provides contextual IntelliSense for the HTML and CSS, plus you can use all the other amazing HTML extensions.
-
-![image](https://github.com/JordanMarr/fable-lit-fullstack-template/assets/1030435/a80afa1c-544d-402c-8bc0-4200eb41ef67)
-
-
-## Toast Module
-
-![image](https://user-images.githubusercontent.com/1030435/193339122-fdf130d7-ed00-4f18-92e2-a87cba44d0ef.png)
-
-You can create toast messages in two ways:
-
-1) Call a `Toast` function directly:
-```F#
-Toast.success $"Name changed to {username}."
+```bash
+cd MyApp
+npm install
+npm run dev
 ```
 
-2) Return a `Toast` `Cmd` (if using Elmish):
-```F#
-let update (msg: Msg) (model: Model) =
-    match msg with
-    | Save -> 
-        model, Cmd.OfAsync.either Server.api.SaveProjectFiles model.Files SaveCompleted OnError
-    | SaveCompleted _ -> 
-        model, Toast.Cmd.success "Files saved."
-    | OnError ex ->
-        model, Toast.Cmd.error ex.Message
+You now have a full F# + Fable + Lit application running with the new DSL baked in.
+
+---
+
+# ⚡ Why Lit Instead of React?
+
+Lit is a modern, lightweight alternative to React — built directly on **native Web Components**, not a custom runtime.  
+If you’re coming from React, you’ll find Lit refreshingly simple, fast, and future‑proof.
+
+### 🚀 1. No Virtual DOM — real DOM updates, surgically applied  
+React re-renders entire component trees and relies on a virtual DOM diffing algorithm to figure out what changed.  
+Lit updates only the exact DOM nodes that need to change, using real browser APIs.
+
+It’s faster because it’s simpler.
+
+### 📦 2. Tiny bundle sizes  
+React + ReactDOM is ~120kb minified.  
+Lit is ~6kb.
+
+Smaller bundles mean:
+
+- faster startup  
+- better Lighthouse scores  
+- better mobile performance  
+
+### 🌐 3. Web‑native, framework‑agnostic components  
+Lit components are **Web Components**, which means they work everywhere:
+
+- React  
+- Vue  
+- Svelte  
+- Angular  
+- plain HTML  
+- server‑rendered apps  
+- microfrontends  
+
+React components only work in React.
+
+### 🧩 4. No build‑time magic  
+Lit uses:
+
+- real JavaScript classes  
+- real DOM APIs  
+- real browser standards  
+
+No JSX transform.  
+No custom compiler.  
+No runtime wrappers.
+
+### 🛠️ 5. Better long‑term stability  
+Web Components are part of the platform.  
+They don’t get rewritten every 18 months.
+
+### 💙 6. A perfect fit for F#  
+Lit’s declarative, composable model maps beautifully to:
+
+- computation expressions  
+- immutable data  
+- functional UI patterns  
+- strongly‑typed DSLs  
+
+React’s JSX does not.
+
+### 🧠 7. No memoization, no dependency arrays, no stale closures  
+React forces you to think about:
+
+- `useMemo`  
+- `useCallback`  
+- dependency arrays  
+- stale closures  
+- preventing unnecessary re-renders  
+
+Lit updates only the DOM nodes that change.  
+F# encourages immutable data by default.
+
+The result:
+
+- no memoization  
+- no dependency arrays  
+- no re-render storms  
+- no performance footguns  
+
+Just clean, predictable updates.
+
+---
+
+# 💡 All the Good Parts of React — Without the Pain
+
+If you enjoy React’s component model, you’ll feel right at home here.
+
+This template supports:
+
+### ✔ Simple, React‑style hooks  
+Use `useState`, `useEffect`, and other familiar patterns — without dependency arrays or stale closures.
+
+### ✔ Full Elmish when you want structure  
+Switch to Elmish for larger components or full applications.  
+You get predictable state, pure updates, and no hook rules.
+
+### ✔ Declarative UI without JSX  
+Write clean, strongly‑typed F# instead of JSX or HTML strings.  
+No editor extensions required.
+
+### ✔ Faster than React by design  
+No virtual DOM.  
+No diffing.  
+No reconciliation.  
+Just direct, surgical DOM updates.
+
+---
+
+# 🌿 Why This Template Makes Lit Even Better
+
+Lit is already fast and modern — but writing HTML templates inside F# strings can be awkward and editor‑dependent.
+
+This template solves that with a new DSL that gives you:
+
+### ✔ Strongly‑typed UI  
+No more stringly‑typed HTML.  
+You get compile‑time checking, autocomplete, and predictable structure.
+
+### ✔ Beautifully nested component trees  
+Instead of this:
+
+```fsharp
+html $"""
+<sl-card>
+  <sl-button>Click me</sl-button>
+</sl-card>
+"""
 ```
 
-## Validation
-The `Validation.fs` module lives in the Shared.fs project and contains functions for creating validation rules.
+You write this:
 
-Usage:
-
-### Shared.fs
-1) Create a custom validation method (or function) alongside your entity in the Shared.fs project:
-
-```F#
-type CatInfo = 
-    {
-        Name: string
-        Age: int
-        LastVetCheckup: System.DateTime
-    }
-    member this.Validate() = 
-        rules
-        |> rulesFor (nameof this.Name) [ 
-            this.Name |> Rules.required
-            this.Name |> Rules.maxLen 10
-        ]
-        |> rulesFor (nameof this.Age) [
-            Rules.isTrue (this.Age > 0) "Age must be a positive number."
-        ]
-        |> rulesFor (nameof this.LastVetCheckup) [
-            // A custom rule
-            let timeSinceLastVetCheckup = System.DateTime.Today - this.LastVetCheckup.Date
-            printfn $"Total days since last checkup: {timeSinceLastVetCheckup.TotalDays}"
-            if this.Age >= 10 && timeSinceLastVetCheckup.TotalDays > 90 then 
-                Error "Cats over 10 years old should get a vet checkup every three months."
-            elif timeSinceLastVetCheckup.TotalDays > 180 then 
-                Error "Cats under 10 years old should get a vet checkup every six months."
-            else 
-                Ok ()
-        ]
-        |> validate
+```fsharp
+slCard {
+    slButton { "Click me" }
+}
 ```
 
-### WebLit.fs
-2) In your WebLit.fs UI / form, track the entity state in your model using the `ValidationResult`:
+Readable. Maintainable. Idiomatic.
 
-```F#
-type Model = 
-    {
-        Cat: CatInfo
-        Validation: ValidationResult
-        Saved: bool
-    }
-    
-let init () = 
-    { 
-        Cat = 
-            { CatInfo.Name = ""
-            ; CatInfo.Age = 0
-            ; CatInfo.LastVetCheckup = System.DateTime.MinValue }
-        Validation = noErrors
-        Saved = false
-    }, Cmd.none
+### ✔ No IDE extensions required  
+Works perfectly in:
+
+- VS Code  
+- Ionide  
+- Rider  
+- Visual Studio  
+
+No HTML colorizer needed.  
+No broken syntax highlighting.  
+No friction.
+
+### ✔ Easy to extend  
+The DSL is modular and library‑agnostic.  
+You can build DSLs for:
+
+- Shoelace  
+- FluentUI / FAST  
+- Material Web  
+- your company’s design system  
+
+### ✔ Escape hatches included  
+You can always drop back to raw Lit:
+
+```fsharp
+html $"""<div>Hello</div>"""
 ```
 
-3) In the Elmish `update` function, update the `Validation` state by calling the custom `Validate` method when saving:
-```F#
-let update msg model = 
-    match msg with
-    | Save -> 
-        let validation = model.Cat.Validate()
-        { model with
-            Validation = validation
-            Saved = validation.HasErrors() = false
-        }, Toast.Cmd.success "Changes saved."
+Or use the `el` helper for arbitrary elements.
+
+---
+
+# 📁 Template Structure
+
+This template intentionally mixes two approaches:
+
+### **1. DSL‑based pages (recommended)**  
+Most pages use the new DSL for clarity and ergonomics.
+
+### **2. A single raw Lit page (WelcomePage)**  
+This page demonstrates:
+
+- plain `html` interpolation  
+- the `el` helper  
+- FluentUI components  
+- how to integrate third‑party Web Components manually  
+
+This keeps the educational value without forcing users to rely on editor extensions.
+
+---
+
+# 🎨 Shoelace Integration
+
+Shoelace components are registered using a simple, reliable system based on `[<Literal>]` asset paths:
+
+```fsharp
+importDynamic Shoelace.Asset.Button
+importDynamic Shoelace.Asset.Dialog
+importDynamic Shoelace.Asset.DarkTheme
 ```
 
-4) In the form, set the `invalid` attributes of your inputs by checking the `model.Validation` state property for the given property:
-```F#
-    <sl-input 
-        label="Cat Name" 
-        .value={model.Cat.Name}
-        .invalid={model.Validation.HasErrors(nameof model.Cat.Name)}
-        @sl-change={Ev (fun e -> SetCat { model.Cat with Name = e.target.Value } |> dispatch)}>
-    </sl-input>
+No abstraction layers.  
+No magic.  
+Just clean, explicit imports.
 
-    <sl-input 
-        label="Age" 
-        type="number"
-        .invalid={model.Validation.HasErrors(nameof model.Cat.Age)}
-        .value={model.Cat.Age}
-        @sl-change={Ev (fun e -> SetCat { model.Cat with Age = e.target?valueAsNumber } |> dispatch)}>
-    </sl-input>
+---
 
-    <sl-input 
-        label="Last Vet Checkup" 
-        type="date"                        
-        .invalid={model.Validation.HasErrors(nameof model.Cat.LastVetCheckup)}
-        .value={model.Cat.LastVetCheckup.ToString("yyyy-MM-dd")}
-        @sl-change={Ev (fun e -> 
-            let date = System.DateTime.Parse(e.target.Value)
-            SetCat { model.Cat with LastVetCheckup = date } |> dispatch
-        )}>
-    </sl-input>
+# ▶️ Running the Template
+
+### Install dependencies
+
+```bash
+npm install
 ```
 
-5) At the top of the form, display the validation errors using the `Ctrls.ValidationSummary`:
-```F#
-<div>
-    {ValidationSummary(model.Validation)}
-</div>
+### Run the dev server
+
+```bash
+npm run dev
 ```
 
-### WebApi.fs
-6) The validation rules may also be reused on the server side:
-```F#
-let saveCatInfo(catInfo: CatInfo) = 
-    match catInfo.Validate().IsValid() with
-    | true -> // save
-    | false -> // reject
+### Build for production
+
+```bash
+npm run build
 ```
+
+### Debugging
+
+The template includes:
+
+- full Fable + .NET debugging support  
+- hot module reloading  
+- server + client projects  
+- shared F# code  
+
+Everything works out of the box.
+
+---
+
+# 🧩 Extending the DSL
+
+Adding a new component is as simple as:
+
+```fsharp
+let myComponent attrs children =
+    el "my-component" attrs children
+```
+
+Or, for a nicer builder:
+
+```fsharp
+let myComponent = dsl "my-component"
+```
+
+The DSL is intentionally small, composable, and easy to grow.
+
+---
+
+# 🛣️ Roadmap
+
+The DSLs included in this template are currently shipped inline for rapid iteration and transparency.  
+Once the APIs stabilize, they will be published as official NuGet packages.
+
+### Planned NuGet Packages
+
+#### 📦 Fable.Lit.Dsl  
+The core DSL for strongly‑typed UI composition  -- currently included in the template.
+
+#### 📦 Fable.Lit.Dsl.Shoelace  
+A first‑class DSL for Shoelace Web Components -- currently included in the template.
+
+#### 📦 Fable.Lit.Dsl.FluentUI or Fable.Lit.Dsl.FAST  
+A future DSL for Microsoft’s Fluent UI / FAST Web Components.
+
+These packages will be extracted once the APIs feel “obvious in hindsight” and have been validated through real‑world usage.
+
+---
+
+# 🤝 Contributing
+
+Feedback, issues, and PRs are welcome — especially around:
+
+- DSL ergonomics  
+- Shoelace component coverage  
+- FluentUI/FAST integration  
+- documentation improvements  
+- real‑world usage patterns  
+
+This template is meant to grow with the community.
+
+---
+
+# 🎉 Enjoy building with F# + Lit
+
+This template is designed to give you a modern, friction‑free experience building Web Components and reactive UI in F#.  
+The new DSL removes the biggest historical pain points and opens the door to a much more expressive, maintainable style of UI development.
+
+Have fun — and build something amazing.
+
+---
