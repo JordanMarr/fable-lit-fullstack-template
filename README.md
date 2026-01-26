@@ -326,16 +326,6 @@ Includes:
 
 ---
 
-# 🧩 Extending the DSL
-
-```fsharp
-let myComponent = dsl "my-component"
-```
-
-The DSL is intentionally small, composable, and easy to grow.
-
----
-
 # 🛣️ Roadmap
 
 Future NuGet packages:
