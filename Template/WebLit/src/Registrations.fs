@@ -32,8 +32,12 @@ let registerFluentUI() =
     }
     |> Promise.start
 
-let private registerShoelace() = 
-    [| 
+let private registerShoelace() =
+    // Set the base path for Shoelace assets (icons, etc.)
+    let setBasePath: string -> unit = import "setBasePath" "@shoelace-style/shoelace/dist/utilities/base-path.js"
+    setBasePath "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/"
+
+    [|
         importDynamic "@shoelace-style/shoelace/dist/themes/dark.css"
         importDynamic "@shoelace-style/shoelace/dist/components/button/button.js"
         importDynamic "@shoelace-style/shoelace/dist/components/card/card.js"
