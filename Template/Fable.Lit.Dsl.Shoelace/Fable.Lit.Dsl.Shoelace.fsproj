@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Dialog.fs" />
     <Compile Include="ShoelaceElements.fs" />
     <Compile Include="ShoelaceAttrs.fs" />
     <Compile Include="ShoelaceEvents.fs" />

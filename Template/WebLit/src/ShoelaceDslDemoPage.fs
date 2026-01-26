@@ -31,11 +31,8 @@ let Page() =
     // Toggle state
     let featureEnabled, setFeatureEnabled = Hook.useState false
 
-    // Dialog state - use ref for imperative show/hide
-    // Shoelace dialogs must be opened via .show() and .hide(), not by setting the open property.
-    let dialogRef = Hook.useRef<obj option>(None)
-    let showDialogRef () = dialogRef.Value |> Option.iter (fun el -> el?show() |> ignore)
-    let hideDialogRef () = dialogRef.Value |> Option.iter (fun el -> el?hide() |> ignore)
+    // Dialog state - use typed DialogRef for imperative show/hide
+    let dialog = Dialog.createRef()
     let confirmCount, setConfirmCount = Hook.useState 0
 
     // Button click counter
@@ -162,7 +159,7 @@ let Page() =
 
                         slButton {
                             variantPrimary
-                            onClick (fun _ -> showDialogRef())
+                            onClick (fun _ -> Dialog.show dialog)
                             slIcon { slot' "prefix"; iconName "box-arrow-up-right" }
                             "Open Dialog"
                         }
@@ -170,12 +167,9 @@ let Page() =
                         p { $"Confirmed {confirmCount} times" }
 
                         slDialog {
-                            bindRef (fun el -> 
-                                //printfn $"Tag: {el?tagName}"
-                                dialogRef.Value <- Some el 
-                            )
+                            Dialog.bind dialog
                             label' "Confirmation"
-                            onSlRequestClose (fun _ -> hideDialogRef())
+                            onSlRequestClose (fun _ -> Dialog.hide dialog)
 
                             p { "Are you sure you want to proceed with this action?" }
 
@@ -185,14 +179,14 @@ let Page() =
 
                                 slButton {
                                     variantDefault
-                                    onClick (fun _ -> hideDialogRef())
+                                    onClick (fun _ -> Dialog.hide dialog)
                                     "Cancel"
                                 }
                                 slButton {
                                     variantPrimary
                                     onClick (fun _ ->
                                         setConfirmCount (confirmCount + 1)
-                                        hideDialogRef()
+                                        Dialog.hide dialog
                                     )
                                     "Confirm"
                                 }

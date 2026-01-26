@@ -1,27 +1,11 @@
 namespace Fable.Lit.Dsl.Shoelace
 
-open Fable.Core.JsInterop
 open Fable.Lit.Dsl
 
 /// Element helpers for Shoelace web components.
 /// These are thin wrappers over the core DSL's ElementBuilder.
 [<AutoOpen>]
 module ShoelaceElements =
-
-    // Dialog/Drawer helpers for imperative show/hide
-    // Shoelace dialogs must be opened via .show() and .hide(), not by setting the open property.
-
-    /// Shows a Shoelace dialog or drawer element.
-    let showDialog (r: obj option ref) =
-        match r.Value with
-        | Some el -> el?show() |> ignore
-        | None -> ()
-
-    /// Hides a Shoelace dialog or drawer element.
-    let hideDialog (r: obj option ref) =
-        match r.Value with
-        | Some el -> el?hide() |> ignore
-        | None -> ()
 
     // Buttons
     let slButton = ElementBuilder("sl-button")
