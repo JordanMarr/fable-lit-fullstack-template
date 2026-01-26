@@ -1,9 +1,34 @@
 ﻿# 📘 Fable Lit Fullstack Template  
-NuGet version [(nuget.org in Bing)](https://www.bing.com/search?q="https%3A%2F%2Fwww.nuget.org%2Fpackages%2Ffable-lit-fullstack-template%2F")
+[![NuGet version (fable-lit-fullstack-template)](https://img.shields.io/nuget/v/fable-lit-fullstack-template.svg?style=flat-square)](https://www.nuget.org/packages/fable-lit-fullstack-template/)
+
 
 A modern, ergonomic starter template for building full‑stack F# applications with **Fable**, **Lit**, and **Web Components** — powered by a brand‑new, strongly‑typed UI DSL that removes the biggest pain points of traditional Lit development.
 
 This template is designed to give you a smooth, productive experience from day one, whether you're building a small prototype or a full production app.
+
+---
+
+# ✨ A Quick Look: A Counter Component in F#
+
+This is all it takes to build a reactive component with the new DSL:
+
+```fsharp
+[<HookComponent>]
+let Counter() =
+    let count, setCount = Hook.useState(0)
+
+    view {
+        slButton {
+            onClick (fun _ -> setCount(count + 1))
+            $"Clicked {count} times"
+        }
+    }
+```
+
+No JSX.  
+No HTML strings.  
+No dependency arrays.  
+Just clean, strongly‑typed F#.
 
 ---
 
@@ -140,6 +165,86 @@ Just direct, surgical DOM updates.
 
 ---
 
+# 📄 Example: A Full Page Built with the DSL
+
+This is what a real page looks like using the DSL.  
+No HTML strings.  
+No JSX.  
+Just clean, composable F#.
+
+```fsharp
+module WebLit.ViewCatFactPage
+
+open Lit
+open LitRouter
+open Fable.Lit.Dsl
+open Fable.Lit.Dsl.Shoelace
+
+let private hmr = HMR.createToken()
+
+[<HookComponent>]
+let Page (fact: string) =
+    Hook.useHmr(hmr)
+
+    view {
+        slBreadcrumb {
+            style "margin: 10px;"
+            slBreadcrumbItem {
+                onClick (fun _ -> Router.navigatePath("/"))
+                "Home"
+            }
+            slBreadcrumbItem {
+                onClick (fun _ -> Router.navigatePath("/cat-facts"))
+                "Cat Facts"
+            }
+            slBreadcrumbItem {
+                style "font-weight: bold;"
+                "Fact"
+            }
+        }
+
+        slCard {
+            class' "card-overview"
+
+            img {
+                slot' "image"
+                attr "src" "https://images.unsplash.com/photo-1559209172-0ff8f6d49ff7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80"
+                attr "alt" "A kitten sits patiently between a terracotta pot and decorative grasses."
+            }
+
+            strong { "Fact" }
+            br { nothing }
+            div { fact }
+            small { "Meow!" }
+
+            div {
+                slot' "footer"
+                slButton {
+                    variantPrimary
+                    pill true
+                    onClick (fun _ -> Router.navigatePath("/cat-facts"))
+                    "Tell me more!!"
+                }
+            }
+        }
+    }
+```
+
+This example demonstrates:
+
+- the `view` builder  
+- the Shoelace DSL  
+- routing  
+- events  
+- slots  
+- attributes  
+- styling  
+- nested composition  
+
+It shows how the DSL scales to real‑world UI.
+
+---
+
 # 🌿 Why This Template Makes Lit Even Better
 
 Lit is already fast and modern — but writing HTML templates inside F# strings can be awkward and editor‑dependent.
@@ -147,59 +252,10 @@ Lit is already fast and modern — but writing HTML templates inside F# strings 
 This template solves that with a new DSL that gives you:
 
 ### ✔ Strongly‑typed UI  
-No more stringly‑typed HTML.  
-You get compile‑time checking, autocomplete, and predictable structure.
-
-### ✔ Beautifully nested component trees  
-Instead of this:
-
-```fsharp
-html $"""
-<sl-card>
-  <sl-button>Click me</sl-button>
-</sl-card>
-"""
-```
-
-You write this:
-
-```fsharp
-slCard {
-    slButton { "Click me" }
-}
-```
-
-Readable. Maintainable. Idiomatic.
-
+### ✔ Beautiful nested component trees  
 ### ✔ No IDE extensions required  
-Works perfectly in:
-
-- VS Code  
-- Ionide  
-- Rider  
-- Visual Studio  
-
-No HTML colorizer needed.  
-No broken syntax highlighting.  
-No friction.
-
-### ✔ Easy to extend  
-The DSL is modular and library‑agnostic.  
-You can build DSLs for:
-
-- Shoelace  
-- FluentUI / FAST  
-- Material Web  
-- your company’s design system  
-
-### ✔ Escape hatches included  
-You can always drop back to raw Lit:
-
-```fsharp
-html $"""<div>Hello</div>"""
-```
-
-Or use the `el` helper for arbitrary elements.
+### ✔ Easy extensibility  
+### ✔ Escape hatches to raw Lit  
 
 ---
 
@@ -217,8 +273,6 @@ This page demonstrates:
 - the `el` helper  
 - FluentUI components  
 - how to integrate third‑party Web Components manually  
-
-This keeps the educational value without forcing users to rely on editor extensions.
 
 ---
 
@@ -240,47 +294,22 @@ Just clean, explicit imports.
 
 # ▶️ Running the Template
 
-### Install dependencies
-
 ```bash
 npm install
-```
-
-### Run the dev server
-
-```bash
 npm run dev
-```
-
-### Build for production
-
-```bash
 npm run build
 ```
 
-### Debugging
+Includes:
 
-The template includes:
-
-- full Fable + .NET debugging support  
+- full Fable + .NET debugging  
 - hot module reloading  
 - server + client projects  
 - shared F# code  
 
-Everything works out of the box.
-
 ---
 
 # 🧩 Extending the DSL
-
-Adding a new component is as simple as:
-
-```fsharp
-let myComponent attrs children =
-    el "my-component" attrs children
-```
-
-Or, for a nicer builder:
 
 ```fsharp
 let myComponent = dsl "my-component"
@@ -292,43 +321,21 @@ The DSL is intentionally small, composable, and easy to grow.
 
 # 🛣️ Roadmap
 
-The DSLs included in this template are currently shipped inline for rapid iteration and transparency.  
-Once the APIs stabilize, they will be published as official NuGet packages.
+Future NuGet packages:
 
-### Planned NuGet Packages
-
-#### 📦 Fable.Lit.Dsl  
-The core DSL for strongly‑typed UI composition  -- currently included in the template.
-
-#### 📦 Fable.Lit.Dsl.Shoelace  
-A first‑class DSL for Shoelace Web Components -- currently included in the template.
-
-#### 📦 Fable.Lit.Dsl.FluentUI or Fable.Lit.Dsl.FAST  
-A future DSL for Microsoft’s Fluent UI / FAST Web Components.
-
-These packages will be extracted once the APIs feel “obvious in hindsight” and have been validated through real‑world usage.
-
----
-
-# 🤝 Contributing
-
-Feedback, issues, and PRs are welcome — especially around:
-
-- DSL ergonomics  
-- Shoelace component coverage  
-- FluentUI/FAST integration  
-- documentation improvements  
-- real‑world usage patterns  
-
-This template is meant to grow with the community.
+- **Fable.Lit.Dsl** -- currently included in this template
+- **Fable.Lit.Dsl.Shoelace** -- currently included in this template  
+- **Fable.Lit.Dsl.FluentUI / FAST**  
 
 ---
 
 # 🎉 Enjoy building with F# + Lit
 
-This template is designed to give you a modern, friction‑free experience building Web Components and reactive UI in F#.  
-The new DSL removes the biggest historical pain points and opens the door to a much more expressive, maintainable style of UI development.
+This template gives you a modern, friction‑free experience building Web Components and reactive UI in F#.  
+The new DSL removes years of friction and opens the door to a more expressive, maintainable style of UI development.
 
 Have fun — and build something amazing.
 
 ---
+
+If you want, I can help you refine the tone, add badges, or generate a small architecture diagram to include in the README.
