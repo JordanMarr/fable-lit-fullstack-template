@@ -2,7 +2,7 @@
 [![NuGet version (fable-lit-fullstack-template)](https://img.shields.io/nuget/v/fable-lit-fullstack-template.svg?style=flat-square)](https://www.nuget.org/packages/fable-lit-fullstack-template/)
 
 
-A modern, ergonomic starter template for building full‑stack F# applications with **Fable**, **Lit**, and **Web Components** — powered by a brand‑new, strongly‑typed UI DSL that removes the biggest pain points of traditional Lit development.
+A modern, ergonomic starter template for building full‑stack F# applications with **[Fable.Lit](https://fable.io/Fable.Lit/)**, and **Web Components** — powered by a brand‑new, strongly‑typed UI DSL that removes the biggest pain points of traditional Lit development.
 
 This template is designed to give you a smooth, productive experience from day one, whether you're building a small prototype or a full production app.
 
@@ -29,6 +29,23 @@ No JSX.
 No HTML strings.  
 No dependency arrays.  
 Just clean, strongly‑typed F#.
+
+<details>
+  <summary>Prefer raw Lit templates instead?</summary>
+
+You can still use interpolated string templates directly with `html { ... }`.
+
+```fsharp
+html $"""
+  <sl-button @click=${fun _ -> setCount(count + 1)}>
+    Count: {state.Count}
+  </sl-button>
+"""
+```
+
+For best results, install the VS Code extension for F# template highlighting:  
+https://marketplace.visualstudio.com/items?itemName=alfonsogarciacaro.vscode-template-fsharp-highlight
+</details>
 
 ---
 
@@ -309,16 +326,6 @@ Includes:
 
 ---
 
-# 🧩 Extending the DSL
-
-```fsharp
-let myComponent = dsl "my-component"
-```
-
-The DSL is intentionally small, composable, and easy to grow.
-
----
-
 # 🛣️ Roadmap
 
 Future NuGet packages:
@@ -337,5 +344,3 @@ The new DSL removes years of friction and opens the door to a more expressive, m
 Have fun — and build something amazing.
 
 ---
-
-If you want, I can help you refine the tone, add badges, or generate a small architecture diagram to include in the README.
