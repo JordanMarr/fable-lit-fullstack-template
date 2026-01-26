@@ -5,8 +5,10 @@ open Fable.Lit.Dsl
 
 /// A strongly-typed reference to a Shoelace dialog element.
 /// This provides a typed abstraction over raw JS interop for imperative dialog control.
-type DialogRef =
-    { mutable Element: obj option }
+/// DialogRef is a class (reference type), so it persists across renders.
+/// No Hook.useRef is required.
+type DialogRef() =
+    member val Element: obj option = None with get, set
 
 /// Functions for working with Shoelace dialogs.
 /// This module provides a typed API for creating dialog refs and controlling dialogs imperatively.
@@ -33,25 +35,22 @@ type DialogRef =
 module Dialog =
 
     /// Creates a new dialog reference.
-    let createRef () : DialogRef =
-        { Element = None }
+    let createRef () = DialogRef()
 
-    /// Alias for createRef for more concise usage.
-    /// Usage: let dialog = Dialog.ref()
-    let inline ref () = createRef()
+    /// Binds a Shoelace dialog element to a DialogRef.
+    /// Ignores null/undefined values that Lit may pass when clearing the part.
+    let bind (r: DialogRef) =
+        bindRef (fun el ->
+            // el can be null/undefined when the part is being cleared.
+            if not (isNullOrUndefined el) then
+                r.Element <- Some el
+        )
 
-    /// Binds the dialog reference to the element.
-    /// Use this inside an slDialog builder to capture the element reference.
-    let bind (r: DialogRef) : Attr =
-        bindRef (fun el -> r.Element <- Some el)
-
-    /// Shows the dialog.
     let show (r: DialogRef) =
         match r.Element with
         | Some el -> el?show() |> ignore
         | None -> ()
 
-    /// Hides the dialog.
     let hide (r: DialogRef) =
         match r.Element with
         | Some el -> el?hide() |> ignore

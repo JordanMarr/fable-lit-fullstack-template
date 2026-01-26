@@ -169,7 +169,6 @@ let Page() =
                         slDialog {
                             Dialog.bind dialog
                             label' "Confirmation"
-                            onSlRequestClose (fun _ -> Dialog.hide dialog)
 
                             p { "Are you sure you want to proceed with this action?" }
 
