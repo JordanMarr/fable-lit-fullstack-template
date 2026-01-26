@@ -36,11 +36,15 @@ Just clean, strongly‑typed F#.
 You can still use interpolated string templates directly with `html { ... }`.
 
 ```fsharp
-html $"""
-  <sl-button @click=${fun _ -> setCount(count + 1)}>
-    Count: {state.Count}
-  </sl-button>
-"""
+[<HookComponent>]
+let Counter() =
+    let count, setCount = Hook.useState(0)
+
+    html $"""
+      <sl-button @click=${Ev(fun _ -> setCount(count + 1))}>
+        Count: {state.Count}
+      </sl-button>
+    """
 ```
 
 For best results, install the VS Code extension for F# template highlighting:  
