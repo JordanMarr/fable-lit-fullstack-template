@@ -297,13 +297,12 @@ This template intentionally mixes two approaches:
 ### **1. DSL‑based pages (recommended)**  
 Most pages use the new DSL for clarity and ergonomics.
 
-### **2. A single raw Lit page (WelcomePage)**  
+### **2. A raw Lit page (CatInfoPage)**  
 This page demonstrates:
 
-- plain `html` interpolation  
-- the `el` helper  
-- FluentUI components  
-- how to integrate third‑party Web Components manually  
+- a plain `html` string interpolation template
+- usage of Shoelace components
+- usage of custom-crafted Lit web component controls (`vert-stack` and `horiz-stack`)
 
 ---
 
