@@ -344,8 +344,6 @@ Includes:
 
 Future NuGet packages:
 
-- **Fable.Lit.Dsl** -- currently included in this template
-- **Fable.Lit.Dsl.Shoelace** -- currently included in this template  
 - **Fable.Lit.Dsl.FluentUI / FAST**  
 
 ---
