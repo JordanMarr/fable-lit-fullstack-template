@@ -53,6 +53,15 @@ https://marketplace.visualstudio.com/items?itemName=alfonsogarciacaro.vscode-tem
 
 ---
 
+# Template Showcase
+
+<img width="1686" height="1138" alt="image" src="https://github.com/user-attachments/assets/608d1a9d-9cbe-48fa-8751-6577e10bb1a6" />
+
+
+<img width="1676" height="1265" alt="image" src="https://github.com/user-attachments/assets/a5c0c5e5-9bff-4dbe-9684-ed3e31d3067f" />
+
+---
+
 # 🚀 Getting Started
 
 Install the template globally:
