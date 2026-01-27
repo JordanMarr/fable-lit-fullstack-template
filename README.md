@@ -48,8 +48,7 @@ let Counter() =
     """
 ```
 
-For best results, install the VS Code extension for F# template highlighting:  
-https://marketplace.visualstudio.com/items?itemName=alfonsogarciacaro.vscode-template-fsharp-highlight
+For best results, install the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=alfonsogarciacaro.vscode-template-fsharp-highlight) for F# template highlighting. 
 </details>
 
 ---
