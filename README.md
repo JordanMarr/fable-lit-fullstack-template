@@ -10,7 +10,7 @@ This template is designed to give you a smooth, productive experience from day o
 
 # ✨ A Quick Look: A Counter Component in F#
 
-This is all it takes to build a reactive component with the new DSL:
+This is all it takes to build a reactive component with the new [Fable.Lit.Dsl](https://github.com/JordanMarr/Fable.Lit.Dsl):
 
 ```fsharp
 [<HookComponent>]
@@ -234,7 +234,7 @@ let Page (fact: string) =
             }
 
             strong { "Fact" }
-            br { nothing }
+            br { }
             div { fact }
             small { "Meow!" }
 
