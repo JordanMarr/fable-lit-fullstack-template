@@ -1,10 +1,11 @@
 ﻿# 📘 Fable Lit Fullstack Template  
-[![NuGet version (fable-lit-fullstack-template)](https://img.shields.io/nuget/v/fable-lit-fullstack-template.svg?style=flat-square)](https://www.nuget.org/packages/fable-lit-fullstack-template/)
-
+[![fable-lit-fullstack-template](https://img.shields.io/nuget/v/fable-lit-fullstack-template?label=fable-lit-fullstack-template)](https://www.nuget.org/packages/fable-lit-fullstack-template/)
 
 A modern, ergonomic starter template for building full‑stack F# applications with **[Fable.Lit](https://fable.io/Fable.Lit/)**, and **Web Components** — powered by a brand‑new, strongly‑typed UI DSL that removes the biggest pain points of traditional Lit development.
 
 This template is designed to give you a smooth, productive experience from day one, whether you're building a small prototype or a full production app.
+
+> **Now updated to .NET 10, Fable 5.0.0‑alpha.22, and FSharp.Core 10.**
 
 ---
 
