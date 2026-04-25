@@ -1,5 +1,7 @@
 ﻿module Shared.Api
+
 open Shared.Validation
+open Serde.FS
 
 /// Defines how routes are generated on server and mapped from client
 let routerPaths typeName method = sprintf "/api/%s" method
@@ -37,8 +39,12 @@ type CatInfo =
         ]
         |> validate
 
+
 /// A type that specifies the communication protocol between client and server.
-/// To learn more, read the docs at https://zaid-ajaj.github.io/Fable.Remoting/src/basics.html
-type IServerApi = {
-    GetCatFacts: PageSize * PageNumber -> Async<CatFact list>
-}
+/// This will generate the RPC types:
+/// - The server types will be generated in the WebApi server project.
+/// - The Fable client types will be generated in this Shared project to be consumed by the WebLit client project.
+/// To learn more, read the docs at https://github.com/serde-fs/Serde.FS
+[<RpcApi; GenerateFableClient>]
+type IServerApi = 
+    abstract member GetCatFacts: PageSize * PageNumber -> Async<CatFact list>

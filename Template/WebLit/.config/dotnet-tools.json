@@ -2,17 +2,19 @@
   "version": 1,
   "isRoot": true,
   "tools": {
-    "fable": {
-      "version": "5.0.0-alpha.22",
-      "commands": [
-        "fable"
-      ]
-    },
     "femto": {
       "version": "0.11.0",
       "commands": [
         "femto"
-      ]
+      ],
+      "rollForward": false
+    },
+    "fable": {
+      "version": "5.0.0",
+      "commands": [
+        "fable"
+      ],
+      "rollForward": false
     }
   }
 }

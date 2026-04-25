@@ -5,7 +5,8 @@
       "WebFetch(domain:fable.io)",
       "Bash(dotnet build:*)",
       "Bash(dotnet restore:*)",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:github.com)"
     ]
   }
 }

@@ -17,6 +17,7 @@
     <Compile Include="App.fs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Fable.Core" Version="5.0.0" />
     <PackageReference Include="Fable.Lit" Version="1.4.2" />
     <PackageReference Include="Fable.Lit.Dsl" Version="1.0.1" />
     <PackageReference Include="Fable.Lit.Dsl.Shoelace" Version="1.0.1" />
@@ -30,6 +31,6 @@
     <ProjectReference Include="..\..\Shared\Shared.fsproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="10.0.102" />
+    <PackageReference Update="FSharp.Core" Version="10.0.103" />
   </ItemGroup>
 </Project>

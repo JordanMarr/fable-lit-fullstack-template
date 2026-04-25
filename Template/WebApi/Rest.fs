@@ -1,17 +1,16 @@
-﻿module WebApi.Rest
+module WebApi.Rest
 
-open Microsoft.Extensions.Logging
 open System.Net.Http
-open Newtonsoft.Json
-open System
-open System.Net.Http.Headers
+open System.Text.Json
 
-/// Makes REST GET call and return a 'Result.
-let get<'Result> (client: HttpClient) (relativeUrl: string) = 
+let private jsonOptions =
+    JsonSerializerOptions(PropertyNameCaseInsensitive = true)
+
+/// Makes REST GET call and returns a 'Result.
+let get<'Result> (client: HttpClient) (relativeUrl: string) =
     task {
         let! resp = client.GetAsync(relativeUrl)
         let! content = resp.Content.ReadAsStringAsync()
-        let result = JsonConvert.DeserializeObject<'Result>(content)
-        return result
+        return JsonSerializer.Deserialize<'Result>(content, jsonOptions)
     }
     |> Async.AwaitTask

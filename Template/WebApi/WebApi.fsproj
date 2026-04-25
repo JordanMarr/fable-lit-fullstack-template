@@ -10,12 +10,11 @@
   <ItemGroup>
     <Compile Include="Rest.fs" />
     <Compile Include="ApiBuilder.fs" />
-    <Compile Include="Views.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fable.Remoting.Giraffe" Version="5.24.0" />
+    <PackageReference Include="Serde.FS.Json.AspNet" Version="1.0.0-alpha.12" />
     <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
   </ItemGroup>
@@ -25,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="10.0.102" />
+    <PackageReference Update="FSharp.Core" Version="10.0.103" />
   </ItemGroup>
 
 </Project>
