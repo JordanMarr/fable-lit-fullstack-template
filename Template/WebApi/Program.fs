@@ -13,7 +13,7 @@ open Serilog.Events
 open Shared.Api
 open Serde.FS.Json.AspNet
 
-[<EntryPoint; Serde.FS.EntryPoint>]
+[<Serde.FS.EntryPoint>]
 let main args =
     let contentRoot = Directory.GetCurrentDirectory()
     let webRoot = Path.Combine(contentRoot, "wwwroot")
