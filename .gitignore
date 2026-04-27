@@ -22,4 +22,3 @@ NPGSQL_FSHARP
 .build
 nuget.exe
 *.nupkg
-/Template/Shared/generated-fable
