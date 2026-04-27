@@ -24,7 +24,7 @@ export default {
                 secure: false,
                 ws: true,
             },
-            '/api': {
+            '/rpc': {
                  target: 'https://localhost:5001/',
                  changeOrigin: true,
                  secure: false,
