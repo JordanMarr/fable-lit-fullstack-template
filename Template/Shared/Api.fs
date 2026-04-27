@@ -1,10 +1,7 @@
-﻿module Shared.Api
+﻿namespace Shared.Api
 
 open Shared.Validation
 open Serde.FS
-
-/// Defines how routes are generated on server and mapped from client
-let routerPaths typeName method = sprintf "/api/%s" method
 
 type CatFact = { Fact: string }
 type CatFactPage = { Current_Page: int; Data: CatFact list }
