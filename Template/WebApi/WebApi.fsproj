@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Serde.FS.Json.AspNet" Version="1.0.0-alpha.17" />
+    <PackageReference Include="Serde.FS.Json.AspNet" Version="1.0.0-alpha.18" />
     <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
   </ItemGroup>
