@@ -284,7 +284,7 @@ This single interface is the source of truth for both ends.
 
 ### 2. Implement it on the server
 
-In the `WebApi` project, implement `IServerApi` and let **Serde.FS.Json.AspNet** map it to endpoints — no controllers or routing to hand‑wire.
+In the `WebApi` project, implement `IServerApi` and register it with `app.MapRpcApi<IServerApi>(...)`. That's **plain ASP.NET Core — no Giraffe, no Saturn, no controllers**; `MapRpcApi` is just an endpoint‑routing extension, so an RPC BFF carries no web‑framework dependency. Need a REST endpoint too? Drop a minimal‑API `app.MapGet` right alongside it — the two surfaces coexist on the same host.
 
 ### 3. Call it from the client — with a generated, typed proxy
 

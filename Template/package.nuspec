@@ -2,15 +2,15 @@
 <package >
   <metadata>
     <id>fable-lit-fullstack-template</id>
-    <version>2.1.1</version>
+    <version>3.0.0</version>
     <authors>Jordan Marr</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <projectUrl>https://github.com/JordanMarr/fable-lit-fullstack-template</projectUrl>
     <repository type="git" url="https://github.com/JordanMarr/fable-lit-fullstack-template" branch="main" />
-    <description>A SAFE-style template with Fable.Lit, Fable.Remoting and Giraffe</description>
+    <description>A modern full-stack F# template: Fable.Lit + Web Components on the front end, with a fully type-safe client/server RPC layer powered by Serde.FS.</description>
     <copyright>$copyright$</copyright>
-    <tags>dotnet webapi fsharp fable lit giraffe safe template</tags>
+    <tags>dotnet webapi fsharp fable lit serde rpc fullstack template</tags>
     <packageTypes>
       <packageType name="Template" />
     </packageTypes>
