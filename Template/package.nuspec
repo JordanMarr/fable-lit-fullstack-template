@@ -16,6 +16,6 @@
     </packageTypes>
   </metadata>
   <files>
-    <file src="**" exclude="**\bin\**\*;**\obj\**\*;**\*.user;**\*.lock.json;**\.DS_Store;**\.git\**\*;**\.github\**\*;**\.vs\**\*;**\*LICENSE;**\*.gitattributes;**\*README.md;**\*.gitignore;**\*nuget.config;**\WebLit\build\**\*;**\docs\**\*;**\dist\**.*;**\node_modules\**\*;nuget.exe;run_pack.cmd;" target="/content" />
+    <file src="**" exclude="**\bin\**\*;**\obj\**\*;**\*.user;**\*.lock.json;**\.DS_Store;**\.git\**\*;**\.github\**\*;**\.vs\**\*;**\*LICENSE;**\*.gitattributes;**\*README.md;**\*.gitignore;**\*nuget.config;**\WebLit\build\**\*;**\fable-generated\**\*;**\docs\**\*;**\dist\**.*;**\node_modules\**\*;nuget.exe;run_pack.cmd;" target="/content" />
   </files>
 </package>
