@@ -2,7 +2,7 @@
 [![NuGet version (fable-lit-fullstack-template)](https://img.shields.io/nuget/v/fable-lit-fullstack-template.svg?style=flat-square)](https://www.nuget.org/packages/fable-lit-fullstack-template/)
 
 
-A modern, ergonomic starter template for building full‑stack F# applications with **[Fable.Lit](https://fable.io/Fable.Lit/)**, and **Web Components** — powered by a brand‑new, strongly‑typed UI DSL that removes the biggest pain points of traditional Lit development.
+A modern, ergonomic starter template for building **full‑stack F#** applications with **[Fable.Lit](https://fable.io/Fable.Lit/)** and **Web Components** — featuring a brand‑new, strongly‑typed UI DSL on the front end and a **fully type‑safe client ⇄ server RPC layer** powered by **[Serde.FS](https://github.com/serde-fs/Serde.FS)** on the back end.
 
 This template is designed to give you a smooth, productive experience from day one, whether you're building a small prototype or a full production app.
 
@@ -263,6 +263,50 @@ This example demonstrates:
 - nested composition  
 
 It shows how the DSL scales to real‑world UI.
+
+---
+
+# 🔗 End‑to‑End Type Safety: Client ⇄ Server with Serde.FS
+
+This is a *true* full‑stack template. You define your API **once** as an F# interface, and both ends stay in lockstep — no REST boilerplate, no hand‑written `fetch` calls, no manual JSON (de)serialization, and no silent client/server drift. It's powered by **[Serde.FS](https://github.com/serde-fs/Serde.FS)** and its Fable companion, **[Serde.FS.Json.Fable](https://www.nuget.org/packages/Serde.FS.Json.Fable)**.
+
+### 1. Define the contract once
+
+In the shared project (`Shared/Api.fs`), describe the protocol as an interface and mark it `[<RpcApi>]`:
+
+```fsharp
+[<RpcApi>]
+type IServerApi =
+    abstract member GetCatFacts: PageSize * PageNumber -> Async<CatFact list>
+```
+
+This single interface is the source of truth for both ends.
+
+### 2. Implement it on the server
+
+In the `WebApi` project, implement `IServerApi` and let **Serde.FS.Json.AspNet** map it to endpoints — no controllers or routing to hand‑wire.
+
+### 3. Call it from the client — with a generated, typed proxy
+
+The `WebLit` (Fable) project references the **`Serde.FS.Json.Fable`** package. That reference *is* the opt‑in: on every build it scans for `[<RpcApi>]` interfaces and generates a fully‑typed client proxy into `WebLit/src/fable-generated/` for you — no attribute, no config.
+
+You create the client once:
+
+```fsharp
+// WebLit/src/Server.fs
+let api = SerdeGenerated.Fable.IServerApiFableClient.create "/"
+```
+
+…then call the server as if it were a local `async` function — here from an Elmish page:
+
+```fsharp
+// WebLit/src/ListCatFactsPage.fs
+Cmd.OfAsync.either Server.api.GetCatFacts (model.PageSize, model.PageNumber) LoadCatFacts OnError
+```
+
+### Why it matters
+
+Change the interface in `Shared` and **both** the server dispatch and the client proxy regenerate on the next build. Any mismatch becomes a compile error before you ever run the app — end‑to‑end type safety across the network boundary, in pure F#.
 
 ---
 

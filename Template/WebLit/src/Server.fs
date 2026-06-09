@@ -1,3 +1,3 @@
 ﻿module WebLit.Server
 
-let api = Shared.Api.IServerApiFableClient.create "/"
+let api = SerdeGenerated.Fable.IServerApiFableClient.create "/"

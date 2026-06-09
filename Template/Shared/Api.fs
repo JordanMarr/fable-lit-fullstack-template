@@ -38,10 +38,11 @@ type CatInfo =
 
 
 /// A type that specifies the communication protocol between client and server.
-/// This will generate the RPC types:
-/// - The server types will be generated in the WebApi server project.
-/// - The Fable client types will be generated in this Shared project to be consumed by the WebLit client project.
+/// This [<RpcApi>] interface drives code generation on both ends:
+/// - The server dispatch/codecs are generated in the WebApi project (via Serde.FS.Json.AspNet).
+/// - The typed Fable client proxy is generated in the WebLit project's fable-generated/
+///   folder, automatically, because WebLit references the Serde.FS.Json.Fable package.
 /// To learn more, read the docs at https://github.com/serde-fs/Serde.FS
-[<RpcApi; GenerateFableClient>]
-type IServerApi = 
+[<RpcApi>]
+type IServerApi =
     abstract member GetCatFacts: PageSize * PageNumber -> Async<CatFact list>
