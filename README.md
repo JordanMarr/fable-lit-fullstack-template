@@ -311,7 +311,10 @@ let api = SerdeGenerated.Fable.IServerApiFableClient.create "/"
 
 ```fsharp
 // WebLit/src/ListCatFactsPage.fs
-Cmd.OfAsync.either Server.api.GetCatFacts (model.PageSize, model.PageNumber) LoadCatFacts OnError
+Cmd.OfAsync.either
+    Server.api.GetCatFacts (model.PageSize, model.PageNumber)
+    LoadCatFacts
+    OnError
 ```
 
 ### Why it matters
