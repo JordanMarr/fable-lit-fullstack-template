@@ -1,10 +1,11 @@
 ﻿# 📘 Fable Lit Fullstack Template  
-[![NuGet version (fable-lit-fullstack-template)](https://img.shields.io/nuget/v/fable-lit-fullstack-template.svg?style=flat-square)](https://www.nuget.org/packages/fable-lit-fullstack-template/)
-
+[![fable-lit-fullstack-template](https://img.shields.io/nuget/v/fable-lit-fullstack-template?label=fable-lit-fullstack-template)](https://www.nuget.org/packages/fable-lit-fullstack-template/)
 
 A modern, ergonomic starter template for building **full‑stack F#** applications with **[Fable.Lit](https://fable.io/Fable.Lit/)** and **Web Components** — featuring a brand‑new, strongly‑typed UI DSL on the front end and a **fully type‑safe client ⇄ server RPC layer** powered by **[Serde.FS](https://github.com/serde-fs/Serde.FS)** on the back end.
 
 This template is designed to give you a smooth, productive experience from day one, whether you're building a small prototype or a full production app.
+
+> **Now updated to .NET 10, Fable 5.0.0‑alpha.22, and FSharp.Core 10.**
 
 ---
 
@@ -47,9 +48,18 @@ let Counter() =
     """
 ```
 
-For best results, install the VS Code extension for F# template highlighting:  
-https://marketplace.visualstudio.com/items?itemName=alfonsogarciacaro.vscode-template-fsharp-highlight
+For best results, install the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=alfonsogarciacaro.vscode-template-fsharp-highlight) for F# template highlighting. 
 </details>
+
+---
+
+# Template Showcase
+
+### HTML DSL Example
+<img width="1686" height="1138" alt="image" src="https://github.com/user-attachments/assets/608d1a9d-9cbe-48fa-8751-6577e10bb1a6" />
+
+### Shoelace DSL Example
+<img width="1676" height="1265" alt="image" src="https://github.com/user-attachments/assets/a5c0c5e5-9bff-4dbe-9684-ed3e31d3067f" />
 
 ---
 
@@ -331,13 +341,12 @@ This template intentionally mixes two approaches:
 ### **1. DSL‑based pages (recommended)**  
 Most pages use the new DSL for clarity and ergonomics.
 
-### **2. A single raw Lit page (WelcomePage)**  
+### **2. A raw Lit page (CatInfoPage)**  
 This page demonstrates:
 
-- plain `html` interpolation  
-- the `el` helper  
-- FluentUI components  
-- how to integrate third‑party Web Components manually  
+- a plain `html` string interpolation template
+- usage of Shoelace components
+- usage of custom-crafted Lit web component controls (`vert-stack` and `horiz-stack`)
 
 ---
 
@@ -378,8 +387,6 @@ Includes:
 
 Future NuGet packages:
 
-- **Fable.Lit.Dsl** -- currently included in this template
-- **Fable.Lit.Dsl.Shoelace** -- currently included in this template  
 - **Fable.Lit.Dsl.FluentUI / FAST**  
 
 ---
