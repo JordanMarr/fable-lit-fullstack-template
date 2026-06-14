@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>fable-lit-fullstack-template</id>
-    <version>3.0.0</version>
+    <version>3.1.0</version>
     <authors>Jordan Marr</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>

@@ -11,7 +11,7 @@ open Microsoft.Extensions.Hosting
 open Serilog
 open Serilog.Events
 open Shared.Api
-open Serde.FS.Json.AspNet
+open Serde.FS.AspNet
 
 [<Serde.FS.EntryPoint>]
 let main args =
