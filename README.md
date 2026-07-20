@@ -71,23 +71,31 @@ For best results, install the [VS Code extension](https://marketplace.visualstud
 Install the template globally:
 
 ```bash
-dotnet new -i fable-lit-fullstack-template
+dotnet new install fable-lit-fullstack-template
 ```
 
 Create a new project:
 
 ```bash
-dotnet new fable-lit-fullstack -n MyApp
+dotnet new flft -n MyApp
 ```
 
-Run it:
+Run it (two terminals):
 
 ```bash
-cd MyApp
-npm install
-npm run dev
+# Terminal 1 - the server
+cd MyApp/WebApi
+dotnet run
 ```
 
+```bash
+# Terminal 2 - the client (Fable watch + Vite dev server)
+cd MyApp/WebLit
+npm install
+npm run start
+```
+
+Then browse to `https://localhost:3000`.
 You now have a full F# + Fable + Lit application running with the new DSL baked in.
 
 ---
@@ -326,6 +334,51 @@ Change the interface in `Shared` and **both** the server dispatch and the client
 
 ---
 
+# 🖥️ Desktop App (Photino) — Same App, Native Window
+
+The template also includes a **`Desktop`** project: a tiny [Photino.NET](https://www.tryphotino.io/) shell that hosts the **same** ASP.NET Core server in-process and shows the **same** Fable.Lit client in a native window — WebView2 on Windows, WKWebView on macOS, WebKitGTK on Linux. No Electron, no bundled Chromium, no code changes.
+
+- **One codebase, two deployments.** `WebApi`, `WebLit`, and `Shared` are completely unchanged between the web and desktop hosts. Going from desktop to web (or back) isn't a migration — it's just picking which host to run.
+- **Web-grade hot reload in a native window.** In Debug, the Desktop app starts Kestrel in-process and points its window at the Vite dev server, so you get full Fable HMR inside the desktop shell — something traditional .NET desktop UI stacks can't offer.
+- The Serde.FS RPC layer works identically in all hosts — the client proxy posts to relative `/rpc/...` URLs, so it doesn't know or care whether it's running in a browser tab or a native window.
+
+### Desktop dev workflow (with HMR)
+
+```bash
+# Terminal 1 - the client dev server
+cd MyApp/WebLit
+npm run start
+```
+
+```bash
+# Terminal 2 - the desktop shell (starts the server in-process on :5001)
+cd MyApp/Desktop
+dotnet run
+```
+
+A native window opens showing the app with full hot reload. (Don't run `WebApi` at the same time — the Desktop app hosts the server itself on the same port.)
+
+### Publishing the desktop app
+
+```bash
+./build.cmd PackDesktop
+```
+
+This publishes the Desktop app plus the built client to `.build/desktop/`. The published exe starts Kestrel on a dynamic loopback port (`http://127.0.0.1:0`), serves the client from the `wwwroot` folder next to the exe, and opens the window — fully self-contained, no console, no configuration.
+
+### Cross-platform notes
+
+- **Windows**: uses the WebView2 Runtime (preinstalled on Windows 11 and most Windows 10 machines).
+- **Linux**: requires `libwebkit2gtk-4.1`.
+- **macOS**: uses the built-in WKWebView.
+- **Debug-mode HTTPS caveat (macOS/Linux)**: the dev window loads `https://localhost:3000`, which uses a locally-issued mkcert certificate. WKWebView/WebKitGTK may reject it. Simplest fix for desktop dev on those platforms: set `server.https: false` in `WebLit/vite.config.js` and change the Debug URLs in `Desktop/Program.fs` to `http://localhost:3000` (the default web workflow is unaffected).
+
+### Hosting inside AutoCAD / Revit
+
+The same architecture — in-process Kestrel + a WebView showing the Fable client — also works embedded inside host applications like AutoCAD and Revit (2025+), giving you hot-reloadable web UI in a palette or dockable pane. See the [CAD add-in recipe](https://github.com/JordanMarr/fable-lit-fullstack-template/blob/main/docs/cad-addin-recipe.md) for the full pattern, including the thread-marshaling dispatcher bridge.
+
+---
+
 # 🌿 Why This Template Makes Lit Even Better
 
 Lit is already fast and modern — but writing HTML templates inside F# strings can be awkward and editor‑dependent.
@@ -374,17 +427,19 @@ Just clean, explicit imports.
 
 # ▶️ Running the Template
 
+All npm commands run in the `WebLit` folder:
+
 ```bash
-npm install
-npm run dev
-npm run build
+npm install     # restore client packages (also runs `dotnet tool restore`)
+npm run start   # Fable watch + Vite dev server with HMR
+npm run build   # production client build -> WebLit/dist
 ```
 
 Includes:
 
 - full Fable + .NET debugging  
 - hot module reloading  
-- server + client projects  
+- server + client + desktop projects  
 - shared F# code  
 
 ---

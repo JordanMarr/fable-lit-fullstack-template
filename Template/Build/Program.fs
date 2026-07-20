@@ -18,9 +18,12 @@ let webLit =  path [ solutionRoot; "WebLit" ]
 let webApiTests = path [ solutionRoot; "WebApi.Tests" ]
 let webLitTests = path [ solutionRoot; "WebLit.Tests" ]
 let webLitDist = path [ webLit; "dist" ]
+let desktop = path [ solutionRoot; "Desktop" ]
 let build = path [ solutionRoot; ".build" ]
 let dist = path [ solutionRoot; build; "dist" ]
 let clientOutput = path [ dist; "wwwroot" ]
+let desktopDist = path [ build; "desktop" ]
+let desktopClientOutput = path [ desktopDist; "wwwroot" ]
 
 Target.create "Clean" <| fun _ ->
     // sometimes files are locked by VS for a bit, retry again until they can be deleted
@@ -36,6 +39,8 @@ Target.create "Clean" <| fun _ ->
         path [ webLitTests; "bin" ]
         path [ webLitTests; "obj" ]
         path [ webLitTests; ".fable" ]
+        path [ desktop; "bin" ]
+        path [ desktop; "obj" ]
     ]
 
 Target.create "RestoreServer" <| fun _ ->
@@ -95,6 +100,20 @@ Target.create "PackNoTests" <| fun _ ->
     | _ ->
         failwith "Failed to build the server project"
 
+Target.create "Desktop" <| fun _ ->
+    Retry.retry 5 <| fun _ ->
+        let exitCode = Shell.Exec(Tools.dotnet, "build --configuration Release", desktop)
+        if exitCode <> 0 then failwith "Could not build the desktop project"
+
+Target.create "PackDesktop" <| fun _ ->
+    match Shell.Exec(Tools.dotnet, sprintf "publish --configuration Release --output %s" desktopDist, desktop) with
+    | 0 ->
+        match Shell.Exec(Tools.npm, "run build", webLit) with
+        | 0 -> Shell.copyDir desktopClientOutput webLitDist (fun file -> true)
+        | _ -> failwith "Failed to build the client project"
+    | _ ->
+        failwith "Failed to publish the desktop project"
+
 Target.create "Restore" <| fun _ ->
     printfn "Restoring Server and Client"
 
@@ -116,6 +135,8 @@ let dependencies = [
     "Clean" ==> "RestoreClient" ==> "Client" ==> "ClientTests"
     "Clean" ==> "ServerTests" ==> "ClientTests" ==> "Pack"
     "Clean" ==> "Server" ==> "Client" ==> "PackNoTests"
+    "Clean" ==> "Desktop"
+    "Clean" ==> "PackDesktop"
     "PackNoTests" ==> "AzDeployWeb" // Deploy Web App to Azure
 ]
 

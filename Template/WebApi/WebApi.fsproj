@@ -10,11 +10,12 @@
   <ItemGroup>
     <Compile Include="Rest.fs" />
     <Compile Include="ApiBuilder.fs" />
+    <Compile Include="WebApp.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Serde.FS.AspNet" Version="1.0.0-beta.3" />
+    <PackageReference Include="Serde.FS.AspNet" Version="1.0.0-beta.4" />
     <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
   </ItemGroup>
