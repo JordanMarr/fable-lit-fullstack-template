@@ -33,4 +33,4 @@ jobs:
           user: "jordan marr" # nuget.org profile name (not email)
 
       - name: Push
-        run: dotnet nuget push Template/.build/*.nupkg --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+        run: dotnet nuget push Template.build*.nupkg --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
