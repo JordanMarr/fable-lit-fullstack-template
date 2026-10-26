@@ -4,7 +4,7 @@
 [![Fable.Lit.Dsl.Shoelace](https://img.shields.io/nuget/v/Fable.Lit.Dsl.Shoelace.svg?label=Fable.Lit.Dsl.Shoelace)](https://www.nuget.org/packages/Fable.Lit.Dsl.Shoelace/)
 
 
-A modern, ergonomic starter template for building **full‑stack F#** applications with **[Fable.Lit](https://fable.io/Fable.Lit/)** and **Web Components** — featuring a brand‑new, strongly‑typed UI DSL on the front end and a **fully type‑safe client ⇄ server RPC layer** powered by **[Serde.FS](https://github.com/serde-fs/Serde.FS)** on the back end.
+A modern, ergonomic starter template for building **full‑stack F#** applications with **[Fable.Lit](https://fable-hub.github.io/Fable.Lit/)** and **Web Components** — featuring a brand‑new, strongly‑typed UI DSL on the front end and a **fully type‑safe client ⇄ server RPC layer** powered by **[Serde.FS](https://github.com/serde-fs/Serde.FS)** on the back end.
 
 This template is designed to give you a smooth, productive experience from day one, whether you're building a small prototype or a full production app.
 
