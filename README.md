@@ -289,7 +289,7 @@ It shows how the DSL scales to real‑world UI.
 
 # 🔗 End‑to‑End Type Safety: Client ⇄ Server with Serde.FS
 
-This is a *true* full‑stack template. You define your API **once** as an F# interface, and both ends stay in lockstep — no REST boilerplate, no hand‑written `fetch` calls, no manual JSON (de)serialization, and no silent client/server drift. It's powered by **[Serde.FS](https://github.com/serde-fs/Serde.FS)** and its Fable companion, **[Serde.FS.Json.Fable](https://www.nuget.org/packages/Serde.FS.Json.Fable)**.
+This is a *true* full‑stack template. You define your API **once** as an F# interface, and both ends stay in lockstep — no REST boilerplate, no hand‑written `fetch` calls, no manual JSON (de)serialization, and no silent client/server drift. It's powered by **[Serde.FS](https://github.com/serde-fs/Serde.FS)** and its Fable companion, **[Serde.FS.Fable](https://www.nuget.org/packages/Serde.FS.Fable)**.
 
 ### 1. Define the contract once
 
@@ -309,7 +309,9 @@ In the `WebApi` project, implement `IServerApi` and register it with `app.MapRpc
 
 ### 3. Call it from the client — with a generated, typed proxy
 
-The `WebLit` (Fable) project references the **`Serde.FS.Json.Fable`** package. That reference *is* the opt‑in: on every build it scans for `[<RpcApi>]` interfaces and generates a fully‑typed client proxy into `WebLit/src/fable-generated/` for you — no attribute, no config.
+The `WebLit` (Fable) project references the **`Serde.FS.Fable`** package. That reference *is* the opt‑in: on every build it scans for `[<RpcApi>]` interfaces and generates a fully‑typed client proxy into `WebLit/src/fable-generated/` for you — no attribute, no config.
+
+All Serde.FS packages share one version, set once in `Directory.Build.props` (`SerdePackagesVersion`). The client and server must agree on the wire format, so upgrade them together by changing that one number, and redeploy them as a unit.
 
 You create the client once:
 

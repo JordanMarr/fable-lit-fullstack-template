@@ -23,7 +23,7 @@ The client, the RPC contracts, and the server wiring are all unchanged. Only two
 
 ## 1. Starting the server from the add-in
 
-Start Kestrel from the add-in lifecycle hook — `IExtensionApplication.Initialize` (AutoCAD) or `IExternalApplication.OnStartup` (Revit). As of Serde.FS `1.0.0-beta.4`, `MapRpcApi` self-initializes the generated codec/RPC registrations, so no bootstrap ceremony is needed even though the add-in is not the process entry point. (If you ever need registrations before the server starts — e.g. standalone `SerdeJson.serialize` calls — run `Serde.FS.Bootstrap.Run()` explicitly.)
+Start Kestrel from the add-in lifecycle hook — `IExtensionApplication.Initialize` (AutoCAD) or `IExternalApplication.OnStartup` (Revit). `MapRpcApi` self-initializes the generated codec/RPC registrations, so no bootstrap ceremony is needed even though the add-in is not the process entry point. (If you ever need registrations before the server starts — e.g. standalone `SerdeJson.serialize` calls — run `Serde.FS.Bootstrap.Run()` explicitly.)
 
 ```fsharp
 open Microsoft.Extensions.Hosting

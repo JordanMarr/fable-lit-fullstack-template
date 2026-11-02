@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Serde.FS.AspNet" Version="1.0.0-beta.4" />
+    <PackageReference Include="Serde.FS.AspNet" Version="$(SerdePackagesVersion)" />
     <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
   </ItemGroup>
