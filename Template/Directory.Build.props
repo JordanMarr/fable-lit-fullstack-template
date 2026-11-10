@@ -3,6 +3,6 @@
     <!-- One version for every Serde.FS package (Serde.FS, Serde.FS.AspNet,
          Serde.FS.Fable). Client and server must agree on the wire format,
          so upgrade them together by changing this number. -->
-    <SerdePackagesVersion>1.0.0</SerdePackagesVersion>
+    <SerdePackagesVersion>1.0.1</SerdePackagesVersion>
   </PropertyGroup>
 </Project>
