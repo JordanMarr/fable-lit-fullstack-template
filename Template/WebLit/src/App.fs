@@ -29,6 +29,7 @@ let MyApp() =
             navButton "Cat Info Form" "info-circle-fill" "/cat-info" (isActive ["cat-info"])
             navButton "DSL Demo" "code-slash" "/dsl-demo" (isActive ["dsl-demo"])
             navButton "Shoelace DSL" "brush" "/shoelace-dsl-demo" (isActive ["shoelace-dsl-demo"])
+            navButton "Metrino DSL" "grid-3x3-gap-fill" "/metrino-dsl-demo" (isActive ["metrino-dsl-demo"])
 
             div {
                 style "float: right; padding: 10px"
@@ -52,6 +53,8 @@ let MyApp() =
                 lit (DslDemoPage.Page())
             | ["shoelace-dsl-demo"] ->
                 lit (ShoelaceDslDemoPage.Page())
+            | ["metrino-dsl-demo"] ->
+                lit (MetrinoDslDemoPage.Page())
             | _ ->
                 h1 { "Page not found." }
         }

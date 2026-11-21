@@ -4,6 +4,7 @@ open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Core.DynamicExtensions
 open Fable.Lit.Dsl.Shoelace
+open Fable.Lit.Dsl.Metrino
 
 [<AutoOpen>]
 module PromiseExtensions =
@@ -33,9 +34,30 @@ let registerFluentUI() =
     }
     |> Promise.start
 
+/// Registers the Metrino components used by the Metrino DSL demo page.
+/// (Use `Metrino.registerAll()` to register every component, or a category like `Metrino.registerInputs()`.)
+let registerMetrino() =
+    Metrino.Register.button()
+    Metrino.Register.comboBox()
+    Metrino.Register.textBox()
+    Metrino.Register.toggleSwitch()
+    Metrino.Register.checkBox()
+    Metrino.Register.slider()
+    Metrino.Register.rating()
+    Metrino.Register.pivot()
+    Metrino.Register.tileGrid()
+    Metrino.Register.iconicTile()
+    Metrino.Register.flipTile()
+    Metrino.Register.liveTile()
+    Metrino.Register.contentDialog()
+    Metrino.Register.infoBar()
+    Metrino.Register.progressBar()
+    Metrino.Register.progressRing()
+
 /// Imports and registers components
 let registerComponents () =
     registerFluentUI()
+    registerMetrino()
     Shoelace.setBasePath()
     [|
         importDynamic Shoelace.Asset.DarkTheme

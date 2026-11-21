@@ -2,6 +2,7 @@
 [![fable-lit-fullstack-template](https://img.shields.io/nuget/v/fable-lit-fullstack-template?label=fable-lit-fullstack-template)](https://www.nuget.org/packages/fable-lit-fullstack-template/)
 [![Fable.Lit.Dsl](https://img.shields.io/nuget/v/Fable.Lit.Dsl.svg?label=Fable.Lit.Dsl)](https://www.nuget.org/packages/Fable.Lit.Dsl/)
 [![Fable.Lit.Dsl.Shoelace](https://img.shields.io/nuget/v/Fable.Lit.Dsl.Shoelace.svg?label=Fable.Lit.Dsl.Shoelace)](https://www.nuget.org/packages/Fable.Lit.Dsl.Shoelace/)
+[![Fable.Lit.Dsl.Metrino](https://img.shields.io/nuget/v/Fable.Lit.Dsl.Metrino.svg?label=Fable.Lit.Dsl.Metrino)](https://www.nuget.org/packages/Fable.Lit.Dsl.Metrino/)
 
 
 A modern, ergonomic starter template for building **full‑stack F#** applications with **[Fable.Lit](https://fable-hub.github.io/Fable.Lit/)** and **Web Components** — featuring a brand‑new, strongly‑typed UI DSL on the front end and a **fully type‑safe client ⇄ server RPC layer** powered by **[Serde.FS](https://github.com/serde-fs/Serde.FS)** on the back end.
@@ -424,6 +425,30 @@ importDynamic Shoelace.Asset.DarkTheme
 No abstraction layers.  
 No magic.  
 Just clean, explicit imports.
+
+---
+
+# 🟦 Metrino Integration
+
+The **Metrino DSL** demo page uses [Fable.Lit.Dsl.Metrino](https://www.nuget.org/packages/Fable.Lit.Dsl.Metrino/), typed bindings for [Metrino](https://github.com/AngelMunoz/metrino) by Angel D. Munoz: Lit web components implementing the Windows Phone / Windows 8 **Metro** design system (pivots, live tiles, app bars, and more).
+
+Metrino components are registered explicitly at startup in `Registrations.fs`:
+
+```fsharp
+Metrino.Register.button()
+Metrino.Register.pivot()   // also registers metro-pivot-item
+// ...or everything at once:
+Metrino.registerAll()
+```
+
+The `@angelmunoz/metrino` npm package is published to **GitHub Packages**, so `WebLit/.npmrc` points the `@angelmunoz` scope at `https://npm.pkg.github.com`. GitHub Packages requires authentication even for public packages, so before running `npm install` you need a [personal access token (classic)](https://github.com/settings/tokens) with the `read:packages` scope:
+
+```bash
+npm login --scope=@angelmunoz --auth-type=legacy --registry=https://npm.pkg.github.com
+# Username: your GitHub username, Password: the token
+```
+
+Don't want Metrino? Delete `MetrinoDslDemoPage.fs`, its route and nav button in `App.fs`, `registerMetrino` in `Registrations.fs`, the `Fable.Lit.Dsl.Metrino` package reference, the `@angelmunoz/metrino` and `@mdi/js` npm packages, and `WebLit/.npmrc`.
 
 ---
 

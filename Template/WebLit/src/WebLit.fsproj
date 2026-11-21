@@ -13,6 +13,7 @@
     <Compile Include="ListCatFactsPage.fs" />
     <Compile Include="DslDemoPage.fs" />
     <Compile Include="ShoelaceDslDemoPage.fs" />
+    <Compile Include="MetrinoDslDemoPage.fs" />
     <Compile Include="WelcomePage.fs" />
     <Compile Include="App.fs" />
   </ItemGroup>
@@ -20,6 +21,7 @@
     <PackageReference Include="Fable.Core" Version="5.0.0" />
     <PackageReference Include="Fable.Lit" Version="2.0.0" />
     <PackageReference Include="Fable.Lit.Dsl" Version="2.1.0" />
+    <PackageReference Include="Fable.Lit.Dsl.Metrino" Version="1.0.0" />
     <PackageReference Include="Fable.Lit.Dsl.Shoelace" Version="2.1.1" />
     <PackageReference Include="Fable.Lit.Elmish" Version="2.0.0" />
     <PackageReference Include="Fable.LitRouter" Version="1.0.2" />
